@@ -1,0 +1,67 @@
+[
+  {
+    "alergenos": "altramuces",
+    "descripcion": "Todos los productos que puedan contener trazas de altramuces, como pasteles, pan o pastas. Un alérgico a los altramuces también puede serlo al cacahuete o a la soja",
+    "imagen": "altramuces.png"
+  },
+  {
+    "alergenos": "apio",
+    "descripcion": "Se puede encontrar apio y derivados en ensaladas, sopas, salsas, productos cárnicos e, incluso, sal. El apio es la hortaliza que con más frecuencia se relaciona con la anafilaxia, una reacción alérgica grave. Existe la posibilidad de que una persona alérgica al apio lo sea también a la zanahoria o al pepino.",
+    "imagen": "apio.png"
+  },
+  {
+    "alergenos": "cacahuetes",
+    "descripcion": "Todos los productos que contengan maní o también pueden contener trazas de cacahuetes. Entre ellos chocolate, currys, salsas, aceites, harina, mantecas, galletas, etc. Es común que los alérgicos a los cacahuetes también lo sean a otro fruto seco o a algún cereal o legumbre.",
+    "imagen": "cacahuetes.png"
+  },
+  {
+    "alergenos": "frutos secos",
+    "descripcion": "Almendras, avellanas, nueces, anacardos, pacanas, nueces de Brasil, alfóncigos, nueces macadamia o nueces de Australia y productos derivados. Son los denominados frutos secos oleaginosos por su alto contenido en aceite y por su escaso contenido en agua (generalmente inferior al 50%).",
+    "imagen": "frutos-secos.png"
+  },
+  {
+    "alergenos": "gluten",
+    "descripcion": "El gluten es una proteína que se encuentra en muchos cereales, como trigo, centeno, cebada, avena, espelta, kamut o sus variedades híbridas y productos derivados.",
+    "imagen": "gluten.png"
+  },
+  {
+    "alergenos": "huevo",
+    "descripcion": "Productos que pueden contener huevo, incluso en trazas. Hay que tener en cuenta que el huevo se utiliza, en muchas ocasiones, como aditivo alimentario, por lo que es muy común encontrarlo en numerosos productos. La clara suele ser más alergénica que la yema y hay una serie de compuestos que nos pueden indicar la presencia de huevo en un producto: ovotransferrina, lisozima, globulina, lecitina (E-322) que no sea de soja, luteína, pigmento amarillo (E-161b) o emulsificante, entre otros.",
+    "imagen": "huevo.png"
+  },
+  {
+    "alergenos": "lácteos",
+    "descripcion": "Además de quesos, yogures, natas o salsas, también es obligatorio indicar en el etiquetado de los alimentos el contenido de ingredientes procedentes de la leche como la caseína, el caseinato de sodio, E-4512, caseinato de potasio, hidrolizado proteico, lactoalbúmina, beta-lactoglobulina o alfa-lactoalbúmina. Hay que tener en cuenta que la normativa no obliga al etiquetado del lactosuero para destilados alcohólicos ni el lactitol.",
+    "imagen": "lacteos.png"
+  },
+  {
+    "alergenos": "marisco",
+    "descripcion": "Todos los productos que puedan contener mariscos incluso en trazas. La principal proteína responsable de esta alergia es la tropomiosina, resistente al calor y, por tanto, a la cocción; por lo que la alergia se puede manifestar tanto en productos crudos como cocinados",
+    "imagen": "marisco.png"
+  },
+  {
+    "alergenos": "mostaza",
+    "descripcion": "Todos los productos que puedan contener trazas de mostaza. Tanto mostaza como derivados puedan estar presentes en productos cárnicos, aliños, sopas, salsas, currys, panes o marinados. Una persona alérgica a la mostaza también puede serlo a productos de la misma familia como las coles de Bruselas, repollo, brócoli, rábano o col, o a otros alimentos como frutos secos o legumbres.",
+    "imagen": "mostaza.png"
+  },
+  {
+    "alergenos": "pescado",
+    "descripcion": "El alérgeno principal que contiene el pescado es la parvalbúmina, una proteína termoestable, por lo que es resistente al calor y, por tanto, a la cocción.",
+    "imagen": "pescado.png"
+  },
+  {
+    "alergenos": "sésamo",
+    "descripcion": "Todos aquellos productos que puedan contener trazas de sésamo como harinas, pastas, aceites o panes. Existe la posibilidad de que una persona alérgica al sésamo lo sea también a algunas legumbres o frutos secos",
+    "imagen": "sesamo.png"
+  },
+  {
+    "alergenos": "soja",
+    "descripcion": "Es común encontrar soja o derivados en pastas, productos cárnicos, aceites, salsas, postres o productos elaborados para vegetarianos.",
+    "imagen": "soja.png"
+  },
+  {
+    "alergenos": "sulfitos",
+    "descripcion": "En concentraciones superiores a 10 mg/kg o 10 mg/litro en términos de SO2 total, para los productos listos para el consumo o reconstituidos conforme a las instrucciones del fabricante. Suelen aparecer en conservantes en crustáceos, en productos alcohólicos como cerveza o vino, o no alcohólicos como zumos, sidra o mostos, en vegetales, frutas desecadas, productos cárnicos, alimentos precocinados y alimentos ultracongelados.",
+    "imagen": "sulfitos.png"
+  }
+]

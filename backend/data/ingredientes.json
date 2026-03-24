@@ -1,0 +1,260 @@
+[
+  {
+    "ingredientes": "3 quesos",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "aceite de oliva",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "aceitunas negras",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "alcachofas",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "alcaparras",
+    "alergenos": "sulfitos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "anchoas",
+    "alergenos": "pescado",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "atún",
+    "alergenos": "pescado",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "bacon",
+    "alergenos": "soja, lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "bechamel",
+    "alergenos": "gluten, lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "calabacín",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "carne de kebab",
+    "alergenos": "gluten, soja, lácteos",
+    "disponible": true,
+    "precio": 1.5
+  },
+  {
+    "ingredientes": "carne de ternera",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1.5
+  },
+  {
+    "ingredientes": "cebolla",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "cebolla caramelizada",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1.5
+  },
+  {
+    "ingredientes": "champiñones",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "gambas",
+    "alergenos": "marisco",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "huevos de codorníz",
+    "alergenos": "huevo",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "jamón york",
+    "alergenos": "soja, lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "maíz",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "mermelada de pimiento",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "miel de caña",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1.5
+  },
+  {
+    "ingredientes": "mozzarella",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "nata",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "orégano",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "pepperoni",
+    "alergenos": "soja, lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "pimiento rojo",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "pimiento verde",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "piña",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "pollo",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1.5
+  },
+  {
+    "ingredientes": "queso cheddar",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "queso azul",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "queso philadelphia",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "rulos de cabra",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1.5
+  },
+  {
+    "ingredientes": "salchichas",
+    "alergenos": "soja, lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "salsa de tomate",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "salsa barbacoa",
+    "alergenos": "gluten, mostaza",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "salsa de kebab",
+    "alergenos": "huevo, mostaza, lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "salsa de yogur",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "salsa gaucha",
+    "alergenos": "lácteos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "salsa sriracha",
+    "alergenos": "sulfitos",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "surimi",
+    "alergenos": "gluten, huevo, pescado, soja, marisco",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "tomate cherry",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  },
+  {
+    "ingredientes": "tomate a rodajas",
+    "alergenos": "",
+    "disponible": true,
+    "precio": 1
+  }
+]
