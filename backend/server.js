@@ -1,15 +1,21 @@
-// Importamos las librerías
+// Importa las librerías
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config(); // Para poder leer el archivo .env
 
-// Inicializamos la app de Express
+// Importa el archivo de rutas de productos
+const productosRoutes = require('./routes/productos');
+
+// Inicializa la app de Express
 const app = express();
 
-// Middlewares (Configuraciones básicas)
+// Middlewares 
 app.use(cors()); // Permite que el frontend (React) se comunique con este backend
 app.use(express.json()); // Permite que nuestro servidor entienda datos en formato JSON
+
+// Le decimos a Express que use nuestras rutas cuando alguien visite /api/productos (NUEVO)
+app.use('/api/productos', productosRoutes);
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI)
