@@ -1,260 +1,303 @@
 [
   {
-    "ingredientes": "3 quesos",
+    "ingrediente": "3 quesos",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "aceite de oliva",
+    "ingrediente": "aceite de oliva",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "aceitunas negras",
+    "ingrediente": "aceitunas negras",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "alcachofas",
+    "ingrediente": "alcachofas",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "alcaparras",
+    "ingrediente": "alcaparras",
     "alergenos": "sulfitos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "anchoas",
+    "ingrediente": "anchoas",
     "alergenos": "pescado",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "atún",
+    "ingrediente": "atún",
     "alergenos": "pescado",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "bacon",
+    "ingrediente": "bacon",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "bechamel",
+    "ingrediente": "bechamel",
     "alergenos": "gluten, lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "calabacín",
+    "ingrediente": "calabacín",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "carne de kebab",
+    "ingrediente": "carne de kebab",
     "alergenos": "gluten, soja, lácteos",
     "disponible": true,
-    "precio": 1.5
+    "precio": 1.5,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "carne de ternera",
+    "ingrediente": "carne de ternera",
     "alergenos": "",
     "disponible": true,
-    "precio": 1.5
+    "precio": 1.5,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "cebolla",
+    "ingrediente": "cebolla",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "cebolla caramelizada",
+    "ingrediente": "cebolla caramelizada",
     "alergenos": "",
     "disponible": true,
-    "precio": 1.5
+    "precio": 1.5,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "champiñones",
+    "ingrediente": "champiñones",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "gambas",
+    "ingrediente": "gambas",
     "alergenos": "marisco",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "huevos de codorníz",
+    "ingrediente": "huevos de codorníz",
     "alergenos": "huevo",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "jamón york",
+    "ingrediente": "jamón york",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "maíz",
+    "ingrediente": "maíz",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "mermelada de pimiento",
+    "ingrediente": "mermelada de pimiento",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "miel de caña",
+    "ingrediente": "miel de caña",
     "alergenos": "",
     "disponible": true,
-    "precio": 1.5
+    "precio": 1.5,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "mozzarella",
+    "ingrediente": "mozzarella",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "nata",
+    "ingrediente": "nata",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "orégano",
+    "ingrediente": "orégano",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "pepperoni",
+    "ingrediente": "pepperoni",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "pimiento rojo",
+    "ingrediente": "pimiento rojo",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "pimiento verde",
+    "ingrediente": "pimiento verde",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "piña",
+    "ingrediente": "piña",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "pollo",
+    "ingrediente": "pollo",
     "alergenos": "",
     "disponible": true,
-    "precio": 1.5
+    "precio": 1.5,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "queso cheddar",
+    "ingrediente": "queso cheddar",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "queso azul",
+    "ingrediente": "queso azul",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "queso philadelphia",
+    "ingrediente": "queso philadelphia",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "rulos de cabra",
+    "ingrediente": "rulos de cabra",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1.5
+    "precio": 1.5,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "salchichas",
+    "ingrediente": "salchichas",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "salsa de tomate",
+    "ingrediente": "salsa de tomate",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "salsa barbacoa",
+    "ingrediente": "salsa barbacoa",
     "alergenos": "gluten, mostaza",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "salsa de kebab",
+    "ingrediente": "salsa de kebab",
     "alergenos": "huevo, mostaza, lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "salsa de yogur",
+    "ingrediente": "salsa de yogur",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "salsa gaucha",
+    "ingrediente": "salsa gaucha",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "salsa sriracha",
+    "ingrediente": "salsa sriracha",
     "alergenos": "sulfitos",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "surimi",
+    "ingrediente": "surimi",
     "alergenos": "gluten, huevo, pescado, soja, marisco",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "tomate cherry",
+    "ingrediente": "tomate cherry",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   },
   {
-    "ingredientes": "tomate a rodajas",
+    "ingrediente": "tomate a rodajas",
     "alergenos": "",
     "disponible": true,
-    "precio": 1
+    "precio": 1,
+    "fecha_registro": ""
   }
 ]

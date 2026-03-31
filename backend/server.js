@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config(); // Para poder leer el archivo .env
 
-// Importa el archivo de rutas de productos
+// Importa los archivos de rutas
 const productosRoutes = require('./routes/productos');
+const ingredientesRoutes = require('./routes/ingredientes'); 
+const alergenosRoutes = require('./routes/alergenos');
 
 // Inicializa la app de Express
 const app = express();
@@ -14,8 +16,10 @@ const app = express();
 app.use(cors()); // Permite que el frontend (React) se comunique con este backend
 app.use(express.json()); // Permite que nuestro servidor entienda datos en formato JSON
 
-// Le decimos a Express que use nuestras rutas cuando alguien visite /api/productos (NUEVO)
+// Le decimos a Express que use nuestras rutas cuando alguien visite /api/{...}
 app.use('/api/productos', productosRoutes);
+app.use('/api/ingredientes', ingredientesRoutes); 
+app.use('/api/alergenos', alergenosRoutes);
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI)
