@@ -8,8 +8,11 @@ const Producto = require('../models/Producto');
 // Cuando alguien entre en la URL raíz de esta ruta, ejecutamos esto:
 router.get('/', async (req, res) => {
   try {
-    // Le pedimos a Mongoose que busque TODOS los documentos de esta colección
-    const productos = await Producto.find(); 
+    // Mongoose busca todos los documentos de esta colección y rellena la información real
+    // de ingredientes y alérgenos
+    const productos = await Producto.find()
+      .populate('ingredientes')
+      .populate('alergenos'); 
     
     // Si todo va bien, el servidor responde (res) enviando los productos en formato JSON
     res.json(productos); 
@@ -17,6 +20,23 @@ router.get('/', async (req, res) => {
     console.error('Error al obtener los productos:', error);
     // Si algo falla, devolvemos un error 500 (Error interno del servidor)
     res.status(500).json({ mensaje: 'Error al obtener los productos' });
+  }
+});
+
+// RUTA GET por ID: Obtiene UN solo producto
+router.get('/:id', async (req, res) => {
+  try {
+    const producto = await Producto.findById(req.params.id)
+      .populate('ingredientes')
+      .populate('alergenos');
+      
+    if (!producto) {
+      return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    }
+    res.json(producto);
+  } catch (error) {
+    console.error('Error al obtener el producto:', error);
+    res.status(500).json({ mensaje: 'Error al obtener el producto', error });
   }
 });
 

@@ -8,15 +8,33 @@ const Ingrediente = require('../models/Ingrediente');
 // Cuando alguien entre en la URL raíz de esta ruta, ejecutamos esto:
 router.get('/', async (req, res) => {
   try {
-    // Le pedimos a Mongoose que busque TODOS los documentos de esta colección
-    const ingredientes = await Ingrediente.find(); 
-    
+    // Mongoose busca todos los documentos de esta colección y rellena la información real
+    // de alérgenos
+    const ingredientes = await Ingrediente.find() 
+      .populate('alergenos');
+
     // Si todo va bien, el servidor responde (res) enviando los ingredientes en formato JSON
     res.json(ingredientes); 
   } catch (error) {
     console.error('Error al obtener los ingredientes:', error);
     // Si algo falla, devolvemos un error 500 (Error interno del servidor)
     res.status(500).json({ mensaje: 'Error al obtener los ingredientes' });
+  }
+});
+
+// RUTA GET por ID: Obtiene UN solo ingrediente
+router.get('/:id', async (req, res) => {
+  try {
+    const ingrediente = await Ingrediente.findById(req.params.id)
+      .populate('alergenos');
+      
+    if (!ingrediente) {
+      return res.status(404).json({ mensaje: 'Ingrediente no encontrado' });
+    }
+    res.json(ingrediente);
+  } catch (error) {
+    console.error('Error al obtener el ingrediente:', error);
+    res.status(500).json({ mensaje: 'Error al obtener el ingrediente', error });
   }
 });
 

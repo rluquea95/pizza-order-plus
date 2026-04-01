@@ -4,33 +4,35 @@ const mongoose = require('mongoose');
 const productoSchema = new mongoose.Schema({
   producto: { type: String, required: true },
   categoria: { type: String, required: true, enum: ['PIZZA', 'BEBIDA'] },
-  ingredientes: { type: String, default: "" },
+  // Relacion con la entidad Ingrediente
+  ingredientes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingrediente' }],
   descripcion: { type: String, default: "" },
-  alergenos: { type: String, default: "" },
+  // Relacion con la entidad Alergeno
+  alergenos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Alergeno' }],
   
   // Precios Pizza 
-  'precio-pizza-peq': { type: Number, default: null },
-  'precio-pizza-med': { type: Number, default: null },
-  'precio-pizza-fam': { type: Number, default: null },
+  precio_pizza_med: { type: Number, default: null },
+  precio_pizza_peq: { type: Number, default: null },
+  precio_pizza_fam: { type: Number, default: null },
   
   // Precios Bebida
-  'precio-beb-330ml': { type: Number, default: null },
-  'precio-beb-500ml': { type: Number, default: null },
-  'precio-beb-1000ml': { type: Number, default: null },
+  precio_beb_330ml: { type: Number, default: null },
+  precio_beb_500ml: { type: Number, default: null },
+  precio_beb_1000ml: { type: Number, default: null },
   
   // Imágenes
-  'imagen-pizza': { type: String, default: "" },
-  'imagen-beb-330ml': { type: String, default: "" },
-  'imagen-beb-500ml': { type: String, default: "" },
-  'imagen-beb-1000ml': { type: String, default: "" },
+  imagen_pizza: { type: String, default: "" },
+  imagen_beb_330ml: { type: String, default: "" },
+  imagen_beb_500ml: { type: String, default: "" },
+  imagen_beb_1000ml: { type: String, default: "" },
   
   // Disponibilidad
-  'disp-piz-peq': { type: Boolean, default: false },
-  'disp-piz-med': { type: Boolean, default: false },
-  'disp-piz-fam': { type: Boolean, default: false },
-  'disp-beb-330ml': { type: Boolean, default: false },
-  'disp-beb-500ml': { type: Boolean, default: false },
-  'disp-beb-1000ml': { type: Boolean, default: false },
+  disp_piz_peq: { type: Boolean, default: false },
+  disp_piz_med: { type: Boolean, default: false },
+  disp_piz_fam: { type: Boolean, default: false },
+  disp_beb_330ml: { type: Boolean, default: false },
+  disp_beb_500ml: { type: Boolean, default: false },
+  disp_beb_1000ml: { type: Boolean, default: false },
 
   // Fecha automática
   fecha_registro: { type: Date, default: Date.now }
