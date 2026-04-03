@@ -84,6 +84,8 @@ export const Footer = () => {
                     <div 
                       key={alergeno._id}
                       title={`${alergeno.alergeno.toUpperCase()}: ${alergeno.descripcion}`}
+                      aria-label={`Alérgeno: ${alergeno.alergeno}. Descripción: ${alergeno.descripcion}`}
+                      tabIndex="0"
                       className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-xl hover:bg-action hover:scale-110 transition-all cursor-help overflow-hidden p-0.5"
                     >
                       <img 
