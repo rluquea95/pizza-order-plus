@@ -1,3 +1,4 @@
+import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
           Contenido de la página...
         </h1>
       </div>
-
+      <Footer/>
     </div>
   )
 }
