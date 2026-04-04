@@ -63,7 +63,7 @@ export const Footer = () => {
                   alt="Logo PizzaOrder+" 
                   className="w-20 h-20 rounded-full border-2 border-action object-contain bg-bg-logo shrink-0"
                 />
-                <div className="font-roboto text-lg leading-relaxed text-gray-200">
+                <div className="text-lg leading-relaxed text-gray-200">
                   <p>C\ Calle, 12</p>
                   <p className="font-bold text-white">POBLACIÓN</p>
                   <p>(PROVINCIA)</p>
@@ -102,7 +102,7 @@ export const Footer = () => {
             {/* COLUMNA 3: Horarios */}
             <div className="flex flex-col items-center">
               <h3 className="font-bold text-xl mb-6 tracking-widest text-center">ABIERTOS</h3>
-              <div className="font-roboto text-lg leading-relaxed text-gray-200 text-center">
+              <div className="text-lg leading-relaxed text-gray-200 text-center">
                 <p>De Martes a Domingo</p>
                 <p className="font-bold text-white mt-1">20:00 – 24:00 Horas</p>
               </div>
@@ -119,13 +119,13 @@ export const Footer = () => {
               ENLACES LEGALES Y COPYRIGHT
               ========================================= */}
           <div className="flex flex-col items-center gap-6">
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 font-roboto text-sm md:text-base text-gray-300">
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm md:text-base text-gray-300">
               <Link to="/aviso-legal" className="hover:text-action transition-colors">Aviso Legal</Link>
               <Link to="/privacidad" className="hover:text-action transition-colors">Política de Privacidad</Link>
               <Link to="/cookies" className="hover:text-action transition-colors">Política de Cookies</Link>
               <Link to="/accesibilidad" className="hover:text-action transition-colors">Declaración de Accesibilidad</Link>
             </div>
-            <p className="font-roboto text-sm text-gray-500 text-center mt-2">
+            <p className="text-sm text-text-muted text-center mt-2">
               Copyright © {new Date().getFullYear()} PizzaOrder+ | Diseñado por Rosa María Luque Aguilar
             </p>
           </div>
