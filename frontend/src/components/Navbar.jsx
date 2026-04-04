@@ -100,11 +100,11 @@ export const Navbar = () => {
           {/* Botón Carrito*/}
           <button
             aria-label="Ver carrito de compras"
-            className="flex flex-col items-center justify-center text-white hover:text-action px-2 transition-colors min-w-[60px] md:min-w-[75px]"
+            className="flex flex-col items-center justify-center text-white hover:text-action px-2 transition-colors min-w-15 md:min-w-20"
           >
             <div className="relative mb-1">
               <CarritoIcon className="w-7 h-7 md:w-8 md:h-8" />
-              <span className="absolute -top-2 -right-3 md:-right-4 bg-action text-white px-1.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm leading-none flex items-center justify-center min-w-[20px] min-h-[20px]">
+              <span className="absolute -top-2 -right-3 md:-right-4 bg-action text-white px-1.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm leading-none flex items-center justify-center min-w-5 min-h-5">
                 0
               </span>
             </div>
