@@ -1,5 +1,6 @@
 import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
+import { HomePage } from './pages/HomePage';
 
 const App = () => {
   return (
@@ -8,12 +9,10 @@ const App = () => {
       {/* Componente de navegación */}
       <Navbar />
 
-      {/* Un texto temporal para saber que estamos probando */}
-      <div className="p-8 text-center">
-        <h1 className="text-3xl font-poppins text-primary font-bold">
-          Contenido de la página...
-        </h1>
-      </div>
+      {/* Landing Page*/}
+      <HomePage />
+
+      {/* Componente de pie de página */}
       <Footer/>
     </div>
   )
