@@ -76,7 +76,7 @@ export const Footer = () => {
             <div className="flex flex-col items-center">
               <h3 className="font-bold text-xl mb-6 tracking-widest text-center">INFORMACIÓN SOBRE ALÉRGENOS</h3>
               
-              <div className="flex flex-wrap justify-center gap-2 max-w-[280px]">
+              <div className="flex flex-wrap justify-center gap-2 max-w-70">
                 {isLoading ? (
                   <span className="text-gray-400 text-sm animate-pulse">Cargando alérgenos...</span>
                 ) : (

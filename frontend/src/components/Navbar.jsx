@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import logoClaro from '../assets/logo_pizza_order_claro.jpg';
 import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
+import { Button } from '../components/ui/Button';
 import { CarritoIcon } from './icons/CarritoIcon';
 import { LoginIcon } from './icons/LoginIcon';
 import { MenuIcon } from './icons/MenuIcon';
@@ -11,6 +12,9 @@ export const Navbar = () => {
 
   // Estado para el menú hamburguesa: 'false' (cerrado) y 'true' (abierto) 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Variable temporal para ocultar burbuja del carrito
+  const cantidadItems = 10;
 
   return (
     <nav className="bg-primary text-white h-20 shadow-md relative z-50">
@@ -100,15 +104,18 @@ export const Navbar = () => {
           {/* Botón Carrito*/}
           <button
             aria-label="Ver carrito de compras"
-            className="flex flex-col items-center justify-center text-white hover:text-action px-2 transition-colors min-w-15 md:min-w-20"
+            className="flex items-center gap-2 text-white hover:text-action px-2 transition-colors"
           >
-            <div className="relative mb-1">
+            <div className="relative">
               <CarritoIcon className="w-7 h-7 md:w-8 md:h-8" />
-              <span className="absolute -top-2 -right-3 md:-right-4 bg-action text-white px-1.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm leading-none flex items-center justify-center min-w-5 min-h-5">
-                0
-              </span>
+              {/* Solo se muestra la burbuja si hay productos en el carrito */}
+              {cantidadItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-action text-white rounded-full text-[9px] md:text-[10px] font-bold shadow-sm flex items-center justify-center w-4 h-4 md:w-5 md:h-5 ">
+                  {cantidadItems}
+                </span>
+              )}
             </div>
-            <span className="hidden md:block text-[14px] md:text-[18px] tracking-widest mt-0.5">
+            <span className="hidden xl:inline tracking-widest">
               CARRITO
             </span>
           </button>
@@ -140,7 +147,7 @@ export const Navbar = () => {
 
           <hr className="border-white/10 my-2" />
 
-          {/* Inciar Sesión */}
+          {/* Iniciar Sesión */}
           <button
             aria-label="Iniciar sesión"
             onClick={() => setIsMenuOpen(false)}
