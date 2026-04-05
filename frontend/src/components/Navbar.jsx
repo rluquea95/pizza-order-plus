@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import logoClaro from '../assets/logo_pizza_order_claro.jpg';
 import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
-import { Button } from '../components/ui/Button';
 import { CarritoIcon } from './icons/CarritoIcon';
 import { LoginIcon } from './icons/LoginIcon';
 import { MenuIcon } from './icons/MenuIcon';
