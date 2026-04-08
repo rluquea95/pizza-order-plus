@@ -3,6 +3,7 @@ import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
 import { CartaPage } from './pages/CartaPage';
+import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
 
 const App = () => {
   return (
@@ -14,6 +15,9 @@ const App = () => {
       <Routes>
         {/* Página de Inicio */}
         <Route path="/" element={<HomePage />} />
+
+        {/* Página de Iniciar Pedido */}
+        <Route path="/iniciar-pedido" element={<IniciarPedidoPage />} />
 
         {/* Página de Carta */}
         <Route path="/carta" element={<CartaPage />} />

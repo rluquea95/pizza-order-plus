@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-export const useProductConfigurator = (isOpen, product, ingredientes) => {
+export const usePizzaConfigurator = (isOpen, product, ingredientes) => {
   // Inicia el tamaño de la pizza, cantidad, ingredientes base quitados, ingredientes 
   // extras añadidos, mensaje de aviso de advertencias
   const [tamañoSeleccionado, setTamañoSeleccionado] = useState('mediana');

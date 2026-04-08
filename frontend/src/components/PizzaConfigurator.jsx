@@ -1,13 +1,13 @@
-import { useProductConfigurator } from '../hooks/useProductConfigurator';
+import { usePizzaConfigurator } from '../hooks/usePizzaConfigurator';
 import { Button } from './ui/Button';
 import { AlertMessage } from './ui/AlertMessage';
 import { BannerInformacion } from './ui/BannerInformacion';
 import { CerrarIcon } from './icons/CerrarIcon';
 import { QuantitySelector } from './ui/QuantitySelector';
 
-export const ProductConfigurator = ({ isOpen, onClose, product, ingredientes }) => {
+export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) => {
 
-  // Consumimos toda la lógica desde nuestro nuevo Hook
+   // Desestructura todo lo que devuelve el hook (usePizzaConfigurator.js)
   const {
     isLoading,
     nombre, descripcion, rutaImagen,
@@ -20,7 +20,7 @@ export const ProductConfigurator = ({ isOpen, onClose, product, ingredientes }) 
     generarPedidoFinal,
     alergenosActuales,
     avisoMaxExtras
-  } = useProductConfigurator(isOpen, product, ingredientes);
+  } = usePizzaConfigurator(isOpen, product, ingredientes);
 
   if (!isOpen || isLoading) return null;
 

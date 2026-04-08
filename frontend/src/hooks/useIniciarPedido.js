@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const useCarta = () => {
+export const useIniciarPedido = () => {
   // Inician la pestana activa, el filtrado y la barra de búsqueda
   const [activeTab, setActiveTab] = useState('pizzas');
   const [selectedSize, setSelectedSize] = useState('todos');
