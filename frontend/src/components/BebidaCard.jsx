@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Button } from './ui/Button';
 
-export const BebidaCard = ({ product, selectedSize }) => {
+export const BebidaCard = ({ product, selectedSize, onAñadirBebida }) => {
   const nombre = product.producto;
-  const descripcion = product.descripcion;
+  // En caso de que no haya descripción en la BBDD
+  const descripcionFinal = product.descripcion || "Bebida refrescante para acompañar tu pizza.";
   const precio = product[`precio_beb_${selectedSize}`] || 0;
 
-  // Si la BD no tiene foto, usamos tu imagen por defecto
+  // Si la BBDD no tiene foto, usamos el placeholder
   const imgName = product[`imagen_beb_${selectedSize}`] || product.imagen_beb_330ml;
   const rutaImagen = imgName
     ? `/img/Bebidas/${imgName}`
@@ -19,25 +20,27 @@ export const BebidaCard = ({ product, selectedSize }) => {
   const LIMITE_LETRAS = 40;
 
   const getTituloBebida = () => {
-    const nombreLower = nombre.toLowerCase();
+    // Lo convertimos a minúsculas para garantizar la búsqueda
+    const nomLower = nombre.toLowerCase();
+
+    // Evitamos duplicar "Lata" o "Botella" si el nombre original ya lo incluye
+    const prefixLata = nomLower.includes('lata') ? '' : 'Lata ';
+    const prefixBotella = nomLower.includes('botella') ? '' : 'Botella ';
 
     // 330ml
     if (selectedSize === '330ml') {
-      if (nombreLower.includes('lata')) return `${nombre} 330ml`;
-      return `Lata ${nombre} 330ml`;
+      return `${prefixLata}${nombre} 330ml`;
     }
 
-    // 500ml (Añadimos la protección de la palabra "botella")
+    // 500ml 
     if (selectedSize === '500ml') {
-      if (nombreLower.includes('botella')) return `${nombre} 500ml`;
-      return `Botella ${nombre} 500ml`;
+      return `${prefixBotella}${nombre} 500ml`;
     }
 
-    // 1000ml (Añadimos la protección de la palabra "botella")
+    // 1L - 1.5L
     if (selectedSize === '1000ml') {
-      let tituloBase = nombreLower.includes('botella') ? nombre : `Botella ${nombre}`;
-      if (nombreLower.includes('agua')) return `${tituloBase} 1.5L`;
-      return `${tituloBase} 1L`;
+      const volumen = nomLower.includes('agua') ? '1.5L' : '1L';
+      return `${prefixBotella}${nombre} ${volumen}`;
     }
 
     return nombre;
@@ -54,14 +57,13 @@ export const BebidaCard = ({ product, selectedSize }) => {
           className="w-full h-full object-contain p-4 transition-transform duration-500 hover:scale-105"
           onError={(e) => {
             e.currentTarget.onerror = null;
-            // Si la imagen de la BD falla al cargar, usamos tu nueva imagen local
             e.currentTarget.src = '/img/Bebidas/bebida-not-found.jpg';
           }}
         />
       </div>
 
       {/* 2. TÍTULO Y PRECIO */}
-      <div className="flex justify-between items-start mb-2 gap-2 font-poppins">
+      <div className="flex justify-between items-start mb-2 gap-2">
         <h3 className="font-bold text-lg text-primary leading-tight">
           {getTituloBebida()}
         </h3>
@@ -73,11 +75,11 @@ export const BebidaCard = ({ product, selectedSize }) => {
       {/* 3. DESCRIPCIÓN Y "VER MÁS" */}
       <div className="grow flex flex-col items-start mb-4">
         <p className={`text-sm text-primary/80 transition-all ${mostrarMas ? '' : 'line-clamp-1'}`}>
-          {descripcion || "Bebida refrescante para acompañar tu pizza."}
+          {descripcionFinal}
         </p>
 
         {/* Aquí miramos la longitud de la descripción real o del texto por defecto */}
-        {descripcion && descripcion.length > LIMITE_LETRAS && (
+        {descripcionFinal.length > LIMITE_LETRAS && (
           <button
             onClick={() => setMostrarMas(!mostrarMas)}
             className="text-xs font-semibold text-primary mt-1 hover:text-action transition-colors focus:outline-none"
@@ -88,7 +90,11 @@ export const BebidaCard = ({ product, selectedSize }) => {
       </div>
 
       {/* 4. BOTÓN */}
-      <Button variant="secondary" className="w-full py-2.5 rounded-full">
+      <Button
+        variant="secondary"
+        className="w-full py-2.5 rounded-full"
+        onClick={() => onAñadirBebida(product, selectedSize)}
+      >
         Pedir
       </Button>
 
