@@ -46,23 +46,6 @@ export const useCarta = () => {
     setSelectedSize('todos');
   };
 
-  // Obtiene el precio de las pizzas y bebidas
-  const getPrecioReferencia = (prod) => {
-    const esPizza = prod.categoria?.toUpperCase() === 'PIZZA';
-    if (esPizza) {
-      return prod.precio_pizza_med || 0;
-    } else {
-      if (selectedSize === '330ml') return prod.precio_beb_330ml;
-      if (selectedSize === '500ml') return prod.precio_beb_500ml;
-      if (selectedSize === '1000ml') return prod.precio_beb_1000ml;
-      return Math.min(
-        prod.precio_beb_330ml || Infinity,
-        prod.precio_beb_500ml || Infinity,
-        prod.precio_beb_1000ml || Infinity
-      );
-    }
-  };
-
   // Convertimos el texto de la búsqueda a minúsculas para garantizar coincidencias
   const term = searchTerm.toLowerCase();
 
@@ -132,13 +115,42 @@ export const useCarta = () => {
     return false; 
   });
 
-  // Toma los productos ya filtrados y los ordena alfabéticamente 
-  // o por precio (ascendente/descendente) usando la función de referencia.
-  const productosOrdenados = [...productosFiltrados].sort((a, b) => {
+  // --- Ordenas las pizzas ---
+  const pizzasFiltradas = productosFiltrados.filter(p => p.categoria?.toUpperCase() === 'PIZZA');
+  const pizzasOrdenadas = [...pizzasFiltradas].sort((a, b) => {
     if (sortBy === 'nombre') return a.producto.localeCompare(b.producto);
-    const precioA = getPrecioReferencia(a);
-    const precioB = getPrecioReferencia(b);
+    const precioA = Number(a.precio_pizza_med) || 0;
+    const precioB = Number(b.precio_pizza_med) || 0;
     return sortBy === 'precio-asc' ? precioA - precioB : precioB - precioA;
+  });
+
+  // --- Ordena las bebidas ---
+  const bebidasFiltradas = productosFiltrados.filter(p => p.categoria?.toUpperCase() === 'BEBIDA');
+  let bebidasDesglosadas = [];
+  
+  bebidasFiltradas.forEach(prod => {
+    if (selectedSize !== 'todos') {
+      bebidasDesglosadas.push({ product: prod, size: selectedSize, idKey: `${prod._id}-${selectedSize}` });
+    } else {
+      if (prod.precio_beb_330ml) bebidasDesglosadas.push({ product: prod, size: '330ml', idKey: `${prod._id}-330` });
+      if (prod.precio_beb_500ml) bebidasDesglosadas.push({ product: prod, size: '500ml', idKey: `${prod._id}-500` });
+      if (prod.precio_beb_1000ml) bebidasDesglosadas.push({ product: prod, size: '1000ml', idKey: `${prod._id}-1000` });
+    }
+  });
+
+  const bebidasOrdenadas = bebidasDesglosadas.sort((a, b) => {
+    const precioA = Number(a.product[`precio_beb_${a.size}`]) || 0;
+    const precioB = Number(b.product[`precio_beb_${b.size}`]) || 0;
+
+    if (sortBy === 'precio-asc') return precioA - precioB;
+    if (sortBy === 'precio-desc') return precioB - precioA;
+    
+    if (sortBy === 'nombre') {
+      const comparacionNombre = a.product.producto.localeCompare(b.product.producto);
+      if (comparacionNombre === 0) return precioA - precioB; // Misma bebida, ordena por tamaño
+      return comparacionNombre;
+    }
+    return 0;
   });
 
   // Retorna solo lo que la vista (CartaPage) necesita saber o modificar
@@ -150,7 +162,8 @@ export const useCarta = () => {
     sortBy, setSortBy,
     cargando,
     error,
-    productosOrdenados,
+    pizzasOrdenadas, 
+    bebidasOrdenadas,
     ingredientes
   };
 };
