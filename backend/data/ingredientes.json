@@ -3,70 +3,70 @@
     "ingrediente": "3 quesos",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "aceite de oliva",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "aceitunas negras",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "alcachofas",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "alcaparras",
     "alergenos": "sulfitos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "anchoas",
     "alergenos": "pescado",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "atún",
     "alergenos": "pescado",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "bacon",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "bechamel",
     "alergenos": "gluten, lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "calabacín",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
@@ -87,7 +87,7 @@
     "ingrediente": "cebolla",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
@@ -101,42 +101,42 @@
     "ingrediente": "champiñones",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "gambas",
     "alergenos": "marisco",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "huevos de codorníz",
     "alergenos": "huevo",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "jamón york",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "maíz",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "mermelada de pimiento",
-    "alergenos": "",
+    "alergenos": "gluten, soja, sulfitos, sésamo, lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
@@ -150,49 +150,49 @@
     "ingrediente": "mozzarella",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "nata",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "orégano",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "pepperoni",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "pimiento rojo",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "pimiento verde",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "piña",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
@@ -206,21 +206,21 @@
     "ingrediente": "queso cheddar",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "queso azul",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "queso philadelphia",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
@@ -234,70 +234,70 @@
     "ingrediente": "salchichas",
     "alergenos": "soja, lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "salsa de tomate",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "salsa barbacoa",
     "alergenos": "gluten, mostaza",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "salsa de kebab",
     "alergenos": "huevo, mostaza, lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "salsa de yogur",
     "alergenos": "lácteos",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "salsa gaucha",
-    "alergenos": "lácteos",
+    "alergenos": "lácteos, apio",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "salsa sriracha",
-    "alergenos": "sulfitos",
+    "alergenos": "sulfitos, apio",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "surimi",
     "alergenos": "gluten, huevo, pescado, soja, marisco",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "tomate cherry",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   },
   {
     "ingrediente": "tomate a rodajas",
     "alergenos": "",
     "disponible": true,
-    "precio": 1,
+    "precio": 1.5,
     "fecha_registro": ""
   }
 ]
