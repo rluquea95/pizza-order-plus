@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Button } from './ui/Button';
 
-export const PizzaCard = ({ product }) => {
+export const PizzaCard = ({ product, onOpenConfigurator }) => {
   const nombre = product.producto;
-  const descripcion = product.descripcion;
+  // En caso de que no haya descripción en la BBDD
+  const descripcionFinal = product.descripcion || "Nuestra deliciosa pizza artesanal recién horneada.";
   const imagen = product.imagen_pizza;
 
   // Almacena el precio de las pizzas medianas. Si por fallo de BBDD no existe, almacena 0.
@@ -35,26 +36,24 @@ export const PizzaCard = ({ product }) => {
       </div>
 
       {/* 2. TÍTULO Y PRECIO */}
-      <div className="flex justify-between items-start mb-2 gap-2 font-poppins">
+      <div className="flex justify-between items-start mb-2 gap-2">
         <h3 className="font-bold text-lg text-primary leading-tight">
           {nombre}
         </h3>
-        <div className="flex flex-col items-end text-action">
-          <span className="font-bold text-lg whitespace-nowrap">
-            {Number(precio).toFixed(2)}€
-          </span>
-        </div>
+        <span className="font-bold text-lg text-action whitespace-nowrap">
+          {Number(precio).toFixed(2)}€
+        </span>
       </div>
 
       {/* 3. DESCRIPCIÓN Y "VER MÁS" */}
       <div className="grow flex flex-col items-start mb-4">
-        {/* Si supera los 40 caracteres, se corta la descripción */}
+        {/* Si supera los 60 caracteres, se corta la descripción */}
         <p className={`text-sm text-primary/80 transition-all ${mostrarMas ? '' : 'line-clamp-1'}`}>
-          {descripcion}
+          {descripcionFinal}
         </p>
 
-        {/* Muestra el botón si la descripción supera los 40 caracteres */}
-        {descripcion && descripcion.length > LIMITE_LETRAS && (
+        {/* Muestra el botón si la descripción supera los 60 caracteres */}
+        {descripcionFinal.length > LIMITE_LETRAS && (
           <button
             onClick={() => setMostrarMas(!mostrarMas)}
             className="text-xs font-semibold text-primary mt-1 hover:text-action transition-colors focus:outline-none"
@@ -65,7 +64,11 @@ export const PizzaCard = ({ product }) => {
       </div>
 
       {/* 4. BOTÓN "CONFIGURAR PIZZA" */}
-      <Button variant="secondary" className="w-full py-2.5 rounded-full">
+      <Button
+        variant="secondary"
+        className="w-full py-2.5 rounded-full"
+        onClick={() => onOpenConfigurator(product)}
+      >
         Configurar Pizza
       </Button>
 
