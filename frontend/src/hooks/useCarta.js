@@ -13,12 +13,22 @@ export const useCarta = () => {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
+  // Estado para guardar todos los ingredientes de la BBDD
+  const [ingredientes, setIngredientes] = useState([]);
+
   // Extrae los productos desde el backend 
   useEffect(() => {
-    const obtenerProductos = async () => {
+    const obtenerDatos = async () => {
       try {
-        const respuesta = await axios.get('http://localhost:5000/api/productos'); 
-        setProductos(respuesta.data);
+        // Pide productos e ingredientes al mismo tiempo
+        const [resProductos, resIngredientes] = await Promise.all([
+          axios.get('http://localhost:5000/api/productos'),
+          axios.get('http://localhost:5000/api/ingredientes')
+        ]);
+        
+        setProductos(resProductos.data);
+        // Guarda los ingredientes que estén "disponibles: true"
+        setIngredientes(resIngredientes.data.filter(ing => ing.disponible));
         setCargando(false);
       } catch (err) {
         console.error("Error cargando carta:", err);
@@ -26,7 +36,7 @@ export const useCarta = () => {
         setCargando(false);
       }
     };
-    obtenerProductos();
+    obtenerDatos();
   }, []);
 
   // Cuando se cambia de pestaña, resetea la búsqueda y el filtro
@@ -53,6 +63,9 @@ export const useCarta = () => {
     }
   };
 
+  // Convertimos el texto de la búsqueda a minúsculas para garantizar coincidencias
+  const term = searchTerm.toLowerCase();
+
   // Filtra la lista principal de productos basándose en la pestaña activa, 
   // el tamaño seleccionado (para bebidas) y el texto del buscador.
   const productosFiltrados = productos.filter((prod) => {
@@ -65,13 +78,28 @@ export const useCarta = () => {
     if (activeTab === 'pizzas' && !esPizza) return false;
     if (activeTab === 'bebidas' && !esBebida) return false;
 
-    if (activeTab === 'bebidas' && selectedSize !== 'todos') {
-      const precioTamañoSeleccionado = getPrecioReferencia(prod);
-      if (precioTamañoSeleccionado === null || precioTamañoSeleccionado === undefined) return false;
+    // Filtro de disponibilidad
+    if (esPizza) {
+      // Comprueba disponibilidad de pizza mediana
+      if (!prod.disp_piz_med) return false;
     }
 
-    // Convierte a minúsculas la búsqueda para garantizar coincidencias
-    const term = searchTerm.toLowerCase();
+    if (esBebida) {
+      // Comprobamos la disponibilidad según el tamaño seleccionado
+      if (selectedSize === '330ml' && !prod.disp_beb_330ml) return false;
+      if (selectedSize === '500ml' && !prod.disp_beb_500ml) return false;
+      if (selectedSize === '1000ml' && !prod.disp_beb_1000ml) return false;
+      
+      // Si está filtrado por "todos" los tamaños, nos aseguramos de que al menos 
+      // uno de los tres tamaños exista y esté disponible
+      if (selectedSize === 'todos') {
+        const algunTamañoDisponible = prod.disp_beb_330ml || prod.disp_beb_500ml || prod.disp_beb_1000ml;
+        if (!algunTamañoDisponible) return false;
+      }
+    }
+
+    // Si la barra está vacía, no hace falta buscar nada, el producto es válido
+    if (!term) return true;
 
     // Como medida de seguridad en caso de que no exista el producto buscado,
     // se asigna un texto vacío
@@ -95,9 +123,13 @@ export const useCarta = () => {
         coincideIngredientes = textoIngredientes.includes(term);
       }
       return coincideNombre || coincideDescripcion || coincideIngredientes;
-    } else {
+    } 
+    
+    if (esBebida) {
       return nombreProducto.includes(term);
     }
+    // Por seguridad, en caso de que no sea pizza ni bebida
+    return false; 
   });
 
   // Toma los productos ya filtrados y los ordena alfabéticamente 
@@ -118,6 +150,7 @@ export const useCarta = () => {
     sortBy, setSortBy,
     cargando,
     error,
-    productosOrdenados
+    productosOrdenados,
+    ingredientes
   };
 };
