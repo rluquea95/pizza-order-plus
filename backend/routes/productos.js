@@ -11,14 +11,17 @@ router.get('/', async (req, res) => {
     // Mongoose busca todos los documentos de esta colección y rellena la información real
     // de ingredientes y alérgenos
     const productos = await Producto.find()
-      .populate('ingredientes')
-      .populate('alergenos'); 
+      .populate('alergenos') // Trae los alérgenos base de la masa
+      .populate({
+        path: 'ingredientes',
+        populate: { path: 'alergenos' } // Entra en los ingredientes y trae sus alérgenos
+      }); 
     
     // Si todo va bien, el servidor responde (res) enviando los productos en formato JSON
     res.json(productos); 
   } catch (error) {
     console.error('Error al obtener los productos:', error);
-    // Si algo falla, devolvemos un error 500 (Error interno del servidor)
+    // Si algo falla, devuelve un error 500 (Error interno del servidor)
     res.status(500).json({ mensaje: 'Error al obtener los productos' });
   }
 });
@@ -27,8 +30,11 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const producto = await Producto.findById(req.params.id)
-      .populate('ingredientes')
-      .populate('alergenos');
+      .populate('alergenos') // Trae los alérgenos base de la masa
+      .populate({
+        path: 'ingredientes',
+        populate: { path: 'alergenos' } // Entra en los ingredientes y trae sus alérgenos
+      });
       
     if (!producto) {
       return res.status(404).json({ mensaje: 'Producto no encontrado' });
@@ -45,8 +51,9 @@ router.post('/', async (req, res) => {
   try {
     // req.body es la información que nos enviará React (el formulario con la nueva pizza)
     const nuevoProducto = new Producto(req.body); 
-    const productoGuardado = await nuevoProducto.save(); // Lo guardamos en MongoDB
-    res.status(201).json(productoGuardado); // 201 significa "Creado con éxito"
+    // Lo guardamos en MongoDB
+    const productoGuardado = await nuevoProducto.save(); 
+    res.status(201).json(productoGuardado); 
   } catch (error) {
     console.error('Error al crear producto:', error);
     res.status(400).json({ mensaje: 'Error al crear el producto', error });
@@ -60,7 +67,7 @@ router.put('/:id', async (req, res) => {
     const productoActualizado = await Producto.findByIdAndUpdate(
       req.params.id, // El ID del producto a buscar
       req.body,      // Los nuevos datos a actualizar
-      { new: true }  // Le decimos a Mongoose que nos devuelva el producto YA modificado
+      { new: true }  // Moongosee nos devuelve el producto YA modificado
     );
     
     if (!productoActualizado) {
