@@ -110,13 +110,17 @@ const importarDatos = async () => {
       const arrayAlergenos = transformarArray(producto.alergenos);
       let alergenosIds = arrayAlergenos.map(nombre => mapaAlergenos[nombre]).filter(id => id);
 
-      // Si la categoría es PIZZA y existe el alérgeno gluten en nuestro diccionario...
-      if (producto.categoria === 'PIZZA' && mapaAlergenos['gluten']) {
-        const idGluten = mapaAlergenos['gluten'];
-        // Si la pizza no tiene ya el gluten en su lista, se lo añadimos a la fuerza
-        if (!alergenosIds.includes(idGluten)) {
-          alergenosIds.push(idGluten);
-        }
+      // Si la categoría es PIZZA, añade los alérgenos base a la fuerza
+      if (producto.categoria === 'PIZZA') {
+        const alergenosBaseObligatorios = ['gluten', 'frutos secos', 'altramuces', 'cacahuete', 'sésamo'];
+        
+        alergenosBaseObligatorios.forEach(nombreAlergeno => {
+          const idAlergeno = mapaAlergenos[nombreAlergeno];
+          // Si el alérgeno existe en la BBDD y no está ya en la lista de esta pizza, lo incluye
+          if (idAlergeno && !alergenosIds.includes(idAlergeno)) {
+            alergenosIds.push(idAlergeno);
+          }
+        });
       }
       
       // Guardamos la lista definitiva de IDs de alérgenos en el producto
