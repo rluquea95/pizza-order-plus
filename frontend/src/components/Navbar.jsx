@@ -84,13 +84,14 @@ export const Navbar = () => {
         <div className="flex items-center gap-2 md:gap-4 text-lg font-bold tracking-wide">
 
           {/* Botón Iniciar Pedido*/}
-          <button
+          <Link
             to="/iniciar-pedido"
             aria-label="Ir a la página de iniciar pedido"
-            className="bg-action text-white px-3 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all shadow-md"
+            className="bg-action text-white px-3 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all 
+                      shadow-md flex items-center justify-center"
           >
             <span className="text-sm md:text-lg">INICIAR PEDIDO</span>
-          </button>
+          </Link>
 
           {/* Botón Iniciar Sesión*/}
           <button
@@ -110,7 +111,8 @@ export const Navbar = () => {
               <CarritoIcon className="w-7 h-7 md:w-8 md:h-8" />
               {/* Solo se muestra la burbuja si hay productos en el carrito */}
               {cantidadItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-action text-white rounded-full text-[9px] md:text-[10px] font-bold shadow-sm flex items-center justify-center w-4 h-4 md:w-5 md:h-5 ">
+                <span className="absolute -top-2 -right-2 bg-action text-white rounded-full text-[9px] md:text-[10px] font-bold 
+                                  shadow-sm flex items-center justify-center w-4 h-4 md:w-5 md:h-5 ">
                   {cantidadItems}
                 </span>
               )}
