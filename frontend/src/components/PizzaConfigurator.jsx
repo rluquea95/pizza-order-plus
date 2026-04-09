@@ -1,3 +1,4 @@
+import { useCart } from '../context/CartContext';
 import { usePizzaConfigurator } from '../hooks/usePizzaConfigurator';
 import { Button } from './ui/Button';
 import { AlertMessage } from './ui/AlertMessage';
@@ -23,6 +24,9 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
     avisoMaxExtras
   } = usePizzaConfigurator(isOpen, product, ingredientes);
 
+  // Almacena el carrito (estado global)
+  const { agregarAlCarrito } = useCart();
+
   if (!isOpen || isLoading) return null;
 
   return (
@@ -46,9 +50,9 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
         {/* CUERPO DEL MODAL */}
         <div className="grow overflow-hidden flex flex-col px-4 sm:px-8 md:px-12 pb-6 md:pb-10 bg-white">
           {/* 
-            CONTENEDOR CREMA ASIMÉTRICO
-            Redondeado a la izquierda (rounded-l-3xl), esquinas rectas/suaves a la derecha (rounded-r-md).
-            Así la barra de scroll nativa encaja como un guante sin pisar curvas.
+            CONTENEDOR DE LA INFORMACIÓN DEL PRODUCTO
+            Redondeado a la izquierda (rounded-l-3xl) y esquinas rectas/suaves a la derecha (rounded-r-md),
+            así la barra de scroll nativa se integra mejor visualmente.
           */}
           <div className="bg-[#FFF8ED] rounded-l-3xl rounded-r-md border border-[#FBEAD2] shadow-inner flex-1 overflow-y-auto p-6 sm:p-8 md:p-10">
 
@@ -220,7 +224,11 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
             variant="primary"
             className="w-full sm:w-auto h-14 sm:h-16 px-10 sm:px-12 text-lg sm:text-xl uppercase"
             onClick={() => {
-              console.log("Añadir pedido a la cesta:", generarPedidoFinal());
+              // Genera el objeto con toda la info de la pizza configurada
+              const pedidoAñadido = generarPedidoFinal();
+              // Lo agrega al carrito (estado global)
+              agregarAlCarrito(pedidoAñadido);
+              // Cierra el modal
               onClose();
             }}
           >

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
+import { useCart } from '../context/CartContext';
 import logoClaro from '../assets/logo_pizza_order_claro.jpg';
 import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
 import { CarritoIcon } from './icons/CarritoIcon';
@@ -12,8 +13,8 @@ export const Navbar = () => {
   // Estado para el menú hamburguesa: 'false' (cerrado) y 'true' (abierto) 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Variable temporal para ocultar burbuja del carrito
-  const cantidadItems = 10;
+  // Variable que almacena la cantidad de items añadida en el carrito
+  const { cantidadTotal } = useCart();
 
   return (
     <nav className="bg-primary text-white h-20 shadow-md relative z-50">
@@ -110,10 +111,10 @@ export const Navbar = () => {
             <div className="relative">
               <CarritoIcon className="w-7 h-7 md:w-8 md:h-8" />
               {/* Solo se muestra la burbuja si hay productos en el carrito */}
-              {cantidadItems > 0 && (
+              {cantidadTotal > 0 && (
                 <span className="absolute -top-2 -right-2 bg-action text-white rounded-full text-[9px] md:text-[10px] font-bold 
                                   shadow-sm flex items-center justify-center w-4 h-4 md:w-5 md:h-5 ">
-                  {cantidadItems}
+                  {cantidadTotal}
                 </span>
               )}
             </div>

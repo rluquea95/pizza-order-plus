@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCart } from '../context/CartContext';
 import { BarraBusqueda } from '../components/BarraBusqueda';
 import { Filtro } from '../components/Filtro';
 import { BannerInformacion } from '../components/ui/BannerInformacion';
@@ -25,6 +26,9 @@ export const IniciarPedidoPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // Almacena el carrito (estado global)
+  const { agregarAlCarrito } = useCart();
+
   // Función que controla el modal para configurar pizzas
   const handleOpenConfigurator = (producto) => {
     setSelectedProduct(producto);
@@ -33,14 +37,24 @@ export const IniciarPedidoPage = () => {
 
   // Función que añade bebida
   const handleAñadirBebida = (producto, tamaño) => {
+
+    // Calcula el precio según el tamaño
     const precio = producto[`precio_beb_${tamaño}`];
-    console.log("Añadir bebida al carrito al instante:", {
+
+    // Crea el objeto del pedido de la bebida
+    const bebidaPedido = {
+      // Genera un ID único por si el usuario añade la misma bebida varias veces
+      idLinea: `bebida-${producto._id}-${tamaño}`, 
       productoId: producto._id,
+      tipo: 'bebida',
       nombre: producto.producto,
       tamaño: tamaño,
       cantidad: 1, // Por defecto añade 1 ud.
-      precioTotal: precio
-    });
+      precioTotalLinea: precio
+    };
+
+    // Lo metemos al estado global del carrito
+    agregarAlCarrito(bebidaPedido);
   };
 
   return (
