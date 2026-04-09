@@ -4,10 +4,11 @@ import { AlertMessage } from './ui/AlertMessage';
 import { BannerInformacion } from './ui/BannerInformacion';
 import { CerrarIcon } from './icons/CerrarIcon';
 import { QuantitySelector } from './ui/QuantitySelector';
+import { ListaAlergenos } from './ui/ListaAlergenos';
 
 export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) => {
 
-   // Desestructura todo lo que devuelve el hook (usePizzaConfigurator.js)
+  // Desestructura todo lo que devuelve el hook (usePizzaConfigurator.js)
   const {
     isLoading,
     nombre, descripcion, rutaImagen,
@@ -64,33 +65,11 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
                 <h3 className="text-3xl font-bold text-primary mb-3">{nombre}</h3>
                 <p className="text-primary/80 text-base leading-relaxed">{descripcion}</p>
 
-                {/* --- RENDERIZADO DINÁMICO DE ALÉRGENOS (ESTILO FOOTER) --- */}
+                {/* --- RENDERIZADO DINÁMICO DE ALÉRGENOS --- */}
                 {alergenosActuales.length > 0 && (
                   <div className="mt-5 pt-5 border-t border-primary/10">
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Contiene los siguientes alérgenos:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {alergenosActuales.map((alergeno) => (
-                        <div
-                          key={alergeno._id}
-                          title={`${alergeno.alergeno.toUpperCase()}: ${alergeno.descripcion || 'Presencia de este alérgeno'}`}
-                          aria-label={`Alérgeno: ${alergeno.alergeno}`}
-                          tabIndex="0"
-                          className="w-10 h-10 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-xl transition-all cursor-help overflow-hidden p-0.5
-                                    focus:outline-none focus:ring-2 focus:ring-action/50 focus:border-action/50 hover:border-action hover:scale-110"
-                        >
-                          {alergeno.imagen ? (
-                            <img
-                              src={`/img/Alergenos/${alergeno.imagen}`}
-                              alt={`Icono de ${alergeno.alergeno}`}
-                              className="w-full h-full object-cover rounded-full"
-                              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                            />
-                          ) : (
-                            <span className="text-sm">⚠️</span>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                    <ListaAlergenos alergenos={alergenosActuales} />
                   </div>
                 )}
               </div>
