@@ -38,7 +38,7 @@ export const Footer = () => {
       {/* =========================================
           BARRA SUPERIOR (Precios de envío y aviso)
           ========================================= */}
-      <div className="bg-bg-main text-action py-4 px-4 text-center shadow-sm">
+      <div className="bg-white text-action py-4 px-4 text-center shadow-sm">
         <p className="font-poppins font-bold text-lg md:text-xl tracking-wide max-w-4xl mx-auto leading-relaxed">
           Servicio a domicilio 1,00€ <span className="hidden md:inline mx-2 text-primary/30">|</span><br className="md:hidden" />
           Fuera del casco urbano 2,00€ <span className="hidden md:inline mx-2 text-primary/30">|</span><br className="md:hidden" />
