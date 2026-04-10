@@ -19,7 +19,7 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
     numQuitados, numExtras, maxExtrasUI,
     cantidad, setCantidad,
     precioTotalLinea,
-    generarPedidoFinal,
+    generarPizzaFinal,
     alergenosActuales,
     avisoMaxExtras
   } = usePizzaConfigurator(isOpen, product, ingredientes);
@@ -218,6 +218,7 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
             <QuantitySelector
               cantidad={cantidad}
               setCantidad={setCantidad}
+              variant="modal"
             />
           </div>
           <Button
@@ -225,9 +226,9 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
             className="w-full sm:w-auto h-14 sm:h-16 px-10 sm:px-12 text-lg sm:text-xl uppercase"
             onClick={() => {
               // Genera el objeto con toda la info de la pizza configurada
-              const pedidoAñadido = generarPedidoFinal();
+              const pizzaAñadida = generarPizzaFinal();
               // Lo agrega al carrito (estado global)
-              agregarAlCarrito(pedidoAñadido);
+              agregarAlCarrito(pizzaAñadida);
               // Cierra el modal
               onClose();
             }}

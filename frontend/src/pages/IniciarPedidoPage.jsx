@@ -46,8 +46,9 @@ export const IniciarPedidoPage = () => {
       // Genera un ID único por si el usuario añade la misma bebida varias veces
       idLinea: `bebida-${producto._id}-${tamaño}`, 
       productoId: producto._id,
-      tipo: 'bebida',
+      categoria: producto.categoria || 'BEBIDA',
       nombre: producto.producto,
+      imagen: producto[`imagen_beb_${tamaño}`],
       tamaño: tamaño,
       cantidad: 1, // Por defecto añade 1 ud.
       precioTotalLinea: precio

@@ -201,9 +201,13 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes) => {
   const precioTotalLinea = Math.max(0, precioUnitario) * cantidad;
 
   // Empaqueta toda la configuración actual en un objeto listo para ser enviado al carrito
-  const generarPedidoFinal = () => ({
+  const generarPizzaFinal = () => ({
+    // ID único para evitar que pizzas distintas se agrupen
+    idLinea: `pizza-${Date.now()}`, 
     productoId: product._id,
     nombre: product.producto,
+    categoria: product.categoria,
+    imagen: product.imagen_pizza,
     tamaño: tamañoSeleccionado,
     cantidad: cantidad,
     ingredientesQuitados,
@@ -222,7 +226,7 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes) => {
     numQuitados, numExtras, maxExtrasUI,
     cantidad, setCantidad,
     precioTotalLinea,
-    generarPedidoFinal,
+    generarPizzaFinal,
     alergenosActuales,
     avisoMaxExtras
   };
