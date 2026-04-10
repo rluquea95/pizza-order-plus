@@ -54,7 +54,13 @@ export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
           {carrito.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
               <p className="text-lg font-medium">Tu carrito está vacío</p>
-              <Button variant="secondary" className="px-6 py-2" onClick={onClose}>Ver la Carta</Button>
+              <Button
+                variant="primary"
+                className="px-6 py-2"
+                to="/iniciar-pedido"
+                onClick={onClose}>
+                Iniciar Pedido
+              </Button>
             </div>
           ) : (
             carrito.map((item) => (

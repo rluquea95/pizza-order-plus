@@ -10,7 +10,7 @@ export const Button = ({
   ...props 
 }) => {
   // Estilos base
-  // focus-visible el anillo sobr el botón solo sale cuando se tabula con el teclado
+  // focus-visible el anillo sobre el botón solo sale cuando se tabula con el teclado
   // focus-visible:ring-primary para que el halo del tabulador sea azul.
   const baseStyles = "font-semibold flex justify-center items-center text-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md";
   
@@ -28,7 +28,7 @@ export const Button = ({
   // Si le pasamos una ruta (to), devuelve un Link
   if (to) {
     return (
-      <Link to={to} className={finalClasses} {...props}>
+      <Link to={to} className={finalClasses} onClick={onClick} {...props}>
         {children}
       </Link>
     );
