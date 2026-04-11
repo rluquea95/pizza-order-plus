@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useCarta } from '../hooks/useCarta';
 import { BarraBusqueda } from '../components/BarraBusqueda';
 import { ListaAlergenos } from '../components/ui/ListaAlergenos';
+import { CapsulaIngrediente } from '../components/ui/CapsulaIngrediente';
 
 export const CartaPage = () => {
   // Desestructura todo lo que devuelve el hook (useCarta.js)
@@ -98,9 +99,17 @@ export const CartaPage = () => {
                     {pizza.ingredientes && pizza.ingredientes.length > 0 && (
                       <div className="mb-6">
                         <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Ingredientes Base</h3>
-                        <p className="text-primary font-medium">
-                          {pizza.ingredientes.map(ing => ing.ingrediente).join(', ')}
-                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {pizza.ingredientes.map(ing => (
+                            <CapsulaIngrediente 
+                              key={ing._id} 
+                              nombre={ing.ingrediente} 
+                              variant="default" 
+                              interactivo={false} // indica que use <span>
+                            />
+                          ))}
+                        </div>
+
                       </div>
                     )}
 

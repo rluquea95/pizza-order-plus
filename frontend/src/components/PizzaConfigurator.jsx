@@ -6,6 +6,7 @@ import { BannerInformacion } from './ui/BannerInformacion';
 import { CerrarIcon } from './icons/CerrarIcon';
 import { QuantitySelector } from './ui/QuantitySelector';
 import { ListaAlergenos } from './ui/ListaAlergenos';
+import { CapsulaIngrediente } from './ui/CapsulaIngrediente';
 
 export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes, pizzaEditando }) => {
 
@@ -101,18 +102,18 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes, pizz
 
                 <div className="flex flex-wrap gap-3">
                   {ingredientesBase.map((ing) => {
+                    // Calcula si el algún ingrediente base ha sido quitado
                     const estaQuitado = ingredientesQuitados.some(item => item._id === ing._id);
                     return (
-                      <button
+                      <CapsulaIngrediente
                         key={`base-${ing._id}`}
+                        nombre={ing.ingrediente}
+                        variant={estaQuitado ? 'disabled' : 'default'}
+                        interactivo={true}
+                        isToggled={!estaQuitado}
+                        size="md"
                         onClick={() => handleToggleBaseIngrediente(ing)}
-                        aria-pressed={!estaQuitado}
-                        className={`px-5 py-2.5 rounded-full text-base font-medium transition-all duration-300 shadow-sm 
-                                    focus:outline-none focus:ring-2 focus:ring-action/50 focus:border-action/50
-                          ${estaQuitado ? 'bg-white/60 text-gray-400 line-through border border-gray-200' : 'bg-[#FFECC8] text-[#8C5E03] hover:bg-[#FCD38B] border border-transparent'}`}
-                      >
-                        {ing.ingrediente}
-                      </button>
+                      />
                     );
                   })}
                 </div>
