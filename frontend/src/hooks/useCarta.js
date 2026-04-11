@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+import { useData } from '../context/DataContext';
 
 export const useCarta = () => {
-  // Inicializa los productos, si está cargando, si hay error y si hay búsqueda
-  const [pizzasBase, setPizzas] = useState([]);
-  const [bebidasBase, setBebidas] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
+
+  // Extrae los 'produtos' y 'cargando' de DataContext
+  const { productos, cargando } = useData();
+  const error = null;
+
+  // Almacena la búsqueda
   const [searchTerm, setSearchTerm] = useState('');
 
   // Calcula todos los alérgenos de la pizza
@@ -22,42 +23,21 @@ export const useCarta = () => {
     );
   };
 
-  // Extrae los productos desde el backend
-  useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        // Se extrae la colección Productos que es la necesaria para la Carta
-        const respuesta = await axios.get('http://localhost:5000/api/productos');
-        const todosLosProductos = respuesta.data;
+  // Filtra, ordena y procesa los alérgenos leyendo la variable global
+  const pizzasBase = productos
+    .filter(prod => prod.categoria?.toUpperCase() === 'PIZZA')
+    .sort((a, b) => a.producto.localeCompare(b.producto))
+    .map(pizza => ({
+      ...pizza,
+      alergenosAcumulados: procesarAlergenos(pizza)
+    }));
 
-        // Filtra, ordena y procesa los alérgenos
-        const pizzasProcesadas = todosLosProductos
-          .filter(prod => prod.categoria?.toUpperCase() === 'PIZZA')
-          .sort((a, b) => a.producto.localeCompare(b.producto))
-          .map(pizza => ({
-            ...pizza,
-            alergenosAcumulados: procesarAlergenos(pizza)
-          }));
+  // Filtra y ordena las bebidas leyendo la variable global
+  const bebidasBase = productos
+    .filter(prod => prod.categoria?.toUpperCase() === 'BEBIDA')
+    .sort((a, b) => a.producto.localeCompare(b.producto));
 
-        // Filtra y ordena las bebidas por orden alfabético
-        const bebidasOrdenadas = todosLosProductos
-          .filter(prod => prod.categoria?.toUpperCase() === 'BEBIDA')
-          .sort((a, b) => a.producto.localeCompare(b.producto));
-
-        setPizzas(pizzasProcesadas);
-        setBebidas(bebidasOrdenadas);
-        setCargando(false);
-      } catch (err) {
-        console.error("Error cargando la carta visual:", err);
-        setError(err.response?.data?.mensaje || err.message);
-        setCargando(false);
-      }
-    };
-
-    obtenerDatos();
-  }, []);
-
-  // Filtra dinámicamente según lo que el usuario escriba
+  // Filtra dinámicamente según lo que el usuario escriba en la barra de búsqueda
   const term = searchTerm.toLowerCase();
 
   const pizzasFiltradas = pizzasBase.filter(prod => {
@@ -66,7 +46,7 @@ export const useCarta = () => {
     const nombre = (prod.producto || '').toLowerCase();
     const descripcion = (prod.descripcion || '').toLowerCase();
 
-    // Convertimos los ingredientes a texto para poder buscar en ellos
+    // Convierte los ingredientes a texto para poder buscar en ellos
     let ingredientesTxt = '';
     if (Array.isArray(prod.ingredientes)) {
       ingredientesTxt = prod.ingredientes.map(ing =>

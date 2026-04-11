@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { useCart } from '../context/CartContext';
+import { useData } from '../context/DataContext'
 import logoClaro from '../assets/logo_pizza_order_claro.jpg';
 import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
 import { CarritoIcon } from './icons/CarritoIcon';
@@ -17,12 +18,25 @@ export const Navbar = () => {
   // Estado que controla si la preview del carrito está abierto o no
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Variable que almacena la cantidad de items añadida en el carrito
-  const { cantidadTotal } = useCart();
+  // Extrae la variable, función y colección de la memoria global
+  const { cantidadTotal, abrirConfigurador } = useCart();
+  const { productos } = useData();
 
-  // Función temporal para cuando cliquen en "Modificar"
-  const handleEditPizza = (pizza) => {
-    alert("Próximamente: Se abrirá el PizzaConfigurator con los datos de " + pizza.nombre);
+  // Función para editar una pizza del carrito
+  const handleEditPizza = (pizzaDelCarrito) => {
+ 
+    // Buscamos la pizza original en la memoria global y así obtener
+    // los ingredientes que tiene por defecto
+    const productoBase = productos.find(p => p._id === pizzaDelCarrito.productoId);
+    
+    // Si el producto existe, se le pasa al modal la pizza base y las modificaciones
+    // del usuario 
+    if (productoBase) {
+      abrirConfigurador(productoBase, pizzaDelCarrito);
+
+    } else {
+      console.error("No se ha encontrado el producto base para editar.");
+    }
   };
 
   return (

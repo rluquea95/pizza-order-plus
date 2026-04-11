@@ -1,37 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useData } from '../context/DataContext'
 import { Link } from 'react-router';
-import axios from 'axios';
 import { ListaAlergenos } from './ui/ListaAlergenos';
 import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
 
 export const Footer = () => {
-  // Estado para almacenar los datos de la base de datos
-  const [alergenos, setAlergenos] = useState([]);
-
-  // Estado para saber si estamos esperando a la base de datos
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Petición al Backend cuando el Footer se carga
-  useEffect(() => {
-    const obtenerAlergenos = async () => {
-      try {
-        // Peticion GET
-        const respuesta = await axios.get('http://localhost:5000/api/alergenos');
-
-        // Axios guarda automáticamente los datos JSON dentro de la propiedad .data
-        setAlergenos(respuesta.data);
-        // Quitamos el estado de "Cargando"
-        setIsLoading(false);
-
-      } catch (error) {
-        // Axios gestiona automáticamente si es un error 404, 500, etc.
-        console.error("Error al conectar con la base de datos con Axios:", error);
-        setIsLoading(false);
-      }
-    };
-
-    obtenerAlergenos();
-  }, []);
+  // Extrae 'alergenos' y 'cargando' de DataContext
+  const { alergenos, cargando } = useData();
 
   return (
     <footer className="w-full flex flex-col">
@@ -77,7 +51,7 @@ export const Footer = () => {
             <div className="flex flex-col items-center">
               <h3 className="font-bold text-xl mb-6 tracking-widest text-center">INFORMACIÓN SOBRE ALÉRGENOS</h3>
 
-              {isLoading ? (
+              {cargando ? (
                 <span className="text-gray-400 text-sm animate-pulse">Cargando alérgenos...</span>
               ) : (
                 <ListaAlergenos

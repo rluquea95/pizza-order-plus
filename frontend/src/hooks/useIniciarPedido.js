@@ -1,43 +1,16 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+import { useData } from '../context/DataContext';
 
 export const useIniciarPedido = () => {
-  // Inician la pestana activa, el filtrado y la barra de búsqueda
+  // Inician la pestaña activa, el filtrado y la barra de búsqueda
   const [activeTab, setActiveTab] = useState('pizzas');
   const [selectedSize, setSelectedSize] = useState('todos');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('nombre');
   
-  // Inician los productos, la carga de productos y si hay algún error
-  const [productos, setProductos] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Estado para guardar todos los ingredientes de la BBDD
-  const [ingredientes, setIngredientes] = useState([]);
-
-  // Extrae los productos desde el backend 
-  useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        // Pide productos e ingredientes al mismo tiempo
-        const [resProductos, resIngredientes] = await Promise.all([
-          axios.get('http://localhost:5000/api/productos'),
-          axios.get('http://localhost:5000/api/ingredientes')
-        ]);
-        
-        setProductos(resProductos.data);
-        // Guarda los ingredientes que estén "disponibles: true"
-        setIngredientes(resIngredientes.data.filter(ing => ing.disponible));
-        setCargando(false);
-      } catch (err) {
-        console.error("Error cargando carta:", err);
-        setError(err.response?.data?.mensaje || err.message);
-        setCargando(false);
-      }
-    };
-    obtenerDatos();
-  }, []);
+  // Extrae 'productos' y 'cargando' de la memoria global
+  const { productos, cargando } = useData();
+  const error = null;
 
   // Cuando se cambia de pestaña, resetea la búsqueda y el filtro
   const handleTabChange = (tab) => {
@@ -62,18 +35,15 @@ export const useIniciarPedido = () => {
     if (activeTab === 'bebidas' && !esBebida) return false;
 
     // Filtro de disponibilidad
-    if (esPizza) {
-      // Comprueba disponibilidad de pizza mediana
-      if (!prod.disp_piz_med) return false;
-    }
+    if (esPizza && !prod.disp_piz_med) return false;
 
     if (esBebida) {
-      // Comprobamos la disponibilidad según el tamaño seleccionado
+      // Comprueba la disponibilidad según el tamaño seleccionado
       if (selectedSize === '330ml' && !prod.disp_beb_330ml) return false;
       if (selectedSize === '500ml' && !prod.disp_beb_500ml) return false;
       if (selectedSize === '1000ml' && !prod.disp_beb_1000ml) return false;
       
-      // Si está filtrado por "todos" los tamaños, nos aseguramos de que al menos 
+      // Si está filtrado por "todos" los tamaños, se asegura de que al menos 
       // uno de los tres tamaños exista y esté disponible
       if (selectedSize === 'todos') {
         const algunTamañoDisponible = prod.disp_beb_330ml || prod.disp_beb_500ml || prod.disp_beb_1000ml;
@@ -153,7 +123,7 @@ export const useIniciarPedido = () => {
     return 0;
   });
 
-  // Retorna solo lo que la vista (CartaPage) necesita saber o modificar
+  // Retorna solo lo que la vista (IniciarPedidoPage) necesita saber o modificar
   return {
     activeTab,
     handleTabChange,
@@ -163,7 +133,6 @@ export const useIniciarPedido = () => {
     cargando,
     error,
     pizzasOrdenadas, 
-    bebidasOrdenadas,
-    ingredientes
+    bebidasOrdenadas
   };
 };

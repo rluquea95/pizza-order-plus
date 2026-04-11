@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { BarraBusqueda } from '../components/BarraBusqueda';
 import { Filtro } from '../components/Filtro';
 import { BannerInformacion } from '../components/ui/BannerInformacion';
 import { ProductCard } from '../components/ProductCard';
-import { PizzaConfigurator } from '../components/PizzaConfigurator';
 import { useIniciarPedido } from '../hooks/useIniciarPedido'; // Lógica de IniciarPedidoPage
 
 export const IniciarPedidoPage = () => {
@@ -18,21 +16,16 @@ export const IniciarPedidoPage = () => {
     cargando,
     error,
     pizzasOrdenadas,
-    bebidasOrdenadas,
-    ingredientes
+    bebidasOrdenadas
   } = useIniciarPedido();
 
-  // Almacena si el modal está abierto y lo inicia
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  // Extrae las funciones necesarias del Carrito Global
+  const { agregarAlCarrito, abrirConfigurador } = useCart();
 
-  // Almacena el carrito (estado global)
-  const { agregarAlCarrito } = useCart();
-
-  // Función que controla el modal para configurar pizzas
+  // Función que llama al configurador global
   const handleOpenConfigurator = (producto) => {
-    setSelectedProduct(producto);
-    setIsModalOpen(true);
+    // Se abre sin datos de edición por defecto
+    abrirConfigurador(producto);
   };
 
   // Función que añade bebida
@@ -44,7 +37,7 @@ export const IniciarPedidoPage = () => {
     // Crea el objeto del pedido de la bebida
     const bebidaPedido = {
       // Genera un ID único por si el usuario añade la misma bebida varias veces
-      idLinea: `bebida-${producto._id}-${tamaño}`, 
+      idLinea: `bebida-${producto._id}-${tamaño}`,
       productoId: producto._id,
       categoria: producto.categoria || 'BEBIDA',
       nombre: producto.producto,
@@ -149,14 +142,6 @@ export const IniciarPedidoPage = () => {
         )}
 
       </div>
-
-      {/* COMPONENTE DEL MODAL */}
-      <PizzaConfigurator
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        product={selectedProduct}
-        ingredientes={ingredientes}
-      />
     </main>
   );
 };

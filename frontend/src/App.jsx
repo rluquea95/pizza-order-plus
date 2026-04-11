@@ -1,11 +1,27 @@
 import { Route, Routes } from 'react-router';
+import { useData } from './context/DataContext';
+import { useCart } from './context/CartContext';
 import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
 import { CartaPage } from './pages/CartaPage';
 import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
+import { PizzaConfigurator } from './components/PizzaConfigurator';
+
 
 const App = () => {
+
+  // Extrae el estado global del Modal de Configurar Pizzas desde el carrito
+  const { 
+    isConfiguratorOpen, 
+    cerrarConfigurador, 
+    configProduct, 
+    pizzaEditando 
+  } = useCart();
+
+  // Extrae los ingredientes desde DataContext
+  const { ingredientes } = useData();
+
   return (
     <div className="min-h-screen flex flex-col">
 
@@ -25,8 +41,17 @@ const App = () => {
 
       {/* Componente de pie de página */}
       <Footer />
+
+      {/* Modal de Configurar Pizza Global */}
+      <PizzaConfigurator
+        isOpen={isConfiguratorOpen}
+        onClose={cerrarConfigurador}
+        product={configProduct}
+        ingredientes={ingredientes}
+        pizzaEditando={pizzaEditando}
+      />
     </div>
-  )
+  );
 }
 
 export default App;
