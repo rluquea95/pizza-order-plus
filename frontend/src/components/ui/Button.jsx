@@ -17,9 +17,9 @@ export const Button = ({
   // Diccionario de variantes de botones
   const variants = {
     // Botón naranja
-    primary: "bg-action text-white border-2 border-transparent rounded-md hover:bg-focus hover:text-primary hover:border-primary hover:scale-105",
+    primary: "bg-action text-primary border-2 border-transparent rounded-md hover:bg-focus hover:text-primary hover:border-primary hover:scale-105",
     // Botón azul
-    secondary: "bg-primary text-white border-2 border-primary rounded-md hover:bg-transparent hover:text-primary",
+    secondary: "bg-primary text-white border-2 border-primary rounded-md hover:bg-transparent hover:text-primary hover:scale-105",
   };
 
   // Une las clases: Base + Variante + Clases extra específicas (padding, width...)

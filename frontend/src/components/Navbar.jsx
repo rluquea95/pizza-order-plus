@@ -112,7 +112,7 @@ export const Navbar = () => {
             <Link
               to="/iniciar-pedido"
               aria-label="Ir a la página de iniciar pedido"
-              className="bg-action text-white px-3 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all 
+              className="bg-action text-primary px-3 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all 
                       shadow-md flex items-center justify-center"
             >
               <span className="text-sm md:text-lg">INICIAR PEDIDO</span>
