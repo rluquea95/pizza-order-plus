@@ -7,7 +7,7 @@ import { CerrarIcon } from './icons/CerrarIcon';
 import { QuantitySelector } from './ui/QuantitySelector';
 import { ListaAlergenos } from './ui/ListaAlergenos';
 
-export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) => {
+export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes, pizzaEditando }) => {
 
   // Desestructura todo lo que devuelve el hook (usePizzaConfigurator.js)
   const {
@@ -22,7 +22,7 @@ export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes }) =>
     generarPizzaFinal,
     alergenosActuales,
     avisoMaxExtras
-  } = usePizzaConfigurator(isOpen, product, ingredientes);
+  } = usePizzaConfigurator(isOpen, product, ingredientes, pizzaEditando);
 
   // Almacena el carrito (estado global)
   const { agregarAlCarrito } = useCart();

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-export const usePizzaConfigurator = (isOpen, product, ingredientes) => {
+export const usePizzaConfigurator = (isOpen, product, ingredientes, pizzaEditando = null) => {
   // Inicia el tamaño de la pizza, cantidad, ingredientes base quitados, ingredientes 
   // extras añadidos, mensaje de aviso de advertencias
   const [tamañoSeleccionado, setTamañoSeleccionado] = useState('mediana');
@@ -33,24 +33,36 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes) => {
       // Bloquea el scroll del fondo de la pantalla
       document.body.style.overflow = 'hidden';
 
-      // Resetea las variables para evitar valores de la configuración anterior
-      setCantidad(1);
-      setIngredientesQuitados([]);
-      setIngredientesExtra([]);
-      setAvisoMaxExtras(null);
+      // En caso de que se acceda al modal para editar una pizza ya añadida al carrito
+      // se inicia con los datos ya configurados
+      if (pizzaEditando) {
+        setCantidad(pizzaEditando.cantidad);
+        setTamañoSeleccionado(pizzaEditando.tamaño);
+        setIngredientesQuitados(pizzaEditando.ingredientesQuitados || []);
+        setIngredientesExtra(pizzaEditando.ingredientesExtra || []);
 
-      // De forma predeterminada la pizza que se muestra es mediana, pero en caso de que
-      // no haya, se muestra otra
-      if (product.disp_piz_med) setTamañoSeleccionado('mediana');
-      else if (product.disp_piz_peq) setTamañoSeleccionado('pequeña');
-      else if (product.disp_piz_fam) setTamañoSeleccionado('familiar');
+      // Sino, carga el modal con valores por defecto
+      } else {
+        // Resetea las variables para evitar valores de la configuración anterior
+        setCantidad(1);
+        setIngredientesQuitados([]);
+        setIngredientesExtra([]);
+        
+        // De forma predeterminada la pizza que se muestra es mediana, pero en caso de que
+        // no haya, se muestra otra
+        if (product.disp_piz_med) setTamañoSeleccionado('mediana');
+        else if (product.disp_piz_peq) setTamañoSeleccionado('pequeña');
+        else if (product.disp_piz_fam) setTamañoSeleccionado('familiar');
+      }
+
+      setAvisoMaxExtras(null);
 
     } else {
       // Si el modal se cierra, devuelve el scroll a la página
       document.body.style.overflow = 'auto';
     }
     return () => { document.body.style.overflow = 'auto'; };
-  }, [isOpen, product]);
+  }, [isOpen, product, pizzaEditando]);
 
   // Si no hay producto, devolvemos valores por defecto vacíos para evitar errores
   if (!product) return { isLoading: true };
@@ -203,10 +215,11 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes) => {
   // Empaqueta toda la configuración actual en un objeto listo para ser enviado al carrito
   const generarPizzaFinal = () => ({
     // ID único para evitar que pizzas distintas se agrupen
-    idLinea: `pizza-${Date.now()}`, 
+    // Si esta editando una pizza añadida al carrito, mantiene su ID para sobrescribirla
+    idLinea: pizzaEditando ? pizzaEditando.idLinea : `pizza-${Date.now()}`, 
     productoId: product._id,
     nombre: product.producto,
-    categoria: product.categoria,
+    categoria: product.categoria || 'PIZZA',
     imagen: product.imagen_pizza,
     tamaño: tamañoSeleccionado,
     cantidad: cantidad,
