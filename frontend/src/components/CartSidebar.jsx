@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { useCart } from '../context/CartContext';
 import { Button } from './ui/Button';
 import { CerrarIcon } from './icons/CerrarIcon';
@@ -7,7 +8,20 @@ import { EditarIcon } from './icons/EditarIcon';
 import { QuantitySelector } from './ui/QuantitySelector';
 
 export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
+  // Constante desestructurada que recibe el carrito global
   const { carrito, actualizarCantidad, eliminarDelCarrito, vaciarCarrito, precioTotal } = useCart();
+
+  // Constante que lee la ruta de la URL actual
+  const location = useLocation();
+
+  // Efecto que se encarga de cerrar la ventana del carrito si cambia la URL
+  useEffect(() => {
+    // Si el carrito está abierto y detecta que la ruta ha cambiado, lo cierra
+    if (isOpen) {
+      onClose();
+    }
+    // Se ejecuta cada vez que 'location.pathname' (la URL) cambia
+  }, [location.pathname]);
 
   // EFECTO PARA BLOQUEAR EL SCROLL DE LA PÁGINA DE FONDO
   useEffect(() => {
@@ -34,7 +48,7 @@ export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
 
       {/* BARRA LATERAL (Drawer) */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-125 bg-bg-main shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 h-full w-full sm:w-112.5 md:w-125 bg-bg-main shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         {/* CABECERA */}
@@ -73,21 +87,21 @@ export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
                 <div className="flex flex-col gap-2 shrink-0">
                   <button
                     onClick={() => eliminarDelCarrito(item.idLinea)}
-                    className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors flex items-center justify-center"
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors flex items-center justify-center"
                     aria-label="Eliminar producto"
                     title="Eliminar del pedido"
                   >
-                    <EliminarIcon className="w-5 h-5" />
+                    <EliminarIcon className="w-6 h-6" />
                   </button>
 
                   {item.categoria === 'PIZZA' && (
                     <button
                       onClick={() => onEditPizza(item)}
-                      className="p-1.5 text-gray-400 hover:text-action hover:bg-orange-50 rounded-full transition-colors flex items-center justify-center"
+                      className="p-2 text-gray-400 hover:text-action hover:bg-orange-50 rounded-full transition-colors flex items-center justify-center"
                       aria-label="Modificar Pizza"
                       title="Modificar Pizza"
                     >
-                      <EditarIcon className="w-5 h-5" />
+                      <EditarIcon className="w-6 h-6" />
                     </button>
                   )}
                 </div>
@@ -95,7 +109,7 @@ export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
                 {/* IMAGEN DEL PRODUCTO */}
                 <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border border-gray-200 p-1">
                   <img
-                    // obtenemos el nombre la imagen y la concatenamos con la ruta correspondiente
+                    // Obtiene el nombre la imagen y la concatena con la ruta correspondiente
                     src={item.imagen
                       ? `/img/${item.categoria === 'PIZZA' ? 'Pizzas' : 'Bebidas'}/${item.imagen}`
                       : `/img/${item.categoria === 'PIZZA' ? 'Pizzas/pizza-not-found.jpg' : 'Bebidas/bebida-not-found.jpg'}`}
@@ -112,7 +126,7 @@ export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
 
                 {/* INFORMACIÓN DEL PRODUCTO */}
                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                  <h3 className="font-bold text-primary text-base sm:text-lg truncate">
+                  <h3 className="font-bold text-primary text-base sm:text-lg leading-tight">
                     <span className="capitalize">{item.categoria.toLowerCase()}</span> {item.nombre}
                   </h3>
                   <span className="font-bold text-action">
@@ -120,11 +134,15 @@ export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
                   </span>
                   <p className="text-xs text-gray-500 capitalize mt-0.5">Tamaño: {item.tamaño}</p>
 
-                  {item.categoria === 'PIZZA' && item.ingredientesExtra && item.ingredientesExtra.length > 0 && (
-                    <p className="text-[10px] sm:text-xs text-gray-400 mt-1 truncate">
-                      + {item.ingredientesExtra.map(i => i.nombre).join(', ')}
-                    </p>
-                  )}
+                  {/* ETIQUETA QUE INDICA QUE LA PIZZA HA SIDO PERSONALIZADA */}
+                  {item.categoria === 'PIZZA' && (
+                    (item.ingredientesExtra && item.ingredientesExtra.length > 0) ||
+                    (item.ingredientesQuitados && item.ingredientesQuitados.length > 0)
+                  ) && (
+                      <span className="inline-flex items-center w-fit mt-1.5 px-2 py-0.5 bg-gray-50 text-gray-500 text-[10px] sm:text-xs font-medium rounded border border-gray-200 shadow-sm whitespace-nowrap">
+                        ✨ Pizza personalizada
+                      </span>
+                    )}
                 </div>
 
                 {/* CONTROLES DE CANTIDAD */}
