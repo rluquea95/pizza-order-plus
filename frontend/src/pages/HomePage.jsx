@@ -11,7 +11,7 @@ export const HomePage = () => {
     const timer = setInterval(() => {
       // Comprueba si se encuentra en la última diapositiva y si es así, vuelve a la primera
       setCurrentSlide((prev) => (prev === landingSlides.length - 1 ? 0 : prev + 1));
-    }, 5000);
+    }, 7000);
 
     // Limpia el timer al desmontar el componente
     return () => clearInterval(timer);
