@@ -9,6 +9,7 @@ import { LoginIcon } from './icons/LoginIcon';
 import { MenuIcon } from './icons/MenuIcon';
 import { CerrarIcon } from './icons/CerrarIcon';
 import { CartSidebar } from './CartSideBar';
+import { Button } from './ui/Button';
 
 export const Navbar = () => {
 
@@ -113,7 +114,7 @@ export const Navbar = () => {
               to="/iniciar-pedido"
               aria-label="Ir a la página de iniciar pedido"
               className="bg-action text-primary px-3 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all 
-                      shadow-md flex items-center justify-center"
+                      shadow-md flex items-center justify-center hover:scale-105 active:scale-95 active:shadow-sm"
             >
               <span className="text-sm md:text-lg">INICIAR PEDIDO</span>
             </Link>
