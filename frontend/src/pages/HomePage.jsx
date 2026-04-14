@@ -21,11 +21,11 @@ export const HomePage = () => {
   const renderButtons = (type) => {
     if (type === 'principal') {
       return (
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 w-full mt-10">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 w-full mt-6 md:mt-10">
           <Button 
             to="/carta" 
             variant="secondary" 
-            className="w-full sm:w-auto text-lg py-4 px-10"
+            className="w-full sm:w-auto text-lg py-3 md:py-4 px-8 md:px-10"
           >
             VER CARTA
           </Button>
@@ -33,7 +33,7 @@ export const HomePage = () => {
           <Button 
             to="/iniciar-pedido" 
             variant="primary" 
-            className="w-full sm:w-auto text-lg py-4 px-10"
+            className="w-full sm:w-auto text-base md:text-lg py-3 md:py-4 px-8 md:px-10"
           >
             INICIAR PEDIDO
           </Button>
@@ -43,11 +43,11 @@ export const HomePage = () => {
     
     if (type === 'registro') {
       return (
-        <div className="flex justify-center items-center w-full mt-10">
+        <div className="flex justify-center items-center w-full mt-6 md:mt-10">
           <Button 
             to="/registro" 
             variant="primary" 
-            className="w-full sm:w-auto text-lg py-4 px-10"
+            className="w-full sm:w-auto text-base md:text-lg py-3 md:py-4 px-8 md:px-10"
           >
             CREAR CUENTA
           </Button>
@@ -81,22 +81,22 @@ export const HomePage = () => {
         {/* =========================================
             CONTENIDO (TEXTOS Y BOTONES EN TARJETA)
             ========================================= */}
-        <div className="relative z-20 px-6 py-10 md:py-16 text-center flex flex-col items-center w-[90%] max-w-4xl mx-auto min-h-87.5 justify-center bg-bg-main/85 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden">
+        <div className="relative z-20 px-6 py-12 md:py-16 text-center flex flex-col items-center w-[90%] max-w-4xl mx-auto min-h-87.5 justify-center bg-bg-main/85 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden">
           {landingSlides.map((slide, index) => (
             <div 
               key={`content-${slide.id}`}
               // El translate-y crea el efecto de que el texto flota desde abajo.
               // pointer-events-none evita que el usuario pueda hacer clic en botones que están ocultos.
-              className={`transition-all duration-700 ease-in-out absolute inset-0 flex flex-col items-center justify-center w-full px-6 md:px-12 ${
+              className={`transition-all duration-700 ease-in-out absolute inset-0 flex flex-col items-center justify-center w-full px-4 md:px-12 ${
                 index === currentSlide 
                   ? 'opacity-100 translate-y-0 pointer-events-auto' 
                   : 'opacity-0 translate-y-8 pointer-events-none'
               }`}
             >
-              <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl text-primary mb-6 tracking-tight drop-shadow-sm">
+              <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl text-primary mb-4 md:mb-6 tracking-tight drop-shadow-sm leading-tight">
                 {slide.title}
               </h1>
-              <p className="text-lg md:text-xl text-primary/90 leading-relaxed max-w-2xl font-medium">
+              <p className="text-base md:text-xl text-primary/90 leading-relaxed max-w-2xl font-medium">
                 {slide.text}
               </p>
               
