@@ -1,16 +1,10 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { pizzaApi } from '../services/api';
 
 // Crea el contexto
 const CartContext = createContext();
 
 // Crea el Provider (repartirá los datos por toda la web)
 export const CartProvider = ({ children }) => {
-
-  // Llamadas a la BBDD para traer las colecciones Producto, Ingredientes y Alergenos
-  const [ingredientesGlobales, setIngredientesGlobales] = useState([]);
-  const [productosGlobales, setProductosGlobales] = useState([]);
-  const [alergenosGlobales, setAlergenosGlobales] = useState([]);
 
   // Inicializa el carrito, verificando si ya había items añadidos almacenados localmente
   const [carrito, setCarrito] = useState(() => {

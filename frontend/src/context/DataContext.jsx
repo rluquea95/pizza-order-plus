@@ -7,6 +7,7 @@ const DataContext = createContext();
 // Crea el Provider (repartirá los datos por toda la web)
 export const DataProvider = ({ children }) => {
 
+  // Almacena los productos, ingredientes, alergenos y si están cargando
   const [productos, setProductos] = useState([]);
   const [ingredientes, setIngredientes] = useState([]);
   const [alergenos, setAlergenos] = useState([]);
@@ -30,6 +31,7 @@ export const DataProvider = ({ children }) => {
     cargarInventario();
   }, []);
 
+  // Devuelve el Provider con las colecciones de la BBDD
   return (
     <DataContext.Provider value={{ productos, ingredientes, alergenos, cargando }}>
       {children}

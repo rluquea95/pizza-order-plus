@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('🟢 ¡Conectado a la base de datos MongoDB!'))
   .catch((err) => console.error('🔴 Error conectando a MongoDB:', err));
 
-// Ruta de prueba (Tu primer endpoint)
+// Ruta de prueba
 app.get('/', (req, res) => {
   res.send('🍕 ¡Bienvenida a la API de PizzaOrder+!');
 });
