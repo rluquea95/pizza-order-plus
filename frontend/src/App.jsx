@@ -3,6 +3,7 @@ import { useData } from './context/DataContext';
 import { useCart } from './context/CartContext';
 import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
+import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { CartaPage } from './pages/CartaPage';
 import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
@@ -29,6 +30,7 @@ const App = () => {
       <Navbar />
 
       <Routes>
+
         {/* Página de Inicio */}
         <Route path="/" element={<HomePage />} />
 
@@ -37,6 +39,10 @@ const App = () => {
 
         {/* Página de Carta */}
         <Route path="/carta" element={<CartaPage />} />
+
+        {/* Página de Registro */}
+        <Route path="/registro" element={<RegisterPage />} />
+
       </Routes>
 
       {/* Componente de pie de página */}
