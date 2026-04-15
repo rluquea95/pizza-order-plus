@@ -8,6 +8,7 @@ require('dotenv').config(); // Para poder leer el archivo .env
 const productosRoutes = require('./routes/productos');
 const ingredientesRoutes = require('./routes/ingredientes'); 
 const alergenosRoutes = require('./routes/alergenos');
+const authRoutes = require('./routes/auth');
 
 // Inicializa la app de Express
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json()); // Permite que nuestro servidor entienda datos en forma
 app.use('/api/productos', productosRoutes);
 app.use('/api/ingredientes', ingredientesRoutes); 
 app.use('/api/alergenos', alergenosRoutes);
+app.use('/api/auth', authRoutes);
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI)
