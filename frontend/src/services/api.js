@@ -7,7 +7,23 @@ const api = axios.create({
   baseURL: API_URL
 });
 
-// Objeto de servicio que agrupa todas las llamadas a la base de datos.
+// Inyección del Token de seguridad antes de que cualquier petición salga hacia el backend
+api.interceptors.request.use((config) => {
+  // Busca el token en el almacenamiento local del navegador
+  const token = localStorage.getItem('pizza-order-token');
+  
+  if (token) {
+    // Si hay token, lo añade a la cabecera de Autorización
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+
+// Objeto de servicio que agrupa todas las llamadas a la base de datos 
+// de Producto, Ingrediente y Alergeno
 export const pizzaApi = {
 
   // Obtiene la colección Productos
@@ -30,4 +46,14 @@ export const pizzaApi = {
       pizzaApi.getAlergenos()
     ]);
   }
+};
+
+// Objeto de servicio que agrupa las llamadas relacionadas con la autenticación
+// de usuarios (registro y login)
+export const authApi = {
+  // Envía los datos del formulario para registrar un nuevo usuario
+  registro: (userData) => api.post('/auth/registro', userData),
+  
+  // Autentica a un usuario mediante sus credenciales y recibe el Token JWT
+  login: (credentials) => api.post('/auth/login', credentials)
 };
