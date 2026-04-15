@@ -8,7 +8,7 @@ const Label = ({ texto, obligatorio }) => (
   </label>
 );
 
-// Este es el componente que vas a importar en tus páginas
+// Este es el componente que se importará y creará el label e input personalizado
 export const FormInput = ({
   label,
   obligatorio = false,
