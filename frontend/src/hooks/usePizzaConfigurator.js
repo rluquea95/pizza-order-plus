@@ -1,31 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { useAutoAlert } from './useAutoAlert';
 
 export const usePizzaConfigurator = (isOpen, product, ingredientes, pizzaEditando = null) => {
-  // Inicia el tamaño de la pizza, cantidad, ingredientes base quitados, ingredientes 
-  // extras añadidos, mensaje de aviso de advertencias
+  // Inicia el tamaño de la pizza, cantidad, ingredientes base quitados, ingredientes extras añadidos
   const [tamañoSeleccionado, setTamañoSeleccionado] = useState('mediana');
   const [cantidad, setCantidad] = useState(1);
   const [ingredientesQuitados, setIngredientesQuitados] = useState([]);
   const [ingredientesExtra, setIngredientesExtra] = useState([]);
-  const [avisoMaxExtras, setAvisoMaxExtras] = useState(null);
 
-  // Referencia para guardar el ID del temporizador actual
-  const timerRef = useRef(null);
-
-  // Función auxiliar para mostrar avisos sin que se solapen los tiempos
-  const mostrarAviso = (mensaje, seccion) => {
-    setAvisoMaxExtras({ mensaje, seccion });
-
-    // Si ya había una cuenta atrás funcionando, la cancela
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
-    // Inicia una nueva cuenta atrás
-    timerRef.current = setTimeout(() => {
-      setAvisoMaxExtras(null);
-    }, 3500);
-  };
+  // Inicializa el sistema de alertas.
+  // El aviso desaparecerá automáticamente a los 3.5 seg
+  const { aviso: avisoMaxExtras, mostrarAviso, ocultarAviso } = useAutoAlert(3500);
 
   // Efectos al abrir y cerrar el modal
   useEffect(() => {
@@ -55,14 +40,14 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes, pizzaEditand
         else if (product.disp_piz_fam) setTamañoSeleccionado('familiar');
       }
 
-      setAvisoMaxExtras(null);
+      ocultarAviso();
 
     } else {
       // Si el modal se cierra, devuelve el scroll a la página
       document.body.style.overflow = 'auto';
     }
     return () => { document.body.style.overflow = 'auto'; };
-  }, [isOpen, product, pizzaEditando]);
+  }, [isOpen, product, pizzaEditando, ocultarAviso]);
 
   // Si no hay producto, devolvemos valores por defecto vacíos para evitar errores
   if (!product) return { isLoading: true };
@@ -140,30 +125,30 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes, pizzaEditand
 
       // Si tiene más ing extras añadidos que el nuevo límite, bloquea la acción
       if (ingredientesExtra.length > nuevoLimiteExtras) {
-        mostrarAviso(
-          `Debes quitar al menos 1 ingrediente extra para recuperar este ingrediente base.`,
-          'ing-base'
-        );
+        mostrarAviso({
+          mensaje: `Debes quitar al menos 1 ingrediente extra para recuperar este ingrediente base.`,
+          seccion: 'ing-base'
+        });
         return;
       }
 
       // Si pasa la validación, quita el ingrediente de la lista de "quitados"
       setIngredientesQuitados(prev => prev.filter(item => item._id !== ing._id));
       // Limpia el mensaje si hay éxito
-      setAvisoMaxExtras(null);
+      ocultarAviso();
 
     } else {
       // Cuando el usuario intenta quitar un ingrediente base
       // Se verifica que sólo pueda quitar hasta 3
       if (ingredientesQuitados.length < 3) {
         setIngredientesQuitados(prev => [...prev, ing]);
-        setAvisoMaxExtras(null);
+        ocultarAviso();
 
       } else {
-        mostrarAviso(
-          `Solo puedes quitar un máximo de 3 ingredientes base.`,
-          'ing-base'
-        );
+        mostrarAviso({
+          mensaje: `Solo puedes quitar un máximo de 3 ingredientes base.`,
+          seccion: 'ing-base'
+        });
       }
     }
   };
@@ -184,7 +169,7 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes, pizzaEditand
     // Solo actualiza si realmente está por debajo del límite
     if (ingredientesExtra.length < maxExtrasPermitidos) {
       setIngredientesExtra(prev => [...prev, extraObject]);
-      setAvisoMaxExtras(null);
+      ocultarAviso();
 
     } 
     // Resetea visualmente el select a la opción por defecto
@@ -194,7 +179,7 @@ export const usePizzaConfigurator = (isOpen, product, ingredientes, pizzaEditand
   // Borra un ingrediente extra que se había añadido previamente
   const handleRemoveExtraAdded = (id) => {
     setIngredientesExtra(prev => prev.filter(item => item._id !== id));
-    setAvisoMaxExtras(null);
+    ocultarAviso();
   };
 
   // --- CÁLCULO DE PRECIO TOTAL ---
