@@ -20,6 +20,7 @@ export const FormInput = ({
   value,
   onChange,
   onBlur,
+  onFocus,
   error,
   isValid
 }) => {
@@ -47,6 +48,7 @@ export const FormInput = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        onFocus={onFocus}
         placeholder={placeholder}
         maxLength={maxLength}
         className={`w-full px-4 py-3 bg-bg-light rounded-md focus:outline-none focus:ring-2 transition-all shadow-sm ${uppercase ? 'uppercase' : ''} ${borderStyle}`}
