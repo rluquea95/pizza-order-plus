@@ -7,13 +7,17 @@ export const Button = ({
   className = '', 
   onClick, 
   type = 'button',
+  animated = true,
   ...props 
 }) => {
-  // Estilos base (Estructura, sombras, animaciones y comportamientos compartidos)
+  // Estilos base (Estructura, sombras y comportamientos compartidos)
   // focus-visible el anillo sobre el botón solo sale cuando se tabula con el teclado
   // focus-visible:ring-primary para que el halo del tabulador sea azul.
-  const baseStyles = "font-semibold flex justify-center items-center text-center rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md hover:scale-105 active:scale-95 active:shadow-sm";
+  const baseStyles = "font-semibold flex justify-center items-center text-center rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 shadow-md";
   
+  // Condición para animar el botón (aumentar/disminuir escala)
+  const animacionStyles = animated ? "hover:scale-105 active:scale-95 active:shadow-sm" : "";
+
   // Diccionario de variantes de botones
   const variants = {
     // Botón naranja
@@ -22,8 +26,8 @@ export const Button = ({
     secondary: "bg-primary text-white border-2 border-primary rounded-md hover:bg-transparent hover:text-primary",
   };
 
-  // Une las clases: Base + Variante + Clases extra específicas (padding, width...)
-  const finalClasses = `${baseStyles} ${variants[variant]} ${className}`;
+  // Une las clases: Base + Animación + Variante + Clases extra específicas (padding, width...)
+  const finalClasses = `${baseStyles} ${animacionStyles} ${variants[variant]} ${className}`;
 
   // Si le pasamos una ruta (to), devuelve un Link
   if (to) {
