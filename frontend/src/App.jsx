@@ -6,6 +6,7 @@ import { Navbar } from './components/Navbar';
 import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { CartaPage } from './pages/CartaPage';
+import { LoginPage } from './pages/LoginPage';
 import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
 import { PizzaConfigurator } from './components/PizzaConfigurator';
 
@@ -42,6 +43,9 @@ const App = () => {
 
         {/* Página de Registro */}
         <Route path="/registro" element={<RegisterPage />} />
+
+        {/* Página de Login */}
+        <Route path="/login" element={<LoginPage />} />
 
       </Routes>
 
