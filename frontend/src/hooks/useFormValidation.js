@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useFormValidation = (initialState) => {
   // Almacena el formulario
@@ -6,9 +6,30 @@ export const useFormValidation = (initialState) => {
   // Almacena los errores
   const [errors, setErrors] = useState({});
 
+  // Almacena el estado que controla si muestra el error de la contraseña
+  const [confirmTouched, setConfirmTouched] = useState(false);
+
+  // Retrasa la validación visual de "Repetir Contraseña" hasta que el usuario 
+  // lleva 0,6 segundos sin teclear. 
+  useEffect(() => {
+    // Si el campo de repetir contraseña está vacío, no hace nada
+    if (!formData.confirm_password) return;
+
+    // Configura un temporizador de 0,6 seg 
+    const temporizador = setTimeout(() => {
+      setConfirmTouched(true);
+    }, 600);
+
+    // Si el usuario vuelve a escribir ANTES de que pase el segundo, 
+    // React ejecuta este 'return' primero, cancelando el temporizador anterior 
+    // para que no salte el error antes de tiempo.
+    return () => clearTimeout(temporizador);
+
+    // Este efecto solo vigila los cambios en este campo específico
+  }, [formData.confirm_password]);
+
 
   // FUNCIONES DE VALIDACIÓN DE LOS INPUTS OBLIGATORIOS
-
   const esSoloTexto = (texto) => {
     // Acepta letras mayúsculas, minúsculas, vocales con tilde, la ñ y espacios.
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s-]+$/;
@@ -69,7 +90,7 @@ export const useFormValidation = (initialState) => {
   };
 
   // Asigna las funciones validadoras al input correspondiente
-  const validateField = (name, value) => {
+  const validateField = (name, value, currentData) => {
     let errorMsg = '';
     switch (name) {
       case 'nombre':
@@ -86,6 +107,9 @@ export const useFormValidation = (initialState) => {
       case 'password':
         if (value.length > 0 && !esPasswordValido(value)) errorMsg = 'Mín. 8 caracteres que incluya 1 mayúscula, 1 minúscula, 1 número y 1 especial.';
         break;
+      case 'confirm_password': // Verifica si es igual que password
+        if (value.length > 0 && value !== currentData.password) errorMsg = 'Las contraseñas no coinciden.';
+        break;
       case 'fecha_nacimiento':
         if (value.length > 0 && !esFechaValida(value)) errorMsg = 'Debes tener entre 18 y 120 años para registrarte.';
         break;
@@ -93,7 +117,7 @@ export const useFormValidation = (initialState) => {
         if (value.length > 0 && !esTelefonoValido(value)) errorMsg = 'El teléfono debe tener exactamente 9 dígitos.';
         break;
       case 'codigo_postal':
-        if (value.length > 0 && !esCodigoPostalValido(value))  errorMsg = 'El código postal debe tener 5 números.';
+        if (value.length > 0 && !esCodigoPostalValido(value)) errorMsg = 'El código postal debe tener 5 números.';
         break;
       default:
         break;
@@ -104,14 +128,31 @@ export const useFormValidation = (initialState) => {
   // Se ejecuta mientras el usuario escribe en cualquier input
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    // Captura el estado actualizado ANTES de guardarlo en React para poder 
+    // hacer validaciones cruzadas
+    const updatedData = { ...formData, [name]: value };
+    setFormData(updatedData);
+
+    // Si el usuario escribe en confirmar contraseña, apagamos el error inmediatamente.
+    // El useEffect se encargará de encenderlo cuando deje de escribir por 1,3s.
+    if (name === 'confirm_password') {
+      setConfirmTouched(false);
+    }
 
     // Evalua las validaciones en cada momento para dar feedback al usuario
-    const fieldError = validateField(name, value);
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: fieldError
-    }));
+    const fieldError = validateField(name, value, updatedData);
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors, [name]: fieldError };
+
+      // Si el usuario edita la contraseña original después de haber rellenado 
+      // la de confirmación, vuelve a validar la confirmación automáticamente.
+      if (name === 'password' && updatedData.confirm_password) {
+        newErrors.confirm_password = validateField('confirm_password', updatedData.confirm_password, updatedData);
+      }
+
+      return newErrors;
+    });
   };
 
   // Se ejecuta cuando el usuario pulsa en 'Crear cuenta'
@@ -120,17 +161,21 @@ export const useFormValidation = (initialState) => {
     const newErrors = {};
     let isValid = true;
 
+    // Si pulsa 'Crear Cuenta', se fuerza a que el campo 'repetir contraseña'se marque como tocado
+    // para que muestre el error rojo si no coinciden
+    setConfirmTouched(true);
+
     Object.keys(formData).forEach((key) => {
-      const camposObligatorios = ['nombre', 'apellidos', 'dni', 'fecha_nacimiento', 'telefono', 'email', 'password'];
+      const camposObligatorios = ['nombre', 'apellidos', 'dni', 'fecha_nacimiento', 'telefono', 'email', 'password', 'confirm_password'];
 
       // Comprueba que los campos obligatorios no se hayan dejado en blanco
       if (camposObligatorios.includes(key) && !formData[key]) {
         newErrors[key] = 'Este campo es obligatorio.';
         isValid = false;
 
-      // Si están rellenos, se comprueba que cumplan con el formato establecido
+        // Si están rellenos, se comprueba que cumplan con el formato establecido
       } else {
-        const error = validateField(key, formData[key]);
+        const error = validateField(key, formData[key], formData);
         if (error) {
           newErrors[key] = error;
           isValid = false;
@@ -155,18 +200,27 @@ export const useFormValidation = (initialState) => {
     if (!hasValue || errors[name]) return false;
 
     // Comprueba todos los campos pasandole las funciones validadoras
-    return validateField(name, valor) === '';
+    return validateField(name, valor, formData) === '';
   };
 
   // Inyecta todas las propiedades en el input
   const getFieldProps = (name) => {
-    return {
+    // Guarda las propiedades base en una variable
+    const props = {
       name: name,
       value: formData[name],
       onChange: handleChange,
       error: errors[name],
       isValid: isFieldValid(name)
     };
+
+    // Aplica el formato en el input
+    if (name === 'confirm_password') {
+      props.error = confirmTouched ? errors[name] : '';
+      props.isValid = confirmTouched ? isFieldValid(name) : false;
+    }
+
+    return props; 
   };
 
   // Exporta los datos necesarios para RegisterPage

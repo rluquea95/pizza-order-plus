@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/Button';
 import { AlertMessage } from '../components/ui/AlertMessage';
-import { FormInput } from '../components/ui/FormInput'; 
+import { FormInput } from '../components/ui/FormInput';
 import { useFormValidation } from '../hooks/useFormValidation';
 import { useAutoAlert } from '../hooks/useAutoAlert';
 
@@ -14,16 +14,19 @@ export const RegisterPage = () => {
   // Extrae la función 'register' del Contexto Global de Autenticación
   const { register } = useAuth();
 
+  // Controla el estado del check de ver contraseña
+  const [verPassword, setVerPassword] = useState(false);
+
   // Inicializa el validador del formulario con los campos vacíos
   const { formData, validateAll, getFieldProps } = useFormValidation({
-    nombre: '', apellidos: '', dni: '', fecha_nacimiento: '', telefono: '', 
-    email: '', password: '', calle: '', numero: '', piso: '', 
+    nombre: '', apellidos: '', dni: '', fecha_nacimiento: '', telefono: '',
+    email: '', password: '', confirm_password: '', calle: '', numero: '', piso: '',
     codigo_postal: '', ciudad: ''
   });
 
   // Hook para manejar el cartel de error superior. Se auto-ocultará a los 5 segundos.
   const { aviso: globalError, mostrarAviso: setGlobalError, ocultarAviso } = useAutoAlert(5000);
-  
+
   // Estado para bloquear el botón mientras esperamos la respuesta del backend
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,8 +34,8 @@ export const RegisterPage = () => {
 
     // Evita que el navegador recargue la página
     e.preventDefault();
-    setGlobalError(''); 
-    
+    setGlobalError('');
+
     // Función que realiza la revisión final del formulario. Si hay algún error, bloquea el envío y sube arriba.
     if (!validateAll()) {
       setGlobalError('Por favor, corrige los errores marcados en rojo antes de continuar.');
@@ -81,14 +84,14 @@ export const RegisterPage = () => {
 
         {/* Con onChange y onFocus en el <form>, cualquier interacción algún input disparará 'ocultarAviso',
             limpiando el error global en cuanto el usuario intenta corregir algo.*/}
-        <form 
-          onSubmit={handleSubmit} 
-          onFocus={ocultarAviso} 
-          onChange={ocultarAviso} 
-          noValidate 
+        <form
+          onSubmit={handleSubmit}
+          onFocus={ocultarAviso}
+          onChange={ocultarAviso}
+          noValidate
           className="flex flex-col gap-12"
         >
-          
+
           <section>
             <h2 className="text-xl font-bold text-primary border-b-2 border-gray-100 pb-3 mb-6">1. Datos Personales</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
@@ -120,7 +123,39 @@ export const RegisterPage = () => {
             <h2 className="text-xl font-bold text-primary border-b-2 border-gray-100 pb-3 mb-6">3. Datos de Acceso</h2>
             <div className="flex flex-col gap-2">
               <FormInput type="email" label="Email" obligatorio={true} {...getFieldProps("email")} placeholder="usuario@email.com" />
-              <FormInput type="password" label="Contraseña" obligatorio={true} {...getFieldProps("password")} placeholder="Mín. 8 caracteres (mayús, minús, número, símbolo)" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                <FormInput
+                  type={verPassword ? 'text' : 'password'}
+                  label="Contraseña"
+                  obligatorio={true}
+                  {...getFieldProps("password")}
+                  placeholder="Mín. 8 caracteres..."
+                />
+                <FormInput
+                  type={verPassword ? 'text' : 'password'}
+                  label="Repetir Contraseña"
+                  obligatorio={true}
+                  {...getFieldProps("confirm_password")}
+                  placeholder="Repite la contraseña"
+                />
+              </div>
+
+              {/* Checkbox para alternar la visibilidad de ambas contraseñas */}
+              <div className="flex items-center gap-2 mt-1">
+                <input
+                  type="checkbox"
+                  id="toggleRegPass"
+                  checked={verPassword}
+                  onChange={() => setVerPassword(!verPassword)}
+                  className="w-4 h-4 cursor-pointer accent-primary"
+                />
+                <label
+                  htmlFor="toggleRegPass"
+                  className="text-sm text-gray-600 cursor-pointer select-none hover:text-primary transition-colors"
+                >
+                  Mostrar contraseñas
+                </label>
+              </div>
             </div>
           </section>
 
