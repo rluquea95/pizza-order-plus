@@ -9,6 +9,7 @@ const productosRoutes = require('./routes/productos');
 const ingredientesRoutes = require('./routes/ingredientes'); 
 const alergenosRoutes = require('./routes/alergenos');
 const authRoutes = require('./routes/auth');
+const pedidosRoutes = require('./routes/pedidos');
 
 // Inicializa la app de Express
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/productos', productosRoutes);
 app.use('/api/ingredientes', ingredientesRoutes); 
 app.use('/api/alergenos', alergenosRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/pedidos', pedidosRoutes);
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI)
