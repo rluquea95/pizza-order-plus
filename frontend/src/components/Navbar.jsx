@@ -246,7 +246,6 @@ export const Navbar = () => {
       <CartSidebar
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        onEditPizza={handleEditPizza}
       />
     </>
   );

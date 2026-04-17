@@ -7,6 +7,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { CartaPage } from './pages/CartaPage';
 import { LoginPage } from './pages/LoginPage';
+import { CheckoutPage } from './pages/CheckoutPage';
 import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
 import { PizzaConfigurator } from './components/PizzaConfigurator';
 
@@ -46,6 +47,9 @@ const App = () => {
 
         {/* Página de Login */}
         <Route path="/login" element={<LoginPage />} />
+
+        {/* Página de Checkout */}
+        <Route path="/tramitar-pedido" element={<CheckoutPage />} />
 
       </Routes>
 

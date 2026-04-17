@@ -1,10 +1,14 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { useData } from './DataContext';
 
 // Crea el contexto
 const CartContext = createContext();
 
 // Crea el Provider (repartirá los datos por toda la web)
 export const CartProvider = ({ children }) => {
+
+  // Extrae los productos globales
+  const { productos } = useData();
 
   // Inicializa el carrito, verificando si ya había items añadidos almacenados localmente
   const [carrito, setCarrito] = useState(() => {
@@ -95,6 +99,15 @@ export const CartProvider = ({ children }) => {
     setIsConfiguratorOpen(true);
   };
 
+  // Carga el Modal de Configurar Pizza con todas las características de la pizza añadida al carrito
+  const editarPizzaDelCarrito = (itemEnCarrito) => {
+    if (!productos || productos.length === 0) return;
+    const productoBase = productos.find(p => p._id === itemEnCarrito.productoId || p.nombre === itemEnCarrito.nombre);
+    if (productoBase) {
+      abrirConfigurador(productoBase, itemEnCarrito);
+    }
+  };
+
   // Cierra el modal de personalización de pizzas y resetea la memoria.
   const cerrarConfigurador = () => {
     setIsConfiguratorOpen(false);
@@ -117,6 +130,7 @@ export const CartProvider = ({ children }) => {
       configProduct,
       pizzaEditando,
       abrirConfigurador,
+      editarPizzaDelCarrito,
       cerrarConfigurador
     }}>
       {children}

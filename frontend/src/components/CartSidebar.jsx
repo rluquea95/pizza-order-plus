@@ -3,13 +3,18 @@ import { useLocation } from 'react-router';
 import { useCart } from '../context/CartContext';
 import { Button } from './ui/Button';
 import { CerrarIcon } from './icons/CerrarIcon';
-import { EliminarIcon } from './icons/EliminarIcon';
-import { EditarIcon } from './icons/EditarIcon';
-import { QuantitySelector } from './ui/QuantitySelector';
+import { CartItem } from './ui/CartItem';
 
-export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
+export const CartSidebar = ({ isOpen, onClose }) => {
   // Constante desestructurada que recibe el carrito global
-  const { carrito, actualizarCantidad, eliminarDelCarrito, vaciarCarrito, precioTotal } = useCart();
+  const { 
+    carrito, 
+    actualizarCantidad, 
+    eliminarDelCarrito, 
+    editarPizzaDelCarrito, 
+    vaciarCarrito, 
+    precioTotal 
+  } = useCart();
 
   // Constante que lee la ruta de la URL actual
   const location = useLocation();
@@ -68,91 +73,20 @@ export const CartSidebar = ({ isOpen, onClose, onEditPizza }) => {
           {carrito.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
               <p className="text-lg font-medium">Tu carrito está vacío</p>
-              <Button
-                variant="primary"
-                className="px-6 py-2"
-                to="/iniciar-pedido"
-                onClick={onClose}>
+              <Button variant="primary" className="px-6 py-2" to="/iniciar-pedido" onClick={onClose}>
                 Iniciar Pedido
               </Button>
             </div>
           ) : (
+            // Componente que lista las columnas de productos
             carrito.map((item) => (
-              <div
+              <CartItem
                 key={item.idLinea}
-                className="flex items-center gap-3 bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-gray-100 group transition-all hover:shadow-md"
-              >
-
-                {/* ACCIONES DE ELIMINAR O EDITAR PRODUCTO */}
-                <div className="flex flex-col gap-2 shrink-0">
-                  <button
-                    onClick={() => eliminarDelCarrito(item.idLinea)}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors flex items-center justify-center"
-                    aria-label="Eliminar producto"
-                    title="Eliminar del pedido"
-                  >
-                    <EliminarIcon className="w-6 h-6" />
-                  </button>
-
-                  {item.categoria === 'PIZZA' && (
-                    <button
-                      onClick={() => onEditPizza(item)}
-                      className="p-2 text-gray-400 hover:text-action hover:bg-orange-50 rounded-full transition-colors flex items-center justify-center"
-                      aria-label="Modificar Pizza"
-                      title="Modificar Pizza"
-                    >
-                      <EditarIcon className="w-6 h-6" />
-                    </button>
-                  )}
-                </div>
-
-                {/* IMAGEN DEL PRODUCTO */}
-                <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border border-gray-200 p-1">
-                  <img
-                    // Obtiene el nombre la imagen y la concatena con la ruta correspondiente
-                    src={item.imagen
-                      ? `/img/${item.categoria === 'PIZZA' ? 'Pizzas' : 'Bebidas'}/${item.imagen}`
-                      : `/img/${item.categoria === 'PIZZA' ? 'Pizzas/pizza-not-found.jpg' : 'Bebidas/bebida-not-found.jpg'}`}
-                    alt={item.nombre}
-                    className="w-full h-full object-cover"
-                    // Imagen por defecto dinámica en caso de error
-                    onError={(e) => {
-                      e.currentTarget.src = item.categoria === 'PIZZA'
-                        ? '/img/Pizzas/pizza-not-found.jpg'
-                        : '/img/Bebidas/bebida-not-found.jpg';
-                    }}
-                  />
-                </div>
-
-                {/* INFORMACIÓN DEL PRODUCTO */}
-                <div className="flex-1 min-w-0 flex flex-col justify-center">
-                  <h3 className="font-bold text-primary text-base sm:text-lg leading-tight">
-                    <span className="capitalize">{item.categoria.toLowerCase()}</span> {item.nombre}
-                  </h3>
-                  <span className="font-bold text-action">
-                    {item.precioTotalLinea.toFixed(2)}€
-                  </span>
-                  <p className="text-xs text-gray-500 capitalize mt-0.5">Tamaño: {item.tamaño}</p>
-
-                  {/* ETIQUETA QUE INDICA QUE LA PIZZA HA SIDO PERSONALIZADA */}
-                  {item.categoria === 'PIZZA' && (
-                    (item.ingredientesExtra && item.ingredientesExtra.length > 0) ||
-                    (item.ingredientesQuitados && item.ingredientesQuitados.length > 0)
-                  ) && (
-                      <span className="inline-flex items-center w-fit mt-1.5 px-2 py-0.5 bg-gray-50 text-gray-500 text-[10px] sm:text-xs font-medium rounded border border-gray-200 shadow-sm whitespace-nowrap">
-                        ✨ Pizza personalizada
-                      </span>
-                    )}
-                </div>
-
-                {/* CONTROLES DE CANTIDAD */}
-                <QuantitySelector
-                  cantidad={item.cantidad}
-                  setCantidad={(nuevaCantidad) => actualizarCantidad(item.idLinea, nuevaCantidad)}
-                  variant="carrito"
-                />
-
-              </div>
+                item={item}
+                onEliminar={eliminarDelCarrito}
+                onEditar={editarPizzaDelCarrito}
+                onActualizarCantidad={actualizarCantidad}
+              />
             ))
           )}
         </div>
