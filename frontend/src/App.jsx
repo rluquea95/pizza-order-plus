@@ -10,16 +10,18 @@ import { LoginPage } from './pages/LoginPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
 import { PizzaConfigurator } from './components/PizzaConfigurator';
+import { AdminRoute } from './components/routing/AdminRoute';
+import { AdminPedidosPage } from './pages/AdminPedidosPage';
 
 
 const App = () => {
 
   // Extrae el estado global del Modal de Configurar Pizzas desde el carrito
-  const { 
-    isConfiguratorOpen, 
-    cerrarConfigurador, 
-    configProduct, 
-    pizzaEditando 
+  const {
+    isConfiguratorOpen,
+    cerrarConfigurador,
+    configProduct,
+    pizzaEditando
   } = useCart();
 
   // Extrae los ingredientes desde DataContext
@@ -32,6 +34,10 @@ const App = () => {
       <Navbar />
 
       <Routes>
+
+        {/* =========================================
+            RUTAS PÚBLICAS Y DE CLIENTES
+            ========================================= */}
 
         {/* Página de Inicio */}
         <Route path="/" element={<HomePage />} />
@@ -50,6 +56,19 @@ const App = () => {
 
         {/* Página de Checkout */}
         <Route path="/tramitar-pedido" element={<CheckoutPage />} />
+
+
+        {/* =========================================
+            RUTAS EXCLUSIVAS DE ADMINISTRACIÓN
+            ========================================= */}
+        <Route
+          path="/admin/pedidos"
+          element={
+            <AdminRoute>
+              <AdminPedidosPage />
+            </AdminRoute>
+          }
+        />
 
       </Routes>
 
