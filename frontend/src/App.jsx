@@ -12,6 +12,7 @@ import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
 import { PizzaConfigurator } from './components/PizzaConfigurator';
 import { AdminRoute } from './components/routing/AdminRoute';
 import { AdminPedidosPage } from './pages/AdminPedidosPage';
+import { AlergenosPage } from './pages/AlergenosPage';
 
 
 const App = () => {
@@ -47,6 +48,9 @@ const App = () => {
 
         {/* Página de Carta */}
         <Route path="/carta" element={<CartaPage />} />
+
+        {/* Página de Alérgenos */}
+        <Route path="/alergenos" element={<AlergenosPage />} />
 
         {/* Página de Registro */}
         <Route path="/registro" element={<RegisterPage />} />
