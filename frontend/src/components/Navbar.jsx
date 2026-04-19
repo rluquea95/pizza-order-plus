@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { useCart } from '../context/CartContext';
-import { useData } from '../context/DataContext'
 import logoClaro from '../assets/logo_pizza_order_claro.jpg';
 import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
 import { CarritoIcon } from './icons/CarritoIcon';
@@ -20,25 +19,11 @@ export const Navbar = () => {
   // Estado que controla si la preview del carrito está abierto o no
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Extrae la variable, función y colección de la memoria global
-  const { cantidadTotal, abrirConfigurador } = useCart();
-  const { productos } = useData();
+  // Extrae el total del Carrito
+  const { cantidadTotal } = useCart();
 
   // Estado que controla el usuario y la función de cierre de sesión
   const { user, logout } = useAuth();
-
-  // Función para editar una pizza del carrito
-  const handleEditPizza = (pizzaDelCarrito) => {
-
-    // Busca la pizza original en la memoria global y así obtener
-    // los ingredientes que tiene por defecto
-    const productoBase = productos.find(p => p._id === pizzaDelCarrito.productoId);
-
-    // Si el producto existe, se le pasa al modal la pizza base y las modificaciones del usuario 
-    if (productoBase) {
-      abrirConfigurador(productoBase, pizzaDelCarrito);
-    }
-  };
 
   return (
     <>
@@ -111,7 +96,9 @@ export const Navbar = () => {
                 {/* Botón de Usuario */}
                 <button className="flex items-center gap-2 text-white hover:text-action transition-colors px-2 h-20">
                   <LoginIcon className="w-8 h-8" />
-                  <span className="hidden xl:inline tracking-widest uppercase">¡HOLA, {user.nombre}!</span>
+                  <span className="hidden xl:inline tracking-widest uppercase">
+                    {user.rol === 'ADMIN' ? '¡HOLA, ADMIN!' : `¡HOLA, ${user.nombre}!`}
+                  </span>
                 </button>
 
                 {/* Menú Desplegable al Hover */}
@@ -123,12 +110,22 @@ export const Navbar = () => {
                     MI PERFIL
                   </Link>
 
-                  <Link
-                    to="/pedidos"
-                    className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold"
-                  >
-                    MIS PEDIDOS
-                  </Link>
+                  {/* Si es ADMIN muestra el Panel, si es CLIENTE muestra sus pedidos */}
+                  {user.rol === 'ADMIN' ? (
+                    <Link
+                      to="/admin/pedidos"
+                      className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold "
+                    >
+                      PANEL DE COCINA
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/pedidos"
+                      className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold"
+                    >
+                      MIS PEDIDOS
+                    </Link>
+                  )}
 
                   <hr className="my-2 border-gray-100" />
 
@@ -212,13 +209,24 @@ export const Navbar = () => {
                   MI PERFIL
                 </Link>
 
-                <Link
-                  to="/pedidos"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-white hover:text-action"
-                >
-                  MIS PEDIDOS
-                </Link>
+                {/* Lógica de botones según Rol en Móvil */}
+                {user.rol === 'ADMIN' ? (
+                  <Link
+                    to="/admin/pedidos"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-white hover:text-action"
+                  >
+                    PANEL DE COCINA
+                  </Link>
+                ) : (
+                  <Link
+                    to="/pedidos"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-white hover:text-action"
+                  >
+                    MIS PEDIDOS
+                  </Link>
+                )}
 
                 <Button
                   onClick={() => { logout(); setIsMenuOpen(false); }}
