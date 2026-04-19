@@ -2,8 +2,83 @@ const express = require('express');
 const router = express.Router();
 const Pedido = require('../models/Pedido');
 
+// Importa los middlewares de seguridad
+const { verificarToken, verificarRolAdmin } = require('../middleware/authMiddleware');
+
+// ==========================================
+// RUTAS DE ADMINISTRADOR
+// ==========================================
+
+// RUTA GET: Obtener TODOS los pedidos (SOLO ADMIN)
+router.get('/', verificarToken, verificarRolAdmin, async (req, res) => {
+  try {
+    // Busca todos los pedidos, ordenados de más recientes a más antiguos (-1)
+    // Usa 'populate' para traer datos clave del usuario (nombre y teléfono)
+    const pedidos = await Pedido.find()
+      .populate('usuario', 'nombre apellidos telefono') 
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      pedidos: pedidos
+    });
+  } catch (error) {
+    console.error('Error al recuperar todos los pedidos:', error);
+    res.status(500).json({
+      success: false,
+      mensaje: 'Error al cargar el panel de pedidos.'
+    });
+  }
+});
+
+// RUTA PATCH: Actualiza el estado del pedido (SOLO ADMIN)
+router.patch('/:id/estado', verificarToken, verificarRolAdmin, async (req, res) => {
+  try {
+    const { nuevoEstado } = req.body;
+
+    // Busca el pedido 
+    const pedido = await Pedido.findById(req.params.id);
+
+    if (!pedido) {
+      return res.status(404).json({ success: false, mensaje: 'Pedido no encontrado.' });
+    }
+
+    // Bloquea al Admin si no han pasado 5 minutos
+    // (A menos que el admin esté cancelando el pedido por algún motivo de fuerza mayor)
+    if (pedido.estado === 'EN_CURSO' && nuevoEstado !== 'CANCELADO') {
+      const tiempoTranscurrido = Date.now() - pedido.createdAt.getTime();
+      const cincoMins = 5 * 60 * 1000;
+
+      if (tiempoTranscurrido < cincoMins) {
+        return res.status(403).json({
+          success: false,
+          mensaje: 'El cliente aún tiene tiempo para cancelar/modificar. Espere a que pasen 5 minutos desde la creación del pedido.'
+        });
+      }
+    }
+
+    // Si pasa la validación (o si ya estaba en otro estado), actualiza el estado
+    pedido.estado = nuevoEstado;
+    await pedido.save();
+
+    res.status(200).json({
+      success: true,
+      pedido,
+      mensaje: `Estado actualizado a ${nuevoEstado}`
+    });
+  } catch (error) {
+    console.error('Error al actualizar estado:', error);
+    res.status(500).json({ success: false, mensaje: 'Error al actualizar el estado.' });
+  }
+});
+
+
+// ==========================================
+// RUTAS DE CLIENTE
+// ==========================================
+
 // RUTA POST: Crear un nuevo pedido (CREATE)
-router.post('/', async (req, res) => {
+router.post('/', verificarToken, async (req, res) => {
   try {
     const {
       usuario,
@@ -50,7 +125,7 @@ router.post('/', async (req, res) => {
 });
 
 // RUTA GET: Obtiene los pedidos del usuario (SELECT)
-router.get('/usuario/:userId', async (req, res) => {
+router.get('/usuario/:userId', verificarToken, async (req, res) => {
   try {
     // Busca los pedidos del usuario y los ordena del más nuevo al más antiguo (-1)
     const pedidos = await Pedido.find({ usuario: req.params.userId }).sort({ createdAt: -1 });
@@ -69,7 +144,7 @@ router.get('/usuario/:userId', async (req, res) => {
 });
 
 // RUTA PATCH: Cancelar un pedido (Borrado lógico)
-router.patch('/:id/cancelar', async (req, res) => {
+router.patch('/:id/cancelar', verificarToken, async (req, res) => {
   try {
     const pedido = await Pedido.findById(req.params.id);
 
@@ -95,7 +170,7 @@ router.patch('/:id/cancelar', async (req, res) => {
 });
 
 // RUTA PUT: Modificar un pedido existente
-router.put('/:id', async (req, res) => {
+router.put('/:id', verificarToken, async (req, res) => {
   try {
     const pedido = await Pedido.findById(req.params.id);
 
@@ -122,48 +197,6 @@ router.put('/:id', async (req, res) => {
     res.status(200).json({ success: true, pedido, mensaje: 'Pedido actualizado.' });
   } catch (error) {
     res.status(500).json({ success: false, mensaje: 'Error al actualizar el pedido.' });
-  }
-});
-
-
-// RUTA PATCH: Actualiza el estado del pedido (SOLO ADMIN)
-router.patch('/:id/estado', async (req, res) => {
-  try {
-    const { nuevoEstado } = req.body;
-
-    // Busca el pedido 
-    const pedido = await Pedido.findById(req.params.id);
-
-    if (!pedido) {
-      return res.status(404).json({ success: false, mensaje: 'Pedido no encontrado.' });
-    }
-
-    // Bloquea al Admin si no han pasado 5 minutos
-    // (A menos que el admin esté cancelando el pedido por algún motivo de fuerza mayor)
-    if (pedido.estado === 'EN_CURSO' && nuevoEstado !== 'CANCELADO') {
-      const tiempoTranscurrido = Date.now() - pedido.createdAt.getTime();
-      const cincoMins = 5 * 60 * 1000;
-
-      if (tiempoTranscurrido < cincoMins) {
-        return res.status(403).json({
-          success: false,
-          mensaje: 'El cliente aún tiene tiempo para cancelar/modificar. Espere a que pasen 5 minutos desde la creación del pedido.'
-        });
-      }
-    }
-
-    // Si pasa la validación (o si ya estaba en otro estado), actualiza el estado
-    pedido.estado = nuevoEstado;
-    await pedido.save();
-
-    res.status(200).json({
-      success: true,
-      pedido,
-      mensaje: `Estado actualizado a ${nuevoEstado}`
-    });
-  } catch (error) {
-    console.error('Error al actualizar estado:', error);
-    res.status(500).json({ success: false, mensaje: 'Error al actualizar el estado.' });
   }
 });
 

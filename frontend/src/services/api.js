@@ -63,6 +63,9 @@ export const pedidosApi = {
   // Crea un nuevo pedido
   crearPedido: (datosPedido) => api.post('/pedidos', datosPedido),
 
+  // Obtiene TODOS los pedidos de la pizzería (Solo ADMIN)
+  obtenerTodosLosPedidos: () => api.get('/pedidos'),
+
   // Obtiene el historial de pedidos de un usuario
   obtenerPedidosUsuario: (userId) => api.get(`/pedidos/usuario/${userId}`),
 
@@ -72,6 +75,6 @@ export const pedidosApi = {
   // Modifica un pedido
   modificarPedido: (pedidoId, datosPedido) => api.put(`/pedidos/${pedidoId}`, datosPedido),
 
-  // Cambia el estado del pedido (Solo Admin / Cocina)
+  // Cambia el estado del pedido (Solo ADMIN)
   actualizarEstadoPedido: (pedidoId, nuevoEstado) => api.patch(`/pedidos/${pedidoId}/estado`, { nuevoEstado })
 };
