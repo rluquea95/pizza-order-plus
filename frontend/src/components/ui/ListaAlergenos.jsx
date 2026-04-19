@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export const ListaAlergenos = ({ alergenos, className = "" }) => {
 
   // Si no hay alérgenos que mostrar, no pinta nada
@@ -12,23 +14,26 @@ export const ListaAlergenos = ({ alergenos, className = "" }) => {
         const textoCompleto = `${nombre}${descripcion}`;
 
         return (
-          <div
+          <Link
+            to="/alergenos"
             key={alergeno._id}
             title={textoCompleto}
             aria-label={`Alérgeno: ${textoCompleto}`}
-            tabIndex="0" 
-            className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden p-0.5 cursor-help hover:scale-110 hover:bg-action transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-action bg-white"
+            // Hace que el scroll se sitúe en el inicio de la página
+            onClick={() => window.scrollTo(0, 0)} 
+            className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden p-0.5 cursor-pointer hover:scale-110 hover:bg-action transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-action bg-white"
           >
             {alergeno.imagen ? (
               <img
                 src={`/img/Alergenos/${alergeno.imagen}`}
                 alt={`Icono de ${nombre}`}
                 className="w-full h-full object-cover rounded-full"
+                onError={(e) => { e.currentTarget.src = '/img/Alergenos/alergeno-not-found.jpg'; }}
               />
             ) : (
               <span className="text-sm">⚠️</span>
             )}
-          </div>
+          </Link>
         );
       })}
     </div>
