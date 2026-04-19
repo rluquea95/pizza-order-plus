@@ -92,6 +92,10 @@ export const useFormValidation = (initialState) => {
   // Asigna las funciones validadoras al input correspondiente
   const validateField = (name, value, currentData) => {
     let errorMsg = '';
+
+    // Si el campo es 'tipo_via', no lo valida, siempre es correcto
+    if (name === 'tipo_via') return '';
+
     switch (name) {
       case 'nombre':
       case 'apellidos':
@@ -111,7 +115,7 @@ export const useFormValidation = (initialState) => {
         if (value.length > 0 && value !== currentData.password) errorMsg = 'Las contraseñas no coinciden.';
         break;
       case 'fecha_nacimiento':
-        if (value.length > 0 && !esFechaValida(value)) errorMsg = 'Debes tener entre 18 y 120 años para registrarte.';
+        if (value.length > 0 && !esFechaValida(value)) errorMsg = 'Debes ser mayor de edad e introducir una fecha válida';
         break;
       case 'telefono':
         if (value.length > 0 && !esTelefonoValido(value)) errorMsg = 'El teléfono debe tener exactamente 9 dígitos.';
@@ -192,6 +196,10 @@ export const useFormValidation = (initialState) => {
 
   // Evalúa el formato que debe tener el input 
   const isFieldValid = (name) => {
+
+    // El selector siempre es válido ya que siempre va a tener una opción marcada
+    if (name === 'tipo_via') return true;
+
     // Revisa que sea un string antes de hacer .trim()
     const valor = formData[name] || '';
     const hasValue = valor.trim().length > 0;

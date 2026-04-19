@@ -6,6 +6,7 @@ import { AlertMessage } from '../components/ui/AlertMessage';
 import { FormInput } from '../components/ui/FormInput';
 import { useFormValidation } from '../hooks/useFormValidation';
 import { useAutoAlert } from '../hooks/useAutoAlert';
+import { AddressForm } from '../components/ui/AddressForm';
 
 export const RegisterPage = () => {
   // Permite redirigir a 'Login' directamente desde código
@@ -20,8 +21,8 @@ export const RegisterPage = () => {
   // Inicializa el validador del formulario con los campos vacíos
   const { formData, validateAll, getFieldProps } = useFormValidation({
     nombre: '', apellidos: '', dni: '', fecha_nacimiento: '', telefono: '',
-    email: '', password: '', confirm_password: '', calle: '', numero: '', piso: '',
-    codigo_postal: '', ciudad: ''
+    email: '', password: '', confirm_password: '', tipo_via: 'Calle', calle: '',
+    numero: '', piso: '', codigo_postal: '', ciudad: ''
   });
 
   // Hook para manejar el cartel de error superior. Se auto-ocultará a los 5 segundos.
@@ -54,8 +55,8 @@ export const RegisterPage = () => {
       fecha_nacimiento: formData.fecha_nacimiento, telefono: formData.telefono,
       email: formData.email, password: formData.password,
       direccion: tieneDireccion ? [{
-        calle: formData.calle, numero: formData.numero, piso: formData.piso,
-        codigo_postal: formData.codigo_postal, ciudad: formData.ciudad
+        tipo_via: formData.tipo_via, calle: formData.calle, numero: formData.numero,
+        piso: formData.piso, codigo_postal: formData.codigo_postal, ciudad: formData.ciudad
       }] : []
     };
 
@@ -105,18 +106,16 @@ export const RegisterPage = () => {
             </div>
           </section>
 
+          {/* SECCIÓN DE DIRECCIÓN */}
           <section>
             <div className="border-b-2 border-gray-100 pb-3 mb-6 flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
               <h2 className="text-xl font-bold text-primary">2. Dirección de Envío</h2>
               <span className="text-sm text-gray-500 mt-1 sm:mt-0">(Sólo es necesario en caso de envío a domicilio)</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-2">
-              <div className="md:col-span-2"><FormInput label="Calle / Avenida" {...getFieldProps("calle")} /></div>
-              <div><FormInput label="Número" {...getFieldProps("numero")} placeholder="Ej: 14, S/N" /></div>
-              <div><FormInput label="Piso / Puerta" {...getFieldProps("piso")} placeholder="Ej: 2ºB" /></div>
-              <div><FormInput label="Código Postal" {...getFieldProps("codigo_postal")} placeholder="41580" maxLength="5" /></div>
-              <div><FormInput label="Ciudad" {...getFieldProps("ciudad")} placeholder="Casariche" /></div>
-            </div>
+
+            {/* FORMULARIO DE DIRECCIÓN */}
+            <AddressForm getFieldProps={getFieldProps} />
+
           </section>
 
           <section>
