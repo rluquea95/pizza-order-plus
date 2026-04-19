@@ -26,6 +26,7 @@ const pedidoSchema = new mongoose.Schema({
   },
   // Dirección opcional, solo se rellena si es a DOMICILIO
   direccionEntrega: {
+    tipo_via: String,
     calle: String,
     numero: String,
     piso: String,

@@ -5,19 +5,6 @@ const Pedido = require('../models/Pedido');
 // RUTA POST: Crear un nuevo pedido (CREATE)
 router.post('/', async (req, res) => {
   try {
-    // Restricción de pedidos cuando el local está cerrado
-    const ahora = new Date();
-    const diaSemana = ahora.getDay();
-    const hora = ahora.getHours();
-
-    // MODO DESARROLLO: Silenciado para hacer pruebas
-    /* if (diaSemana === 1 || hora < 20) {
-      return res.status(403).json({
-        success: false,
-        mensaje: 'El restaurante se encuentra cerrado en este momento.'
-      });
-    } */
-
     const {
       usuario,
       productos,
@@ -144,16 +131,30 @@ router.patch('/:id/estado', async (req, res) => {
   try {
     const { nuevoEstado } = req.body;
 
-    // Verifica si el usuario es Admin
-    const pedido = await Pedido.findByIdAndUpdate(
-      req.params.id,
-      { estado: nuevoEstado },
-      { new: true } // Para que devuelva el pedido ya actualizado
-    );
+    // Busca el pedido 
+    const pedido = await Pedido.findById(req.params.id);
 
     if (!pedido) {
       return res.status(404).json({ success: false, mensaje: 'Pedido no encontrado.' });
     }
+
+    // Bloquea al Admin si no han pasado 5 minutos
+    // (A menos que el admin esté cancelando el pedido por algún motivo de fuerza mayor)
+    if (pedido.estado === 'EN_CURSO' && nuevoEstado !== 'CANCELADO') {
+      const tiempoTranscurrido = Date.now() - pedido.createdAt.getTime();
+      const cincoMins = 5 * 60 * 1000;
+
+      if (tiempoTranscurrido < cincoMins) {
+        return res.status(403).json({
+          success: false,
+          mensaje: 'El cliente aún tiene tiempo para cancelar/modificar. Espere a que pasen 5 minutos desde la creación del pedido.'
+        });
+      }
+    }
+
+    // Si pasa la validación (o si ya estaba en otro estado), actualiza el estado
+    pedido.estado = nuevoEstado;
+    await pedido.save();
 
     res.status(200).json({
       success: true,
@@ -161,6 +162,7 @@ router.patch('/:id/estado', async (req, res) => {
       mensaje: `Estado actualizado a ${nuevoEstado}`
     });
   } catch (error) {
+    console.error('Error al actualizar estado:', error);
     res.status(500).json({ success: false, mensaje: 'Error al actualizar el estado.' });
   }
 });

@@ -31,6 +31,7 @@ const usuarioSchema = new mongoose.Schema({
     match: [/^[0-9]{9}$/, 'El teléfono debe tener 9 dígitos'] // Valida que sean exactamente 9 números
   },
   direccion: [{
+    tipo_via: String,
     calle: String,
     numero: String,
     piso: String,
