@@ -13,9 +13,11 @@ const { verificarToken, verificarRolAdmin } = require('../middleware/authMiddlew
 router.get('/', verificarToken, verificarRolAdmin, async (req, res) => {
   try {
     // Busca todos los pedidos, ordenados de más recientes a más antiguos (-1)
-    // Usa 'populate' para traer datos clave del usuario (nombre y teléfono)
+    // Usa 'populate' para traer los nombres y no las referencias
     const pedidos = await Pedido.find()
-      .populate('usuario', 'nombre apellidos telefono') 
+      .populate('usuario', 'nombre apellidos telefono')
+      .populate('productos.ingredientesExtra', 'ingrediente')
+      .populate('productos.ingredientesQuitados', 'ingrediente')
       .sort({ createdAt: -1 });
 
     res.status(200).json({

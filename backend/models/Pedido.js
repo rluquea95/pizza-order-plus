@@ -15,8 +15,8 @@ const pedidoSchema = new mongoose.Schema({
     cantidad: { type: Number, required: true },
     precioUnitario: { type: Number, required: true },
     // Detalles específicos de personalización
-    ingredientesExtra: [String],
-    ingredientesQuitados: [String],
+    ingredientesExtra: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingrediente' }],
+    ingredientesQuitados: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingrediente' }],
     imagen: String
   }],
   metodoEntrega: {
