@@ -1,7 +1,7 @@
 import { useData } from '../context/DataContext'
 import { Link } from 'react-router';
 import { ListaAlergenos } from './ui/ListaAlergenos';
-import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
+import logoClaro from '../assets/logo_pizza_order_claro.png';
 
 export const Footer = () => {
   // Extrae 'alergenos' y 'cargando' de DataContext
@@ -34,9 +34,9 @@ export const Footer = () => {
               <h3 className="font-bold text-xl mb-6 tracking-widest text-center">ESTAMOS AQUÍ</h3>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
                 <img
-                  src={iconoClaro}
+                  src={logoClaro}
                   alt="Logo PizzaOrder+"
-                  className="w-20 h-20 rounded-full border-2 border-action object-contain bg-bg-logo shrink-0"
+                  className="w-20 h-20 object-contain shrink-0"
                 />
                 <div className="text-lg leading-relaxed text-gray-200">
                   <p>C\ Calle, 12</p>

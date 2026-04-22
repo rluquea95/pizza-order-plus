@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { useCart } from '../context/CartContext';
-import logoClaro from '../assets/logo_pizza_order_claro.jpg';
-import iconoClaro from '../assets/icono_pizza_order_claro.jpg';
+import logoClaro from '../assets/logo_pizza_order_claro.png';
 import { CarritoIcon } from './icons/CarritoIcon';
 import { LoginIcon } from './icons/LoginIcon';
 import { MenuIcon } from './icons/MenuIcon';
@@ -45,8 +44,7 @@ export const Navbar = () => {
 
             {/* Logo */}
             <Link to="/" aria-label="Ir a la página de inicio" className="hover:scale-105 transition-transform shrink-0">
-              <img src={iconoClaro} alt="Icono PizzaOrder+" className="h-18 w-auto lg:hidden" />
-              <img src={logoClaro} alt="Logo PizzaOrder+" className="h-18 w-auto hidden lg:block" />
+              <img src={logoClaro} alt="Logo PizzaOrder+" className="h-18 w-auto lg:block" />
             </Link>
 
             {/* Enlaces de Navegación ESCRITORIO */}
@@ -102,7 +100,7 @@ export const Navbar = () => {
                 </button>
 
                 {/* Menú Desplegable al Hover */}
-                <div className="absolute right-0 top-full w-60 bg-primary text-white rounded-b-xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border-t-2 border-action">
+                <div className="absolute right-0 top-full w-64 bg-primary text-white rounded-b-xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border-t-2 border-action">
                   <Link
                     to="/perfil"
                     className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold"
@@ -110,14 +108,22 @@ export const Navbar = () => {
                     MI PERFIL
                   </Link>
 
-                  {/* Si es ADMIN muestra el Panel, si es CLIENTE muestra sus pedidos */}
+                  {/* Si es ADMIN muestra Panel y el Historial, si es CLIENTE muestra sus pedidos */}
                   {user.rol === 'ADMIN' ? (
-                    <Link
-                      to="/admin/pedidos"
-                      className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold "
-                    >
-                      PANEL DE COCINA
-                    </Link>
+                    <>
+                      <Link
+                        to="/admin/pedidos"
+                        className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold "
+                      >
+                        PANEL DE COCINA
+                      </Link>
+                      <Link
+                        to="/admin/historico"
+                        className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold "
+                      >
+                        HISTORIAL DE PEDIDOS
+                      </Link>
+                    </>
                   ) : (
                     <Link
                       to="/pedidos"
@@ -211,13 +217,22 @@ export const Navbar = () => {
 
                 {/* Lógica de botones según Rol en Móvil */}
                 {user.rol === 'ADMIN' ? (
-                  <Link
-                    to="/admin/pedidos"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-white hover:text-action"
-                  >
-                    PANEL DE COCINA
-                  </Link>
+                  <>
+                    <Link
+                      to="/admin/pedidos"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="text-white hover:text-action"
+                    >
+                      PANEL DE COCINA
+                    </Link>
+                    <Link
+                      to="/admin/historico"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="text-white hover:text-action"
+                    >
+                      HISTORIAL DE PEDIDOS
+                    </Link>
+                  </>
                 ) : (
                   <Link
                     to="/pedidos"
