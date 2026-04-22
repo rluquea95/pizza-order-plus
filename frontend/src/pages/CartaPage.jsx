@@ -24,8 +24,12 @@ export const CartaPage = () => {
         {/* TÍTULO DE LA PÁGINA */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">Nuestra Carta</h1>
-          <p className="text-lg text-primary/70 max-w-2xl mx-auto">
-            Descubre nuestra selección de pizzas artesanales. Ingredientes frescos, masa de fermentación lenta y mucho amor.
+          {/* TEXTO DINÁMICO SEGÚN LA PESTAÑA */}
+          <p className="text-lg text-primary/70 max-w-2xl mx-auto transition-all duration-300">
+            {activeTab === 'pizzas'
+              ? "Descubre nuestra selección de pizzas artesanales. Ingredientes frescos, masa de fermentación lenta y mucho amor."
+              : "Refresca tu paladar con nuestra variedad de bebidas frías. El acompañamiento perfecto para disfrutar de tu pizza."
+            }
           </p>
         </div>
 
@@ -101,10 +105,10 @@ export const CartaPage = () => {
                         <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Ingredientes Base</h3>
                         <div className="flex flex-wrap gap-2">
                           {pizza.ingredientes.map(ing => (
-                            <CapsulaIngrediente 
-                              key={ing._id} 
-                              nombre={ing.ingrediente} 
-                              variant="default" 
+                            <CapsulaIngrediente
+                              key={ing._id}
+                              nombre={ing.ingrediente}
+                              variant="default"
                               interactivo={false} // indica que use <span>
                             />
                           ))}
