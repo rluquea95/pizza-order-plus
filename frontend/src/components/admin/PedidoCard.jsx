@@ -6,7 +6,7 @@ import { CerrarIcon } from '../icons/CerrarIcon';
 import { PhoneIcon } from '../icons/PhoneIcon';
 import { LocationIcon } from '../icons/LocationIcon';
 
-export const PedidoCard = ({ pedido, accionPrincipal, accionRetroceder, onCancelar, isHistorico = false }) => {
+export const PedidoCard = ({ pedido, accionPrincipal, accionRetroceder, onCancelar }) => {
   const [mostrarDetalle, setMostrarDetalle] = useState(false);
   const isDom = pedido.metodoEntrega === 'DOMICILIO';
 
@@ -16,8 +16,7 @@ export const PedidoCard = ({ pedido, accionPrincipal, accionRetroceder, onCancel
   };
 
   return (
-    <div className={`bg-white rounded-3xl shadow-sm border border-gray-200 transition-all duration-300 flex flex-col overflow-hidden group ${isHistorico ? 'opacity-75' : 'hover:shadow-md'
-      }`}>
+    <div className="bg-white rounded-3xl shadow-sm border border-gray-200 transition-all duration-300 flex flex-col overflow-hidden group hover:shadow-md">
 
       {/* CABECERA: Naranja para Domicilio, Azul para Local */}
       <div className={`p-4 sm:p-5 flex items-center justify-between border-b border-gray-200 ${isDom ? 'bg-orange-50' : 'bg-blue-50'}`}>
@@ -73,20 +72,18 @@ export const PedidoCard = ({ pedido, accionPrincipal, accionRetroceder, onCancel
         </div>
 
         {/* BOTÓN DESPLEGAR COMANDA */}
-        {!isHistorico && (
-          <button
-            onClick={() => setMostrarDetalle(!mostrarDetalle)}
-            className="w-full py-3.5 mb-2 bg-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-gray-500 border border-gray-200 hover:bg-gray-50 hover:text-[#1a3a5a] transition-colors flex justify-between px-5 items-center shadow-sm"
-          >
-            {/* TEXTO CONDICIONAL: OCULTAR O VER */}
-            <span>{mostrarDetalle ? 'Ocultar Comanda' : `Ver Comanda`}</span>
-            <span>{mostrarDetalle ? '▲' : '▼'}</span>
-          </button>
-        )}
+        <button
+          onClick={() => setMostrarDetalle(!mostrarDetalle)}
+          className="w-full py-3.5 mb-2 bg-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest text-gray-500 border border-gray-200 hover:bg-gray-50 hover:text-[#1a3a5a] transition-colors flex justify-between px-5 items-center shadow-sm"
+        >
+          {/* TEXTO CONDICIONAL: OCULTAR O VER */}
+          <span>{mostrarDetalle ? 'Ocultar Comanda' : `Ver Comanda`}</span>
+          <span>{mostrarDetalle ? '▲' : '▼'}</span>
+        </button>
 
         {/* LISTADO DE PRODUCTOS */}
-        {(mostrarDetalle || isHistorico) && (
-          <div className={`space-y-4 mb-2 ${isHistorico ? 'mt-2 border-t border-gray-100 pt-5' : 'animate-in fade-in slide-in-from-top-2 duration-300 mt-4'}`}>
+        {mostrarDetalle && (
+          <div className="space-y-4 mb-2 animate-in fade-in slide-in-from-top-2 duration-300 mt-4">
             {pedido.productos.map((item, idx) => (
               <div key={idx} className="flex items-center gap-4 sm:gap-5 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
 
@@ -160,7 +157,7 @@ export const PedidoCard = ({ pedido, accionPrincipal, accionRetroceder, onCancel
         )}
 
         {/* CANCELAR EL PEDIDO */}
-        {onCancelar && !isHistorico && (
+        {onCancelar && (
           <button
             onClick={() => {
               if (window.confirm('¿Estás seguro de que deseas CANCELAR este pedido? Esta acción no se puede deshacer.')) {
