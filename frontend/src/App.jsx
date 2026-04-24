@@ -13,6 +13,7 @@ import { PizzaConfigurator } from './components/PizzaConfigurator';
 import { AdminRoute } from './components/routing/AdminRoute';
 import { AdminPedidosPage } from './pages/AdminPedidosPage';
 import { AlergenosPage } from './pages/AlergenosPage';
+import { HistoricoPedidosPage } from './pages/HistoricoPedidosPage';
 
 
 const App = () => {
@@ -70,6 +71,15 @@ const App = () => {
           element={
             <AdminRoute>
               <AdminPedidosPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/historico"
+          element={
+            <AdminRoute>
+              <HistoricoPedidosPage />
             </AdminRoute>
           }
         />
