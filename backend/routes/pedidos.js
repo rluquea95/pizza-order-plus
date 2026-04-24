@@ -15,7 +15,7 @@ router.get('/', verificarToken, verificarRolAdmin, async (req, res) => {
     // Busca todos los pedidos, ordenados de más recientes a más antiguos (-1)
     // Usa 'populate' para traer los nombres y no las referencias
     const pedidos = await Pedido.find()
-      .populate('usuario', 'nombre apellidos telefono')
+      .populate('usuario', 'nombre apellidos telefono email')
       .populate('productos.ingredientesExtra', 'ingrediente')
       .populate('productos.ingredientesQuitados', 'ingrediente')
       .sort({ createdAt: -1 });
