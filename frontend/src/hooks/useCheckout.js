@@ -157,6 +157,14 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
     ocultarAviso();
     setErrores({});
 
+    // PEDIDO MÍNIMO DE 10€ A DOMICILIO
+    // Comprueba el precioTotal (subtotal de productos) antes de sumar gastos de envío
+    if (metodoEntrega === 'DOMICILIO' && precioTotal < 10) {
+      setErrorGlobal("El pedido mínimo para envío a domicilio es de 10€ (sin incluir gastos de envío).");
+      return; 
+    }
+
+    // Verifica que los campos obligatorios del Domicilio estén cumplimentados
     if (metodoEntrega === 'DOMICILIO') {
       if (!validarFormularioFinal()) {
         setErrorGlobal("Por favor, revisa los campos en rojo de la dirección.");
