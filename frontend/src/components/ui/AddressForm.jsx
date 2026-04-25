@@ -8,7 +8,9 @@ export const AddressForm = ({ getFieldProps, bloquearUbicacion = false }) => {
         <div className="col-span-1 flex flex-col">
           <label className="block text-sm font-semibold text-primary/90 mb-2">Vía</label>
           <select
-            {...getFieldProps("tipo_via")}
+            name={getFieldProps("tipo_via").name}
+            value={getFieldProps("tipo_via").value}
+            onChange={getFieldProps("tipo_via").onChange}
             className="w-full px-4 py-3 bg-bg-light rounded-md focus:outline-none focus:ring-2 transition-all shadow-sm border-2 border-gray-300 focus:ring-gray-300 focus:border-gray-400"
           >
             <option value="Calle">Calle</option>
