@@ -36,7 +36,7 @@ export const FormInput = ({
 
   // Si es readOnly, se le asigna un estilo neutro
   if (readOnly) {
-    borderStyle = "border-2 border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed focus:ring-0";
+    borderStyle = "border-2 border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed focus:ring-0 select-none";
 
     // Color rojo para indicar que el campo no cumple con los requisitos mínimos
   } else if (error) {
@@ -62,6 +62,7 @@ export const FormInput = ({
         placeholder={placeholder}
         maxLength={maxLength}
         readOnly={readOnly}
+        disabled={readOnly}
         className={`w-full px-4 py-3 bg-bg-light rounded-md focus:outline-none focus:ring-2 transition-all shadow-sm ${uppercase ? 'uppercase' : ''} ${borderStyle}`}
       />
       
