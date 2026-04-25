@@ -20,7 +20,7 @@ export const RegisterPage = () => {
 
   // Inicializa el validador del formulario con los campos vacíos
   const { formData, validateAll, getFieldProps } = useFormValidation({
-    nombre: '', apellidos: '', dni: '', fecha_nacimiento: '', telefono: '',
+    nombre: '', apellidos: '', fecha_nacimiento: '', telefono: '',
     email: '', password: '', confirm_password: '', tipo_via: 'Calle', calle: '',
     numero: '', piso: '', codigo_postal: '', ciudad: ''
   });
@@ -51,7 +51,7 @@ export const RegisterPage = () => {
 
     // Formatea los datos exactamente como los espera el modelo Mongoose en el Backend.
     const datosParaBackend = {
-      nombre: formData.nombre, apellidos: formData.apellidos, dni: formData.dni,
+      nombre: formData.nombre, apellidos: formData.apellidos,
       fecha_nacimiento: formData.fecha_nacimiento, telefono: formData.telefono,
       email: formData.email, password: formData.password,
       direccion: tieneDireccion ? [{
@@ -93,16 +93,14 @@ export const RegisterPage = () => {
           className="flex flex-col gap-12"
         >
 
+          {/* SECCIÓN DE DATOS PERSONALES */}
           <section>
             <h2 className="text-xl font-bold text-primary border-b-2 border-gray-100 pb-3 mb-6">1. Datos Personales</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+            <div className="flex flex-col gap-2">
               <FormInput label="Nombre" obligatorio={true} {...getFieldProps("nombre")} />
               <FormInput label="Apellidos" obligatorio={true} {...getFieldProps("apellidos")} />
-              <FormInput label="DNI / NIE" obligatorio={true} {...getFieldProps("dni")} placeholder="12345678A" maxLength="9" uppercase={true} />
               <FormInput type="date" label="Fecha de Nacimiento" obligatorio={true} {...getFieldProps("fecha_nacimiento")} />
-              <div className="md:col-span-2">
-                <FormInput type="tel" label="Teléfono" obligatorio={true} {...getFieldProps("telefono")} placeholder="Ej: 600123456" maxLength="9" />
-              </div>
+              <FormInput type="tel" label="Teléfono" obligatorio={true} {...getFieldProps("telefono")} placeholder="Ej: 600123456" maxLength="9" />
             </div>
           </section>
 
@@ -168,6 +166,6 @@ export const RegisterPage = () => {
           ¿Ya tienes cuenta? <Link to="/login" className="text-action font-bold hover:underline transition-all">Inicia sesión aquí</Link>
         </p>
       </div>
-    </main>
+    </main >
   );
 };

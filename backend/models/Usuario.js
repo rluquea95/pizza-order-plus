@@ -13,14 +13,6 @@ const usuarioSchema = new mongoose.Schema({
     required: [true, 'Los apellidos son obligatorios'],
     trim: true
   },
-  dni: {
-    type: String,
-    required: [true, 'El DNI es obligatorio'],
-    unique: true, // No pueden existir dos usuarios con el mismo DNI
-    trim: true,
-    uppercase: true, 
-    match: [/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i, 'Por favor, introduce un DNI válido (8 números y 1 letra)']
-  },
   fecha_nacimiento: {
     type: Date,
     required: [true, 'La fecha de nacimiento es obligatoria']

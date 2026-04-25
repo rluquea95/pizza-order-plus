@@ -11,7 +11,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // ==========================================
 router.post('/registro', async (req, res) => {
   try {
-    const { nombre, apellidos, dni, fecha_nacimiento, email, password, telefono, direccion } = req.body;
+    const { nombre, apellidos, fecha_nacimiento, email, password, telefono, direccion } = req.body;
 
     // Verifica si el usuario ya existe con ese email
     const usuarioExistente = await Usuario.findOne({ email });
@@ -19,19 +19,12 @@ router.post('/registro', async (req, res) => {
       return res.status(400).json({ mensaje: 'El correo electrónico ya está registrado' });
     }
     
-    // Comprueba si ya hay un usuario registrado con ese DNI
-    const dniExistente = await Usuario.findOne({ dni });
-    if (dniExistente) {
-      return res.status(400).json({ mensaje: 'Ya existe una cuenta con este DNI' });
-    }
-
     // Crea el nuevo usuario
     // El rol por defecto será 'CLIENTE'
     // Argon2 encriptará 'password' automáticamente gracias al hook 'pre-save'
     const nuevoUsuario = new Usuario({ 
       nombre, 
       apellidos,
-      dni,
       fecha_nacimiento, 
       email, 
       password, 
@@ -56,7 +49,7 @@ router.post('/registro', async (req, res) => {
 
   } catch (error) {
     console.error('Error en el registro:', error);
-    // Si hay un error de validación de Mongoose (ej. DNI mal formateado), devuelve ese mensaje
+    // Si hay un error de validación de Mongoose, devuelve ese mensaje
     if (error.name === 'ValidationError') {
       const mensajes = Object.values(error.errors).map(val => val.message);
       return res.status(400).json({ mensaje: mensajes.join('. ') });

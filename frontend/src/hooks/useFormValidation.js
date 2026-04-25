@@ -36,22 +36,6 @@ export const useFormValidation = (initialState) => {
     return regex.test(texto);
   };
 
-  const esDniValido = (dni) => {
-    // Comprueba formato básico (8 números y 1 letra) 
-    const regex = /^\d{8}[a-zA-Z]$/;
-    if (!regex.test(dni)) return false;
-
-    const numero = dni.substring(0, 8);
-    const letraUsuario = dni.charAt(8).toUpperCase();
-    const letrasValidas = "TRWAGMYFPDXBNJZSQVHLCKE";
-
-    // Calcula el resto de dividir el número entre 23 y busca la letra 
-    const resto = parseInt(numero, 10) % 23;
-    const letraCorrecta = letrasValidas.charAt(resto);
-
-    return letraUsuario === letraCorrecta;
-  };
-
   const esEmailValido = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -101,9 +85,6 @@ export const useFormValidation = (initialState) => {
       case 'apellidos':
       case 'ciudad':
         if (value.length > 0 && !esSoloTexto(value)) errorMsg = 'Solo puede contener letras y espacios.';
-        break;
-      case 'dni':
-        if (value.length > 0 && !esDniValido(value)) errorMsg = 'El formato o la letra del DNI no son válidos.';
         break;
       case 'email':
         if (value.length > 0 && !esEmailValido(value)) errorMsg = 'Introduce un correo electrónico válido.';
@@ -170,7 +151,7 @@ export const useFormValidation = (initialState) => {
     setConfirmTouched(true);
 
     Object.keys(formData).forEach((key) => {
-      const camposObligatorios = ['nombre', 'apellidos', 'dni', 'fecha_nacimiento', 'telefono', 'email', 'password', 'confirm_password'];
+      const camposObligatorios = ['nombre', 'apellidos', 'fecha_nacimiento', 'telefono', 'email', 'password', 'confirm_password'];
 
       // Comprueba que los campos obligatorios no se hayan dejado en blanco
       if (camposObligatorios.includes(key) && !formData[key]) {
