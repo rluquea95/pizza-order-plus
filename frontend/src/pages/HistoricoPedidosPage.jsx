@@ -23,9 +23,13 @@ export const HistoricoPedidosPage = () => {
   // Control para mostrar detalles del pedido
   const [expandedRows, setExpandedRows] = useState({});
 
+  // Controla qué filas de la tabla están desplegadas (para ver los productos).
+  // Recibe el ID del pedido que el usuario ha clicado.
   const toggleRow = (id) => {
     setExpandedRows(prev => ({
+      // Copia el estado del resto de filas (para conservar las filas abiertas/cerradas)
       ...prev,
+      // Cambia el estado de plegado a desplegado y viceversa
       [id]: !prev[id]
     }));
   };
@@ -38,7 +42,7 @@ export const HistoricoPedidosPage = () => {
   );
 
   return (
-    <main className="min-h-screen bg-bg-main pt-28 pb-12 px-4 md:px-8 font-poppins">
+    <main className="min-h-screen bg-bg-main pt-28 pb-12 px-4 md:px-8">
 
       {/* CABECERA */}
       <div className="text-center mb-10 max-w-4xl mx-auto">
@@ -163,7 +167,7 @@ export const HistoricoPedidosPage = () => {
                           className={`${rowBg} hover:bg-orange-50/40 transition-colors group cursor-pointer`}
                         >
 
-                          {/* REFERENCIA */}
+                          {/* REFERENCIA DEL PEDIDO */}
                           <td className="p-5 font-black text-gray-400 group-hover:text-action transition-colors text-center select-none">
                             <span className="inline-block w-4 mr-1 text-action">
                               {isExpanded ? '▼' : '▶'}

@@ -6,10 +6,10 @@ import { PedidoItem } from './admin/PedidoItem';
 export const FacturaPDF = ({ pedido }) => {
   const isDom = pedido.metodoEntrega === 'DOMICILIO';
 
-  // Cream una referencia al div que se quiere imprimir
+  // Crea una referencia al div que se quiere imprimir
   const componenteRef = useRef(null);
 
-  // Configuramos la librería añadiendo onBeforeGetContent para asegurar la carga de las imágenes
+  // Configura la librería
   const handlePrint = useReactToPrint({
     contentRef: componenteRef,
     documentTitle: `Factura_${pedido.usuario?.nombre || 'Cliente'}_${pedido._id.slice(-6)}`
@@ -32,10 +32,10 @@ export const FacturaPDF = ({ pedido }) => {
         <DownloadIcon className="w-6 h-6" />
       </button>
 
-      {/* PLANTILLA OCULTA DEL TICKET (AHORA EN EL VIEWPORT PERO INVISIBLE) */}
+      {/* PLANTILLA OCULTA DEL TICKET */}
       <div className="absolute top-0 left-0 w-full opacity-0 pointer-events-none -z-50 overflow-hidden h-0">
-        {/* Le pasamos la referencia "componenteRef" a este contenedor */}
-        <div ref={componenteRef} className="w-full p-8 bg-white text-left font-sans text-gray-800">
+        {/* Le pasa la referencia "componenteRef" a este contenedor */}
+        <div ref={componenteRef} className="w-full p-8 bg-white text-left text-gray-800">
 
           {/* CABECERA FACTURA */}
           <div className="border-b-4 border-[#1a3a5a] pb-6 mb-8 flex justify-between items-end">
@@ -96,7 +96,7 @@ export const FacturaPDF = ({ pedido }) => {
           </div>
 
           {/* ======================================================== */}
-          {/* PRODUCTOS DESGLOSADOS (¡USANDO TU COMPONENTE PedidoItem!) */}
+          {/* PRODUCTOS DESGLOSADOS */}
           {/* ======================================================== */}
           <div className="mb-10">
             <h3 className="text-base font-black text-primary uppercase tracking-widest mb-4 border-b border-gray-200 pb-2">
