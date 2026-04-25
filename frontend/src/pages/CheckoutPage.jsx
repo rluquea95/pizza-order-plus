@@ -150,7 +150,10 @@ export const CheckoutPage = () => {
                 </h2>
 
                 {/* FORMULARIO DE DIRECCIÓN */}
-                <AddressForm getFieldProps={getFieldProps} />
+                <AddressForm
+                  getFieldProps={getFieldProps}
+                  bloquearUbicacion={true}
+                />
 
               </div>
             )}
