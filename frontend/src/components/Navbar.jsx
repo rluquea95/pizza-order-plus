@@ -60,18 +60,6 @@ export const Navbar = () => {
               >
                 CARTA
               </NavLink>
-
-              {/* Ofertas */}
-              <NavLink
-                to="/ofertas"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-action border-b-2 border-action pb-1"
-                    : "hover:text-action transition-colors pb-1 text-white"
-                }
-              >
-                OFERTAS
-              </NavLink>
             </div>
           </div>
 
@@ -101,13 +89,7 @@ export const Navbar = () => {
 
                 {/* Menú Desplegable al Hover */}
                 <div className="absolute right-0 top-full w-64 bg-primary text-white rounded-b-xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border-t-2 border-action">
-                  <Link
-                    to="/perfil"
-                    className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold"
-                  >
-                    MI PERFIL
-                  </Link>
-
+                
                   {/* Si es ADMIN muestra Panel y el Historial, si es CLIENTE muestra sus pedidos */}
                   {user.rol === 'ADMIN' ? (
                     <>
@@ -193,28 +175,11 @@ export const Navbar = () => {
               CARTA
             </NavLink>
 
-            {/* Ofertas */}
-            <NavLink
-              to="/ofertas"
-              onClick={() => setIsMenuOpen(false)}
-              className={({ isActive }) => isActive ? "text-action" : "text-white hover:text-action"}
-            >
-              OFERTAS
-            </NavLink>
-
             <hr className="border-white/10 my-2" />
 
             {/* LÓGICA DE USUARIO (MÓVIL) */}
             {user ? (
               <>
-                <Link
-                  to="/perfil"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-white hover:text-action"
-                >
-                  MI PERFIL
-                </Link>
-
                 {/* Lógica de botones según Rol en Móvil */}
                 {user.rol === 'ADMIN' ? (
                   <>
