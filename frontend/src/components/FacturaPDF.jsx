@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { DownloadIcon } from './icons/DownloadIcon';
-import { PedidoItem } from './admin/PedidoItem';
+import { PedidoItem } from './PedidoItem';
 
 export const FacturaPDF = ({ pedido }) => {
   const isDom = pedido.metodoEntrega === 'DOMICILIO';
@@ -95,9 +95,7 @@ export const FacturaPDF = ({ pedido }) => {
 
           </div>
 
-          {/* ======================================================== */}
           {/* PRODUCTOS DESGLOSADOS */}
-          {/* ======================================================== */}
           <div className="mb-10">
             <h3 className="text-base font-black text-primary uppercase tracking-widest mb-4 border-b border-gray-200 pb-2">
               Productos
@@ -109,9 +107,7 @@ export const FacturaPDF = ({ pedido }) => {
             </div>
           </div>
 
-          {/* ======================================================== */}
-          {/* LÍNEA SEPARADORA Y TOTAL (ANCHO COMPLETO)                  */}
-          {/* ======================================================== */}
+          {/* LÍNEA SEPARADORA Y TOTAL */}
           <hr className="my-8 border-t-2 border-gray-100" />
 
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 flex justify-between items-center">
