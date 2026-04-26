@@ -4,12 +4,16 @@ import { pedidosApi } from '../services/api';
 export const useHistoricoPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Estados para los filtros
   const [searchTerm, setSearchTerm] = useState('');
-  const [filtroEstado, setFiltroEstado] = useState('TODOS'); 
-  const [filtroEntrega, setFiltroEntrega] = useState('TODOS'); 
+  const [filtroEstado, setFiltroEstado] = useState('TODOS');
+  const [filtroEntrega, setFiltroEntrega] = useState('TODOS');
   const [orden, setOrden] = useState('FECHA_DESC');
+
+  // Estados para la paginación
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 15;
 
   // Carga inicial de datos
   const cargarPedidos = useCallback(async () => {
@@ -34,8 +38,13 @@ export const useHistoricoPedidos = () => {
     cargarPedidos();
   }, [cargarPedidos]);
 
-  // Aplica Búsqueda, Filtros y Ordenación
-  const pedidosProcesados = useMemo(() => {
+  // Si el usuario cambia los filtros, lo devuelve a la página 1
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [filtroEstado, filtroEntrega, orden, searchTerm]);
+
+  // Aplica Búsqueda, Filtros, Ordenación y Paginación
+  const { pedidosPaginados, totalPaginas } = useMemo(() => {
     let resultado = [...pedidos];
 
     // Filtro por Estado 
@@ -51,8 +60,8 @@ export const useHistoricoPedidos = () => {
     // Búsqueda por Referencia o Nombre
     if (searchTerm) {
       const query = searchTerm.toLowerCase();
-      resultado = resultado.filter(p => 
-        p._id.slice(-6).toLowerCase().includes(query) || 
+      resultado = resultado.filter(p =>
+        p._id.slice(-6).toLowerCase().includes(query) ||
         `${p.usuario?.nombre} ${p.usuario?.apellidos}`.toLowerCase().includes(query)
       );
     }
@@ -68,27 +77,50 @@ export const useHistoricoPedidos = () => {
           return b.precioTotal - a.precioTotal;
         case 'PRECIO_ASC':  // Menor precio
           return a.precioTotal - b.precioTotal;
-        case 'NOMBRE_ASC':  // Alfabético A-Z
+        case 'NOMBRE_ASC': {  // Alfabéticamente
           const nombreA = `${a.usuario?.nombre} ${a.usuario?.apellidos}`.toLowerCase();
           const nombreB = `${b.usuario?.nombre} ${b.usuario?.apellidos}`.toLowerCase();
           return nombreA.localeCompare(nombreB);
+        }
         default:
           return 0;
       }
     });
 
-    return resultado;
-  }, [pedidos, filtroEstado, filtroEntrega, searchTerm, orden]);
+    // Divide los pedidos en bloques de 15
+    const totalPaginasCalc = Math.ceil(resultado.length / elementosPorPagina);
+
+    // Si la página actual se queda fuera de rango tras un borrado o filtrado, se ajusta al máximo posible
+    const paginaAsegurada = Math.min(paginaActual, totalPaginasCalc > 0 ? totalPaginasCalc : 1);
+
+    // Extrae solo los pedidos de la página correspondiente
+    const indiceInicio = (paginaAsegurada - 1) * elementosPorPagina;
+    const indiceFin = indiceInicio + elementosPorPagina;
+    const pedidosDeLaPagina = resultado.slice(indiceInicio, indiceFin);
+
+    return {
+      pedidosPaginados: pedidosDeLaPagina,
+      totalPaginas: totalPaginasCalc
+    };
+  }, [pedidos, filtroEstado, filtroEntrega, searchTerm, orden, paginaActual]);
+
+  // Funciones para navegar por las páginas
+  const nextPagina = () => setPaginaActual(prev => Math.min(prev + 1, totalPaginas));
+  const prevPagina = () => setPaginaActual(prev => Math.max(prev - 1, 1));
 
   return {
-    pedidos: pedidosProcesados,
+    pedidos: pedidosPaginados,
+    totalPaginas,
+    paginaActual,
+    nextPagina,
+    prevPagina,
     loading,
     searchTerm,
     setSearchTerm,
     filtroEstado,
     setFiltroEstado,
-    filtroEntrega, 
-    setFiltroEntrega, 
+    filtroEntrega,
+    setFiltroEntrega,
     orden,
     setOrden,
     cargarPedidos
