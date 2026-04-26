@@ -14,6 +14,7 @@ import { AdminRoute } from './components/routing/AdminRoute';
 import { AdminPedidosPage } from './pages/AdminPedidosPage';
 import { AlergenosPage } from './pages/AlergenosPage';
 import { HistoricoPedidosPage } from './pages/HistoricoPedidosPage';
+import { PedidosUsuarioPage } from './pages/PedidosUsuarioPage';
 
 
 const App = () => {
@@ -61,6 +62,9 @@ const App = () => {
 
         {/* Página de Checkout */}
         <Route path="/tramitar-pedido" element={<CheckoutPage />} />
+
+        {/* Página de Historial de Pedidos del Cliente */}
+        <Route path="/pedidos" element={<PedidosUsuarioPage />} />
 
 
         {/* =========================================
