@@ -5,7 +5,7 @@ import { AtrasIcon } from '../icons/AtrasIcon';
 import { CerrarIcon } from '../icons/CerrarIcon';
 import { PhoneIcon } from '../icons/PhoneIcon';
 import { LocationIcon } from '../icons/LocationIcon';
-import { PedidoItem } from './PedidoItem';
+import { PedidoItem } from '../PedidoItem';
 
 export const PedidoCard = ({ pedido, accionPrincipal, accionRetroceder, onCancelar }) => {
   const [mostrarDetalle, setMostrarDetalle] = useState(false);
@@ -87,7 +87,11 @@ export const PedidoCard = ({ pedido, accionPrincipal, accionRetroceder, onCancel
           <div className="animate-in fade-in slide-in-from-top-2 duration-300 mt-4 space-y-4 mb-2">
             {/* SE ENVÍA CADA PRODUCTO */}
             {pedido.productos.map((itemDelBucle, index) => (
-              <PedidoItem key={index} item={itemDelBucle} />
+              <PedidoItem
+                key={index}
+                item={itemDelBucle}
+                isCompact={true}
+              />
             ))}
           </div>
         )}
