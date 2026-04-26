@@ -16,6 +16,12 @@ export const CartProvider = ({ children }) => {
     return carritoGuardado ? JSON.parse(carritoGuardado) : [];
   });
 
+  // Guarda el ID del pedido que se está editando
+  // Se almacena en LocalStorage para que no se pierda si se recarga la página.
+  const [pedidoEnEdicion, setPedidoEnEdicion] = useState(() => {
+    return localStorage.getItem('pizza-order-edicion') || null;
+  });
+
   // Inicializa los estados del Modal de configurar pizzas
   const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(false);
   const [configProduct, setConfigProduct] = useState(null);
@@ -25,6 +31,17 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('pizza-order-cart', JSON.stringify(carrito));
   }, [carrito]);
+
+  // Almacena el pedido que se va a editar en LocalStorage
+  useEffect(() => {
+    if (pedidoEnEdicion) {
+      localStorage.setItem('pizza-order-edicion', pedidoEnEdicion);
+    } else {
+      // Cuando no hay pedido en edición, limpia la memoria por completo
+      localStorage.removeItem('pizza-order-edicion');
+      localStorage.removeItem('pizza-order-fecha');
+    }
+  }, [pedidoEnEdicion]);
 
   // AÑADE PRODUCTOS AL CARRITO
   const agregarAlCarrito = (productoAñadido) => {
@@ -84,6 +101,33 @@ export const CartProvider = ({ children }) => {
   // VACIAR CARRITO (Se usará para el botón "Vaciar todo" y tras realizar el pedido) 
   const vaciarCarrito = () => {
     setCarrito([]);
+    // Al vaciar el carrito, sale del modo edición
+    setPedidoEnEdicion(null); 
+  };
+
+  // FUNCION QUE CONTROLA LA EDICION DEL PEDIDO
+  const iniciarEdicionPedido = (pedidoAntiguo) => {
+
+    // Formatea los productos del pedido para que encajen en la estructura del carrito
+    const productosAdaptados = pedidoAntiguo.productos.map(p => ({
+      ...p,
+      // Genera un idLinea temporal 
+      idLinea: p.productoId + '-' + Date.now() + Math.random(),
+
+      // Recrea el precioTotalLinea ya que en la BBDD se almacena el precio unitario
+      precioTotalLinea: p.precioUnitario * p.cantidad
+    }));
+
+    // Añade los productos al carrito
+    setCarrito(productosAdaptados);
+
+    // Guarda el ID del pedido para que Checkout sepa que es una actualización
+    setPedidoEnEdicion(pedidoAntiguo._id);
+
+    // Se almacena en LocalStorage para no perder los datos cuando se recarga o redirecciona
+    localStorage.setItem('pizza-order-cart', JSON.stringify(productosAdaptados));
+    localStorage.setItem('pizza-order-edicion', pedidoAntiguo._id);
+    localStorage.setItem('pizza-order-fecha', pedidoAntiguo.createdAt);
   };
 
   // Cálculos globales
@@ -131,7 +175,9 @@ export const CartProvider = ({ children }) => {
       pizzaEditando,
       abrirConfigurador,
       editarPizzaDelCarrito,
-      cerrarConfigurador
+      cerrarConfigurador,
+      pedidoEnEdicion,       
+      iniciarEdicionPedido
     }}>
       {children}
     </CartContext.Provider>
