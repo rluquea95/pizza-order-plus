@@ -24,7 +24,8 @@ export const CheckoutPage = () => {
     precioTotal,
     actualizarCantidad,
     editarPizzaDelCarrito,
-    eliminarDelCarrito
+    eliminarDelCarrito,
+    pedidoEnEdicion
   } = useCart();
 
   // Obtiene el usuario y la función que comprueba el login
@@ -39,8 +40,11 @@ export const CheckoutPage = () => {
     errorGlobal,
     enviarPedido,
     isCerrado,
-    pedidoRealizado
-  } = useCheckout(user, carrito, precioTotal, vaciarCarrito, navigate);
+    pedidoRealizado,
+    pedidoCancelado,
+    tiempoVisual,
+    handleVaciarCarrito
+  } = useCheckout(user, carrito, precioTotal, vaciarCarrito, navigate, pedidoEnEdicion);
 
   // Controla el Scroll hacia el mensaje de aviso
   const errorRef = useRef(null);
@@ -51,12 +55,17 @@ export const CheckoutPage = () => {
   // Comprueba si hay usuario logueado para redigirilo a un sitio u otro
   useEffect(() => {
 
-    // Si está cargando el Auth, o si acaba de hacer un pedido, cancela el efecto.
-    if (authLoading || pedidoRealizado) return;
+    // Si está cargando, acaba de hacer un pedido o acaba de cancelar un pedido, cancela el efecto.
+    if (authLoading || pedidoRealizado || pedidoCancelado) return;
 
-    if (!user) navigate('/login');
-    else if (carrito.length === 0) navigate('/carta');
-  }, [user, authLoading, carrito.length, navigate, pedidoRealizado]);
+    if (!user) {
+      navigate('/login');
+    }
+    // SOLO redirige a la carta si el carrito está vacío y no se está editando un pedido
+    else if (carrito.length === 0 && !pedidoEnEdicion) {
+      navigate('/carta');
+    }
+  }, [user, authLoading, carrito.length, navigate, pedidoRealizado, pedidoEnEdicion]);
 
   // Efecto para hacer scroll automático hacia el error
   useEffect(() => {
@@ -84,7 +93,7 @@ export const CheckoutPage = () => {
       {/* ENCABEZADO */}
       <div className="text-center mb-8 md:mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">
-          Finaliza tu Pedido
+          {pedidoEnEdicion ? 'Modifica tu Pedido' : 'Finaliza tu Pedido'}
         </h1>
         <p className="text-gray-500 text-lg max-w-2xl mx-auto mb-8">
           Revisa tu compra y selecciona el método de entrega para disfrutar de tu pedido.
@@ -205,9 +214,16 @@ export const CheckoutPage = () => {
 
               <div className="flex flex-col gap-3">
                 <Button variant="primary" className="w-full py-4 text-xl font-black tracking-widest rounded-2xl shadow-lg hover:scale-[1.02] transition-transform" onClick={enviarPedido} disabled={checkoutLoading}>
-                  {checkoutLoading ? 'PROCESANDO...' : 'CONFIRMAR Y PAGAR'}
+                  {checkoutLoading
+                    ? 'PROCESANDO...'
+                    : (pedidoEnEdicion ?
+                      <>
+                        GUARDAR CAMBIOS <span className="text-sm px-2 py-0.5  animate-pulse">({tiempoVisual})</span>
+                      </>
+                      : 'CONFIRMAR Y PAGAR')
+                  }
                 </Button>
-                <button onClick={vaciarCarrito} className="w-full py-2 text-xs font-bold text-gray-400 hover:text-red-500 transition-colors uppercase tracking-[0.2em]">
+                <button onClick={handleVaciarCarrito} className="w-full py-2 text-xs font-bold text-gray-400 hover:text-red-500 transition-colors uppercase tracking-[0.2em]">
                   Vaciar Carrito
                 </button>
               </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { pedidosApi } from '../services/api';
 import { useAutoAlert } from './useAutoAlert';
 
-export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => {
+export const useCheckout = (user, carrito, precioTotal, clearCart, navigate, pedidoEnEdicion) => {
 
   // Almacena el método de entrega del pedido
   const [metodoEntrega, setMetodoEntrega] = useState('LOCAL');
@@ -44,8 +44,9 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
     : 0;
 
   // Bandera para saber si el carrito se ha vaciado al realizar una compra
-  // o el usuario ha pulsado en 'Vaciar Carrito' 
   const [pedidoRealizado, setPedidoRealizado] = useState(false);
+  // Bandera para saber si acabamos de cancelar un pedido
+  const [pedidoCancelado, setPedidoCancelado] = useState(false);
 
   // Validaciones básicas de longitud para la calle y número
   const esCalleValida = (calle) => {
@@ -91,7 +92,7 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
   // Comprueba si el campo es válido para aplicarle el formato adecuado
   const isFieldValid = (name) => {
     // El select siempre es válido
-    if (name === 'tipo_via') return true; 
+    if (name === 'tipo_via') return true;
     const valor = direccion[name] || '';
     const hasValue = valor.trim().length > 0;
 
@@ -152,6 +153,36 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
     return { cerrado: false };
   };
 
+  // LÓGICA DE TEMPORIZADOR DE EDICIÓN
+  const [now, setNow] = useState(Date.now());
+  const fechaPedidoStr = localStorage.getItem('pizza-order-fecha');
+  const tiempoTranscurrido = fechaPedidoStr ? now - new Date(fechaPedidoStr).getTime() : 0;
+  const tiempoRestante = (5 * 60 * 1000) - tiempoTranscurrido;
+
+  const minutos = Math.floor(tiempoRestante / 60000);
+  const segundos = Math.floor((tiempoRestante % 60000) / 1000);
+  const tiempoVisual = `${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+
+  // Mostrará al usuario el tiempo restante de edición de pedido
+  useEffect(() => {
+    let intervalo;
+    if (pedidoEnEdicion && fechaPedidoStr) {
+      intervalo = setInterval(() => setNow(Date.now()), 1000);
+    }
+    return () => clearInterval(intervalo);
+  }, [pedidoEnEdicion, fechaPedidoStr]);
+
+  // Redirige a los pedidos del usuario cuando se acaba el tiempo de edición
+  useEffect(() => {
+    // Si quedan 0 segundos o menos, limpiamos y redirigimos
+    if (pedidoEnEdicion && fechaPedidoStr && tiempoRestante <= 0) {
+      alert("El tiempo de modificación (5 minutos) ha expirado.");
+      clearCart();
+      navigate('/pedidos');
+    }
+  }, [tiempoRestante, pedidoEnEdicion, fechaPedidoStr, clearCart, navigate]);
+
+
   // --- ENVÍO A BACKEND ---
   const enviarPedido = async () => {
     ocultarAviso();
@@ -161,7 +192,7 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
     // Comprueba el precioTotal (subtotal de productos) antes de sumar gastos de envío
     if (metodoEntrega === 'DOMICILIO' && precioTotal < 10) {
       setErrorGlobal("El pedido mínimo para envío a domicilio es de 10€ (sin incluir gastos de envío).");
-      return; 
+      return;
     }
 
     // Verifica que los campos obligatorios del Domicilio estén cumplimentados
@@ -192,7 +223,7 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
 
       // Genera el pedido
       const datosPedido = {
-        usuario: user._id || user.id, 
+        usuario: user._id || user.id,
         productos: productosFormateados,
         metodoEntrega: metodoEntrega,
         precioTotal: Number(totalConEnvio.toFixed(2))
@@ -204,14 +235,19 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
           tipo_via: direccion.tipo_via,
           calle: direccion.calle,
           numero: direccion.numero,
-          piso: direccion.piso || '', 
+          piso: direccion.piso || '',
           codigo_postal: direccion.codigo_postal,
           ciudad: direccion.ciudad
         };
       }
-
+      
       // Llamada a la API
-      await pedidosApi.crearPedido(datosPedido);
+      // Depende de si es edición o una compra se crea/modifica el pedido
+      if (pedidoEnEdicion) {
+        await pedidosApi.modificarPedido(pedidoEnEdicion, datosPedido);
+      } else {
+        await pedidosApi.crearPedido(datosPedido);
+      }
 
       // Indica que el carrito se vacía por una compra
       setPedidoRealizado(true);
@@ -219,9 +255,9 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
       // Vacía el carrito
       clearCart();
 
-      // Redirige al perfil
+      // Redirige a los pedidos del usuario
       // Añade replace:true para que no pueda volver atrás con el navegador
-      navigate('/pedidos', { replace: true }); 
+      navigate('/pedidos', { replace: true });
 
     } catch (err) {
 
@@ -238,6 +274,29 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
     }
   };
 
+  // Función que Cancela el pedido editado en caso de que el usuario vacíe el carrito
+  const handleVaciarCarrito = async () => {
+    if (!pedidoEnEdicion) {
+      clearCart();
+      return;
+    }
+
+    const confirmar = window.confirm(
+      "Al vaciar el carrito durante una edición, este pedido se CANCELARÁ definitivamente. ¿Estás seguro de que deseas cancelar el pedido?"
+    );
+
+    if (confirmar) {
+      try {
+        await pedidosApi.cancelarPedido(pedidoEnEdicion);
+        setPedidoCancelado(true);
+        clearCart();
+        navigate('/pedidos', { replace: true });
+      } catch (err) {
+        alert(err.response?.data?.mensaje || "Hubo un error al cancelar el pedido.");
+      }
+    }
+  };
+
   // Exporta los datos necesarios para CheckoutPage
   return {
     metodoEntrega,
@@ -248,6 +307,9 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate) => 
     errorGlobal,
     enviarPedido,
     isCerrado,
-    pedidoRealizado
+    pedidoRealizado,
+    pedidoCancelado,
+    tiempoVisual,
+    handleVaciarCarrito
   };
 };
