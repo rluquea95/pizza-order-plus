@@ -100,7 +100,7 @@ router.post('/', verificarToken, async (req, res) => {
 
     // Almacena el pedido
     const nuevoPedido = new Pedido({
-      usuario,
+      usuario: req.usuario.id,
       productos,
       metodoEntrega,
       // Si es local, ignora la dirección para que no ocupe espacio innecesario
@@ -127,10 +127,14 @@ router.post('/', verificarToken, async (req, res) => {
 });
 
 // RUTA GET: Obtiene los pedidos del usuario (SELECT)
-router.get('/usuario/:userId', verificarToken, async (req, res) => {
+router.get('/mis-pedidos', verificarToken, async (req, res) => {
   try {
     // Busca los pedidos del usuario y los ordena del más nuevo al más antiguo (-1)
-    const pedidos = await Pedido.find({ usuario: req.params.userId }).sort({ createdAt: -1 });
+    const pedidos = await Pedido.find({ usuario: req.usuario.id })
+      .populate('usuario', 'nombre apellidos telefono email')
+      .populate('productos.ingredientesExtra', 'ingrediente')
+      .populate('productos.ingredientesQuitados', 'ingrediente')
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -178,6 +182,11 @@ router.put('/:id', verificarToken, async (req, res) => {
 
     if (!pedido) {
       return res.status(404).json({ success: false, mensaje: 'Pedido no encontrado.' });
+    }
+
+    // Verifica que solo pueda modificarlo el usuario
+    if (pedido.usuario.toString() !== req.usuario.id) {
+      return res.status(403).json({ success: false, mensaje: 'No tienes permiso.' });
     }
 
     if (!pedido.puedeEditarse) {

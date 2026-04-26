@@ -60,21 +60,23 @@ export const authApi = {
 
 // Objeto de servicio que agrupa las llamadas relacionadas con los pedidos
 export const pedidosApi = {
-  // Crea un nuevo pedido
+  // Crea un nuevo pedido (POST)
   crearPedido: (datosPedido) => api.post('/pedidos', datosPedido),
 
-  // Obtiene TODOS los pedidos de la pizzería (Solo ADMIN)
-  obtenerTodosLosPedidos: () => api.get('/pedidos'),
+  // Obtiene el historial del usuario LOGUEADO 
+  obtenerMisPedidos: () => api.get('/pedidos/mis-pedidos'),
 
-  // Obtiene el historial de pedidos de un usuario
-  obtenerPedidosUsuario: (userId) => api.get(`/pedidos/usuario/${userId}`),
-
-  // Cancela un pedido (Borrado lógico)
-  cancelarPedido: (pedidoId) => api.patch(`/pedidos/${pedidoId}/cancelar`),
-
-  // Modifica un pedido
+  // Modifica un pedido existente (PUT) 
   modificarPedido: (pedidoId, datosPedido) => api.put(`/pedidos/${pedidoId}`, datosPedido),
 
-  // Cambia el estado del pedido (Solo ADMIN)
+  // Cancela un pedido (PATCH - Borrado lógico)
+  cancelarPedido: (pedidoId) => api.patch(`/pedidos/${pedidoId}/cancelar`),
+
+
+  // --- RUTAS DE ADMIN ---
+  // Obtiene TODOS los pedidos de la pizzería 
+  obtenerTodosLosPedidos: () => api.get('/pedidos'),
+
+  // Cambia el estado del pedido 
   actualizarEstadoPedido: (pedidoId, nuevoEstado) => api.patch(`/pedidos/${pedidoId}/estado`, { nuevoEstado })
 };
