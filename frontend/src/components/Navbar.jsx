@@ -6,7 +6,7 @@ import { CarritoIcon } from './icons/CarritoIcon';
 import { LoginIcon } from './icons/LoginIcon';
 import { MenuIcon } from './icons/MenuIcon';
 import { CerrarIcon } from './icons/CerrarIcon';
-import { CartSidebar } from './CartSideBar';
+import { CartSidebar } from './CartSidebar';
 import { Button } from './ui/Button';
 import { useAuth } from '../context/AuthContext';
 
@@ -89,30 +89,31 @@ export const Navbar = () => {
 
                 {/* Menú Desplegable al Hover */}
                 <div className="absolute right-0 top-full w-64 bg-primary text-white rounded-b-xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border-t-2 border-action">
-                
-                  {/* Si es ADMIN muestra Panel y el Historial, si es CLIENTE muestra sus pedidos */}
-                  {user.rol === 'ADMIN' ? (
+
+                  {/* Enlace de cliente común a TODOS los usuarios logueados */}
+                  <Link
+                    to="/pedidos"
+                    className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold"
+                  >
+                    MIS PEDIDOS
+                  </Link>
+
+                  {/* Si es ADMIN muestra Panel de Cocina y el Historico de Pedidos*/}
+                  {user.rol === 'ADMIN' && (
                     <>
                       <Link
                         to="/admin/pedidos"
-                        className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold "
+                        className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold border-t border-white/10"
                       >
                         PANEL DE COCINA
                       </Link>
                       <Link
                         to="/admin/historico"
-                        className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold "
+                        className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold border-t border-white/10"
                       >
                         HISTORIAL DE PEDIDOS
                       </Link>
                     </>
-                  ) : (
-                    <Link
-                      to="/pedidos"
-                      className="block px-4 py-3 hover:text-action transition-colors text-lg tracking-widest font-bold"
-                    >
-                      MIS PEDIDOS
-                    </Link>
                   )}
 
                   <hr className="my-2 border-gray-100" />
@@ -180,9 +181,20 @@ export const Navbar = () => {
             {/* LÓGICA DE USUARIO (MÓVIL) */}
             {user ? (
               <>
-                {/* Lógica de botones según Rol en Móvil */}
-                {user.rol === 'ADMIN' ? (
+                {/* Enlace común para todos */}
+                <Link
+                  to="/pedidos"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-white hover:text-action "
+                >
+                  MIS PEDIDOS
+                </Link>
+
+                {/* Enlaces exclusivos de Admin en móvil */}
+                {user.rol === 'ADMIN' && (
                   <>
+                    <hr className="border-white/10 my-1" />
+
                     <Link
                       to="/admin/pedidos"
                       onClick={() => setIsMenuOpen(false)}
@@ -190,6 +202,9 @@ export const Navbar = () => {
                     >
                       PANEL DE COCINA
                     </Link>
+
+                    <hr className="border-white/10 my-1" />
+
                     <Link
                       to="/admin/historico"
                       onClick={() => setIsMenuOpen(false)}
@@ -198,16 +213,7 @@ export const Navbar = () => {
                       HISTORIAL DE PEDIDOS
                     </Link>
                   </>
-                ) : (
-                  <Link
-                    to="/pedidos"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-white hover:text-action"
-                  >
-                    MIS PEDIDOS
-                  </Link>
                 )}
-
                 <Button
                   onClick={() => { logout(); setIsMenuOpen(false); }}
                   variant="primary"
