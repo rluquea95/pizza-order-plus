@@ -11,6 +11,7 @@ import { CheckoutPage } from './pages/CheckoutPage';
 import { IniciarPedidoPage } from './pages/IniciarPedidoPage';
 import { PizzaConfigurator } from './components/PizzaConfigurator';
 import { AdminRoute } from './components/routing/AdminRoute';
+import { ClienteRoute } from './components/routing/ClienteRoute';
 import { AdminPedidosPage } from './pages/AdminPedidosPage';
 import { AlergenosPage } from './pages/AlergenosPage';
 import { HistoricoPedidosPage } from './pages/HistoricoPedidosPage';
@@ -39,7 +40,7 @@ const App = () => {
       <Routes>
 
         {/* =========================================
-            RUTAS PÚBLICAS Y DE CLIENTES
+            RUTAS PÚBLICAS
             ========================================= */}
 
         {/* Página de Inicio */}
@@ -60,16 +61,35 @@ const App = () => {
         {/* Página de Login */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Página de Checkout */}
-        <Route path="/tramitar-pedido" element={<CheckoutPage />} />
 
-        {/* Página de Historial de Pedidos del Cliente */}
-        <Route path="/pedidos" element={<PedidosUsuarioPage />} />
+        {/* =========================================
+            RUTAS DE CLIENTE
+            ========================================= */}
+        {/* Página de Checkout */}
+        <Route
+          path="/tramitar-pedido"
+          element={
+            <ClienteRoute>
+              <CheckoutPage />
+            </ClienteRoute>
+          }
+        />
+
+        {/* Página de Pedidos del Usuario */}
+        <Route
+          path="/pedidos"
+          element={
+            <ClienteRoute>
+              <PedidosUsuarioPage />
+            </ClienteRoute>
+          }
+        />
 
 
         {/* =========================================
-            RUTAS EXCLUSIVAS DE ADMINISTRACIÓN
+            RUTAS DE ADMINISTRADOR
             ========================================= */}
+        {/* Página de Gestión de Pedidos */}
         <Route
           path="/admin/pedidos"
           element={
@@ -79,6 +99,7 @@ const App = () => {
           }
         />
 
+        {/* Página de Historial de Pedidos Cerrados/Cancelados */}
         <Route
           path="/admin/historico"
           element={

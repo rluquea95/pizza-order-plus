@@ -58,14 +58,11 @@ export const CheckoutPage = () => {
     // Si está cargando, acaba de hacer un pedido o acaba de cancelar un pedido, cancela el efecto.
     if (authLoading || pedidoRealizado || pedidoCancelado) return;
 
-    if (!user) {
-      navigate('/login');
-    }
     // SOLO redirige a la carta si el carrito está vacío y no se está editando un pedido
     else if (carrito.length === 0 && !pedidoEnEdicion) {
       navigate('/carta');
     }
-  }, [user, authLoading, carrito.length, navigate, pedidoRealizado, pedidoEnEdicion]);
+  }, [authLoading, carrito.length, navigate, pedidoRealizado, pedidoEnEdicion]);
 
   // Efecto para hacer scroll automático hacia el error
   useEffect(() => {
@@ -84,8 +81,8 @@ export const CheckoutPage = () => {
     );
   }
 
-  // Si no hay usuario logueado y el carrito está vacío sale
-  if (!user || carrito.length === 0) return null;
+  // Si el carrito está vacío y no se está editando, no renderiza la vista (evita pantallazos antes de redirigir)
+  if (carrito.length === 0 && !pedidoEnEdicion) return null;
 
   return (
     <div className="container mx-auto p-4 pt-28 pb-12 max-w-7xl min-h-screen">
