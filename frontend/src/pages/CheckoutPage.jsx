@@ -52,7 +52,7 @@ export const CheckoutPage = () => {
   // Evalúa si el restaurante está cerrado 
   const estadoCierre = isCerrado();
 
-  // Comprueba si hay usuario logueado para redigirilo a un sitio u otro
+  // Comprueba los efectos para redigirir al usuario a un sitio u otro
   useEffect(() => {
 
     // Si está cargando, acaba de hacer un pedido o acaba de cancelar un pedido, cancela el efecto.
@@ -85,7 +85,7 @@ export const CheckoutPage = () => {
   if (carrito.length === 0 && !pedidoEnEdicion) return null;
 
   return (
-    <div className="container mx-auto p-4 pt-28 pb-12 max-w-7xl min-h-screen">
+    <main className="container mx-auto p-4 pt-28 pb-12 max-w-7xl min-h-screen">
 
       {/* ENCABEZADO */}
       <div className="text-center mb-8 md:mb-12">
@@ -230,6 +230,6 @@ export const CheckoutPage = () => {
         </div>
 
       </div>
-    </div>
+    </main>
   );
 };

@@ -26,7 +26,7 @@ export const AdminPedidosPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-bg-main pt-28 pb-12 px-4 md:px-6 font-poppins">
+    <main className="min-h-screen bg-bg-main pt-28 pb-12 px-4 md:px-6">
 
       {/* CABECERA */}
       <div className="text-center mb-10">
@@ -164,6 +164,6 @@ export const AdminPedidosPage = () => {
         </PedidoColumn>
 
       </div>
-    </div>
+    </main>
   );
 };
