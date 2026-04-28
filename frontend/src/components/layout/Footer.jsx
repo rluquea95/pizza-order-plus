@@ -1,7 +1,8 @@
-import { useData } from '../context/DataContext'
+
 import { Link } from 'react-router';
-import { ListaAlergenos } from './ui/ListaAlergenos';
-import logoClaro from '../assets/logo_pizza_order_claro.png';
+import logoClaro from '../../assets/logo_pizza_order_claro.png';
+import { ListaAlergenos } from '../ListaAlergenos';
+import { useData } from '../../context/DataContext';
 
 export const Footer = () => {
   // Extrae 'alergenos' y 'cargando' de DataContext

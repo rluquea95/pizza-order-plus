@@ -6,7 +6,7 @@ import { AlertMessage } from '../components/ui/AlertMessage';
 import { FormInput } from '../components/ui/FormInput';
 import { useFormValidation } from '../hooks/useFormValidation';
 import { useAutoAlert } from '../hooks/useAutoAlert';
-import { AddressForm } from '../components/ui/AddressForm';
+import { AddressForm } from '../components/AddressForm';
 
 export const RegisterPage = () => {
   // Permite redirigir a 'Login' directamente desde código

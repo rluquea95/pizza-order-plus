@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useCarta } from '../hooks/useCarta';
 import { BarraBusqueda } from '../components/BarraBusqueda';
-import { ListaAlergenos } from '../components/ui/ListaAlergenos';
-import { CapsulaIngrediente } from '../components/ui/CapsulaIngrediente';
+import { ListaAlergenos } from '../components/ListaAlergenos';
+import { CapsulaIngrediente } from '../components/CapsulaIngrediente';
 import { DrinkIcon } from '../components/icons/DrinkIcon';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { EmptyState } from '../components/ui/EmptyState';

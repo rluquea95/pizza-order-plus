@@ -1,4 +1,4 @@
-import { FormInput } from './FormInput';
+import { FormInput } from "./ui/FormInput";
 
 export const AddressForm = ({ getFieldProps, bloquearUbicacion = false }) => {
   return (

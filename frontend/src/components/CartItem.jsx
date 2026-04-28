@@ -1,6 +1,6 @@
-import { EliminarIcon } from '../icons/EliminarIcon';
-import { EditarIcon } from '../icons/EditarIcon';
-import { QuantitySelector } from './QuantitySelector';
+import { EliminarIcon } from './icons/EliminarIcon';
+import { EditarIcon } from './icons/EditarIcon';
+import { QuantitySelector } from './ui/QuantitySelector';
 
 export const CartItem = ({ item, onEliminar, onEditar, onActualizarCantidad }) => {
   return (

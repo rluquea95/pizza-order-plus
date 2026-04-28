@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
-import { useCart } from '../context/CartContext';
-import { Button } from './ui/Button';
-import { CerrarIcon } from './icons/CerrarIcon';
-import { CartItem } from './ui/CartItem';
+import { useCart } from '../../context/CartContext';
+import { Button } from '../ui/Button';
+import { CerrarIcon } from '../icons/CerrarIcon';
+import { CartItem } from '../CartItem';
 
 export const CartSidebar = ({ isOpen, onClose }) => {
   // Constante desestructurada que recibe el carrito global

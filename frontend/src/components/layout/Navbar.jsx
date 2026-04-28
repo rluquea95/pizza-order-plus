@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
-import { useCart } from '../context/CartContext';
-import logoClaro from '../assets/logo_pizza_order_claro.png';
-import { CarritoIcon } from './icons/CarritoIcon';
-import { LoginIcon } from './icons/LoginIcon';
-import { MenuIcon } from './icons/MenuIcon';
-import { CerrarIcon } from './icons/CerrarIcon';
+import { useCart } from '../../context/CartContext';
+import logoClaro from '../../assets/logo_pizza_order_claro.png';
+import { CarritoIcon } from '../icons/CarritoIcon';
+import { LoginIcon } from '../icons/LoginIcon';
+import { MenuIcon } from '../icons/MenuIcon';
+import { CerrarIcon } from '../icons/CerrarIcon';
 import { CartSidebar } from './CartSidebar';
-import { Button } from './ui/Button';
-import { useAuth } from '../context/AuthContext';
+import { Button } from '../ui/Button';
+import { useAuth } from '../../context/AuthContext';
 
 export const Navbar = () => {
 

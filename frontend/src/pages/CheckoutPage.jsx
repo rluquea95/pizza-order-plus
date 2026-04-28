@@ -8,10 +8,10 @@ import { Button } from '../components/ui/Button';
 import { RecogerLocalIcon } from '../components/icons/RecogerLocalIcon';
 import { EnvioDomIcon } from '../components/icons/EnvioDomIcon';
 import { AlertMessage } from '../components/ui/AlertMessage';
-import { CartItem } from '../components/ui/CartItem';
 import { BannerInformacion } from '../components/ui/BannerInformacion';
-import { AddressForm } from '../components/ui/AddressForm';
+import { AddressForm } from '../components/AddressForm';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import { CartItem } from '../components/CartItem';
 
 export const CheckoutPage = () => {
 

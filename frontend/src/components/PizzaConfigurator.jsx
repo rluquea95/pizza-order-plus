@@ -5,8 +5,8 @@ import { AlertMessage } from './ui/AlertMessage';
 import { BannerInformacion } from './ui/BannerInformacion';
 import { CerrarIcon } from './icons/CerrarIcon';
 import { QuantitySelector } from './ui/QuantitySelector';
-import { ListaAlergenos } from './ui/ListaAlergenos';
-import { CapsulaIngrediente } from './ui/CapsulaIngrediente';
+import { ListaAlergenos } from './ListaAlergenos';
+import { CapsulaIngrediente } from './CapsulaIngrediente';
 
 export const PizzaConfigurator = ({ isOpen, onClose, product, ingredientes, pizzaEditando }) => {
 

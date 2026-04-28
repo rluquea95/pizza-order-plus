@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router';
 import { useData } from './context/DataContext';
 import { useCart } from './context/CartContext';
-import { Footer } from './components/Footer';
-import { Navbar } from './components/Navbar';
+import { Footer } from './components/layout/Footer';
+import { Navbar } from './components/layout/Navbar';
 import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { CartaPage } from './pages/CartaPage';
