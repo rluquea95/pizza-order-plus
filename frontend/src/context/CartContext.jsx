@@ -40,6 +40,8 @@ export const CartProvider = ({ children }) => {
       // Cuando no hay pedido en edición, limpia la memoria por completo
       localStorage.removeItem('pizza-order-edicion');
       localStorage.removeItem('pizza-order-fecha');
+      localStorage.removeItem('pizza-order-metodo');
+      localStorage.removeItem('pizza-order-direccion');
     }
   }, [pedidoEnEdicion]);
 
@@ -128,6 +130,12 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('pizza-order-cart', JSON.stringify(productosAdaptados));
     localStorage.setItem('pizza-order-edicion', pedidoAntiguo._id);
     localStorage.setItem('pizza-order-fecha', pedidoAntiguo.createdAt);
+    localStorage.setItem('pizza-order-metodo', pedidoAntiguo.metodoEntrega || 'LOCAL');
+
+    // Guarda la dirección de entrega en caso de que sea envío a Domicilio
+    if (pedidoAntiguo.direccionEntrega) {
+      localStorage.setItem('pizza-order-direccion', JSON.stringify(pedidoAntiguo.direccionEntrega));
+    }
   };
 
   // Cálculos globales

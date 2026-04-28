@@ -19,7 +19,7 @@ export const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Extrae el total del Carrito
-  const { cantidadTotal } = useCart();
+  const { cantidadTotal, pedidoEnEdicion } = useCart();
 
   // Estado que controla el usuario y la función de cierre de sesión
   const { user, logout } = useAuth();
@@ -66,13 +66,15 @@ export const Navbar = () => {
           {/* Agrupa el resto de botones de la barra de navegación*/}
           <div className="flex items-center gap-2 md:gap-4 text-lg font-bold tracking-wide">
 
-            {/* Botón Iniciar Pedido*/}
+            {/* Botón Iniciar Pedido / Añadir Productos */}
             <Link
               to="/iniciar-pedido"
               className="bg-action text-primary px-3 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all 
                       shadow-md flex items-center justify-center hover:scale-105 active:scale-95 active:shadow-sm"
             >
-              <span className="text-sm md:text-lg">INICIAR PEDIDO</span>
+              <span className="text-sm md:text-lg">
+                {pedidoEnEdicion ? 'AÑADE PRODUCTOS' : 'INICIAR PEDIDO'}
+              </span>
             </Link>
 
             {/* LÓGICA DE USUARIO (DESKTOP) */}

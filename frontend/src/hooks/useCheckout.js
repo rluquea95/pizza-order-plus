@@ -4,21 +4,47 @@ import { useAutoAlert } from './useAutoAlert';
 
 export const useCheckout = (user, carrito, precioTotal, clearCart, navigate, pedidoEnEdicion) => {
 
-  // Almacena el método de entrega del pedido
-  const [metodoEntrega, setMetodoEntrega] = useState('LOCAL');
+  // Almacena el método de entrega del pedido. 
+  // Lee del localStorage si esta en edición, si no, por defecto 'LOCAL'
+  const [metodoEntrega, setMetodoEntrega] = useState(() => {
+    return localStorage.getItem('pizza-order-metodo') || 'LOCAL';
+  });
 
   // Estado centralizado del formulario 
-  const [direccion, setDireccion] = useState({
-    tipo_via: user?.direccion?.[0]?.tipo_via || 'Calle',
-    calle: user?.direccion?.[0]?.calle || '',
-    numero: user?.direccion?.[0]?.numero || '',
-    piso: user?.direccion?.[0]?.piso || '',
-    codigo_postal: '41580',
-    ciudad: 'Casariche'
+  // Si se está editando un pedido, obtiene la dirección de localStorage, si no, coge la dirección por defecto
+  // que tiene almacenado el usuario en su cuenta
+  const [direccion, setDireccion] = useState(() => {
+    const dirGuardada = localStorage.getItem('pizza-order-direccion');
+
+    if (dirGuardada) {
+      const parsedDir = JSON.parse(dirGuardada);
+      return {
+        tipo_via: parsedDir.tipo_via || 'Calle',
+        calle: parsedDir.calle || '',
+        numero: parsedDir.numero || '',
+        piso: parsedDir.piso || '',
+        codigo_postal: '41580',
+        ciudad: 'Casariche'
+      };
+    }
+
+    // Si no hay edición, coge la dirección por defecto del usuario
+    return {
+      tipo_via: user?.direccion?.[0]?.tipo_via || 'Calle',
+      calle: user?.direccion?.[0]?.calle || '',
+      numero: user?.direccion?.[0]?.numero || '',
+      piso: user?.direccion?.[0]?.piso || '',
+      codigo_postal: '41580',
+      ciudad: 'Casariche'
+    };
   });
 
   // Cuando el user termina de cargar desde el AuthContext, actualiza el formulario.
   useEffect(() => {
+
+    // Si esta editando un pedido, NO sobreescribimos la dirección con la del perfil
+    if (pedidoEnEdicion) return;
+
     if (user?.direccion && user.direccion.length > 0) {
       const dirPrincipal = user.direccion[0];
       setDireccion(prev => ({
@@ -29,7 +55,7 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate, ped
         piso: dirPrincipal.piso || ''
       }));
     }
-  }, [user]);
+  }, [user, pedidoEnEdicion]);
 
   // Almacena los errores y si está cargando
   const [errores, setErrores] = useState({});
@@ -240,7 +266,7 @@ export const useCheckout = (user, carrito, precioTotal, clearCart, navigate, ped
           ciudad: direccion.ciudad
         };
       }
-      
+
       // Llamada a la API
       // Depende de si es edición o una compra se crea/modifica el pedido
       if (pedidoEnEdicion) {
