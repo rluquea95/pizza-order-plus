@@ -8,9 +8,8 @@ export const useIniciarPedido = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('nombre');
   
-  // Extrae 'productos' y 'cargando' de la memoria global
-  const { productos, cargando } = useData();
-  const error = null;
+  // Extrae 'productos','cargando' y 'error' de la memoria global
+  const { productos, cargando, error } = useData();
 
   // Cuando se cambia de pestaña, resetea la búsqueda y el filtro
   const handleTabChange = (tab) => {

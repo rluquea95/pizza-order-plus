@@ -25,6 +25,8 @@ export const DataProvider = ({ children }) => {
 
       } catch (err) {
         console.error("Error cargando inventario:", err);
+        // Mensaje que recibe el usuario
+        setError("No hemos podido cargar la carta. Por favor, revisa tu conexión o inténtalo de nuevo más tarde.");
         setCargando(false);
       }
     };

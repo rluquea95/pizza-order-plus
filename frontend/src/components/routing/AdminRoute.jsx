@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router';
 import { useAuth } from '../../context/AuthContext';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
 
 
 export const AdminRoute = ({ children }) => {
@@ -8,12 +9,7 @@ export const AdminRoute = ({ children }) => {
 
   // Mientras la app arranca y lee el localStorage, muestra el spinner de carga
   if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fdfaf1] gap-4">
-        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-primary font-bold tracking-widest uppercase text-sm">Cargando usuario...</p>
-      </div>
-    );
+    return <LoadingSpinner mensaje="Validando sesión..." />;
   }
 
   // Si no hay nadie logueado, lo redirige a login

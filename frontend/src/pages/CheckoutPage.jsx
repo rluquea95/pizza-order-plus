@@ -11,6 +11,7 @@ import { AlertMessage } from '../components/ui/AlertMessage';
 import { CartItem } from '../components/ui/CartItem';
 import { BannerInformacion } from '../components/ui/BannerInformacion';
 import { AddressForm } from '../components/ui/AddressForm';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 
 export const CheckoutPage = () => {
 
@@ -73,12 +74,7 @@ export const CheckoutPage = () => {
 
   // Mensaje de carga 
   if (authLoading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fdfaf1] gap-4">
-        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-primary font-bold tracking-widest uppercase text-sm">Cargando pedido...</p>
-      </div>
-    );
+    return <LoadingSpinner mensaje="Cargando pedido..." />;
   }
 
   // Si el carrito está vacío y no se está editando, no renderiza la vista (evita pantallazos antes de redirigir)

@@ -3,6 +3,10 @@ import { useCarta } from '../hooks/useCarta';
 import { BarraBusqueda } from '../components/BarraBusqueda';
 import { ListaAlergenos } from '../components/ui/ListaAlergenos';
 import { CapsulaIngrediente } from '../components/ui/CapsulaIngrediente';
+import { DrinkIcon } from '../components/icons/DrinkIcon';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import { EmptyState } from '../components/ui/EmptyState';
+import { RecogerLocalIcon } from '../components/icons/RecogerLocalIcon';
 
 export const CartaPage = () => {
   // Desestructura todo lo que devuelve el hook (useCarta.js)
@@ -63,8 +67,13 @@ export const CartaPage = () => {
         </div>
 
         {/* Mensajes de estado */}
-        {cargando && <div className="text-center py-20 font-bold text-2xl text-primary animate-pulse">Preparando la carta... 🍕</div>}
-        {error && <div className="text-center text-red-500 py-10 font-bold">Ups, hubo un problema: {error}</div>}
+        {cargando && <LoadingSpinner mensaje="Preparando la carta..." />}
+        {error && (
+          <EmptyState
+            titulo="¡Ups! Algo ha salido mal"
+            descripcion={error}
+          />
+        )}
 
         {/* =========================================
             PESTAÑA: PIZZAS (DISEÑO 1 COLUMNA)
@@ -131,8 +140,12 @@ export const CartaPage = () => {
 
             {/* Mensaje si no hay resultados en la búsqueda de pizzas */}
             {pizzas.length === 0 && (
-              <div className="text-center text-gray-500 py-10 font-semibold text-lg bg-white rounded-3xl shadow-sm border border-gray-100">
-                No hemos encontrado pizzas que coincidan con "{searchTerm}".
+              <div className="col-span-full">
+                <EmptyState
+                  icono={<RecogerLocalIcon className="w-20 h-20" />}
+                  titulo="No se encontraron pizzas"
+                  descripcion={`No hemos encontrado pizzas que coincidan con "${searchTerm}".`}
+                />
               </div>
             )}
           </div>
@@ -166,8 +179,12 @@ export const CartaPage = () => {
 
             {/* Mensaje si no hay resultados en la búsqueda de bebidas */}
             {bebidas.length === 0 && (
-              <div className="col-span-full text-center text-gray-500 py-10 font-semibold text-lg bg-white rounded-3xl shadow-sm border border-gray-100">
-                No hemos encontrado bebidas que coincidan con "{searchTerm}".
+              <div className="col-span-full">
+                <EmptyState
+                  icono={<DrinkIcon className="w-20 h-20" />}
+                  titulo="No se encontraron bebidas"
+                  descripcion={`No hemos encontrado bebidas que coincidan con "${searchTerm}".`}
+                />
               </div>
             )}
           </div>

@@ -7,6 +7,9 @@ import { FacturaPDF } from '../components/FacturaPDF';
 import { EditarIcon } from '../components/icons/EditarIcon';
 import { CerrarIcon } from '../components/icons/CerrarIcon';
 import { Paginacion } from '../components/ui/Paginacion';
+import { EmptyState } from '../components/ui/EmptyState';
+import { PedidoIcon } from '../components/icons/PedidoIcon';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 
 export const PedidosUsuarioPage = () => {
   const {
@@ -42,12 +45,9 @@ export const PedidosUsuarioPage = () => {
     }
   };
 
-  if (loading) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-bg-main gap-4">
-      <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-primary font-bold tracking-widest uppercase text-sm">Cargando tus pedidos...</p>
-    </div>
-  );
+  if (loading) {
+    return <LoadingSpinner mensaje="Cargando tus pedidos..." />;
+  }
 
   return (
     <main className="min-h-screen bg-bg-main pt-28 pb-12 px-4 md:px-8">
@@ -258,11 +258,11 @@ export const PedidosUsuarioPage = () => {
             />
           </div>
         ) : (
-          <div className="text-center py-24 bg-white rounded-4xl border border-gray-200 shadow-sm mt-8">
-            <span className="text-6xl opacity-40 block mb-6" aria-hidden="true">🍕</span>
-            <h3 className="text-2xl font-bold text-primary mb-2">No hay resultados</h3>
-            <p className="text-gray-500 font-medium">No se encontraron pedidos que coincidan con estos filtros.</p>
-          </div>
+          <EmptyState
+            icono={<PedidoIcon className="w-20 h-20" />}
+            titulo="No hay resultados"
+            descripcion="No se encontraron pedidos que coincidan con estos filtros."
+          />
         )}
       </div>
     </main >

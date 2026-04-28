@@ -1,12 +1,15 @@
 import { useData } from '../context/DataContext';
 import { BannerInformacion } from '../components/ui/BannerInformacion';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import { EmptyState } from '../components/ui/EmptyState';
 
 export const AlergenosPage = () => {
-  // Obtiene los alérgenos de useData
-  const { alergenos, cargando } = useData();
+  // Extrae alérgenos, cargando y error de useData
+  const { alergenos, cargando, error: errorApi } = useData();
 
   // Define un error manual por si la colección viene vacía
-  const error = !cargando && (!alergenos || alergenos.length === 0);
+  // Evalua si hay un error de la API o si simplemente la colección vino vacía
+  const error = errorApi || (!cargando && (!alergenos || alergenos.length === 0) ? "No se ha encontrado la información detallada de los alérgenos." : null);
 
   return (
     <main className="w-full grow bg-bg-main py-12 pt-28">
@@ -23,17 +26,13 @@ export const AlergenosPage = () => {
         </div>
 
         {/* Mensajes de estado */}
-        {cargando && (
-          <div className="text-center py-20">
-            <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="font-bold text-xl text-primary animate-pulse">Cargando guía de salud...</p>
-          </div>
-        )}
+        {cargando && <LoadingSpinner mensaje="Cargando alérgenos..." />}
 
         {error && (
-          <div className="text-center text-red-500 py-10 font-bold bg-white rounded-4xl shadow-sm">
-            Hubo un problema al cargar los alérgenos.
-          </div>
+          <EmptyState
+            titulo="¡Ups! Algo ha salido mal"
+            descripcion={error}
+          />
         )}
 
         {/* =========================================

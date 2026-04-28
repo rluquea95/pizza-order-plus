@@ -3,9 +3,8 @@ import { useData } from '../context/DataContext';
 
 export const useCarta = () => {
 
-  // Extrae los 'produtos' y 'cargando' de DataContext
-  const { productos, cargando } = useData();
-  const error = null;
+  // Extrae los 'produtos','cargando' y 'error' de DataContext
+  const { productos, cargando, error } = useData();
 
   // Almacena la búsqueda
   const [searchTerm, setSearchTerm] = useState('');

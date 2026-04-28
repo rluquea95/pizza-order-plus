@@ -4,6 +4,11 @@ import { Filtro } from '../components/Filtro';
 import { BannerInformacion } from '../components/ui/BannerInformacion';
 import { ProductCard } from '../components/ProductCard';
 import { useIniciarPedido } from '../hooks/useIniciarPedido'; // Lógica de IniciarPedidoPage
+import { EmptyState } from '../components/ui/EmptyState';
+import { SearchIcon } from '../components/icons/SeachIcon';
+import { DrinkIcon } from '../components/icons/DrinkIcon';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import { RecogerLocalIcon } from '../components/icons/RecogerLocalIcon';
 
 export const IniciarPedidoPage = () => {
   // Desestructura todo lo que devuelve el hook (useIniciarPedido.js)
@@ -87,8 +92,14 @@ export const IniciarPedidoPage = () => {
         />
 
         {/* Mensajes de carga/error de la Carta */}
-        {cargando && <div className="text-center py-10 font-bold italic text-primary">Cargando la carta... 🍕</div>}
-        {error && <div className="text-center text-red-500 py-10 font-bold">Error: {error}</div>}
+        {cargando && <LoadingSpinner mensaje="Cargando nuestra carta..." />}
+        {error && (
+          <EmptyState
+            icono={<SearchIcon className="w-20 h-20" />}
+            titulo="¡Ups! Algo ha salido mal"
+            descripcion={error}
+          />
+        )}
 
         {/* PESTAÑA PIZZAS */}
         {!cargando && !error && activeTab === 'pizzas' && (
@@ -110,8 +121,12 @@ export const IniciarPedidoPage = () => {
                 />
               ))}
               {pizzasOrdenadas.length === 0 && (
-                <div className="col-span-full text-center text-gray-500 py-10 font-semibold text-lg">
-                  No hemos encontrado pizzas que coincidan con esa búsqueda.
+                <div className="col-span-full">
+                  <EmptyState
+                    icono={<RecogerLocalIcon className="w-20 h-20" />}
+                    titulo="No hay pizzas"
+                    descripcion="No hemos encontrado pizzas que coincidan con tu búsqueda."
+                  />
                 </div>
               )}
             </div>
@@ -133,8 +148,12 @@ export const IniciarPedidoPage = () => {
                 />
               ))}
               {bebidasOrdenadas.length === 0 && (
-                <div className="col-span-full text-center text-gray-500 py-10 font-semibold text-lg">
-                  No hay bebidas que coincidan.
+                <div className="col-span-full">
+                  <EmptyState
+                    icono={<DrinkIcon className="w-20 h-20" />}
+                    titulo="No hay bebidas"
+                    descripcion="No hemos encontrado bebidas que coincidan con los filtros aplicados."
+                  />
                 </div>
               )}
             </div>

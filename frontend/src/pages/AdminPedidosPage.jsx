@@ -7,6 +7,7 @@ import { RecogerLocalIcon } from '../components/icons/RecogerLocalIcon';
 import { EnvioDomIcon } from '../components/icons/EnvioDomIcon';
 import { SiguienteIcon } from '../components/icons/SiguienteIcon';
 import { Button } from '../components/ui/Button';
+import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 
 export const AdminPedidosPage = () => {
   const {
@@ -18,12 +19,9 @@ export const AdminPedidosPage = () => {
     esProcesable
   } = useAdminPedidos();
 
-  if (loading) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-bg-main gap-4">
-      <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-primary font-bold tracking-widest uppercase text-sm">Sincronizando cocina...</p>
-    </div>
-  );
+  if (loading) {
+    return <LoadingSpinner mensaje="Sincronizando cocina..." />;
+  }
 
   return (
     <main className="min-h-screen bg-bg-main pt-28 pb-12 px-4 md:px-6">
