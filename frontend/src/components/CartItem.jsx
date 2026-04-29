@@ -43,7 +43,7 @@ export const CartItem = ({ item, onEliminar, onEditar, onActualizarCantidad }) =
         <div className="flex-1 min-w-0 flex flex-col justify-center">
           <h3 className="font-bold text-[#1a3a5a] text-sm sm:text-base leading-tight">
             <span className="capitalize text-gray-500 text-xs sm:text-sm font-semibold">{item.categoria.toLowerCase()}</span><br/>
-            <span className="truncate block">{item.nombre}</span>
+            <span className="wrap-break-word">{item.nombre}</span>
           </h3>
           <span className="font-black text-action mt-1 text-sm sm:text-base">
             {item.precioTotalLinea.toFixed(2)}€

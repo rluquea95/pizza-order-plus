@@ -108,7 +108,7 @@ export const CheckoutPage = () => {
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mt-4">
 
         {/* COLUMNA IZQUIERDA: ENVÍO Y DATOS */}
-        <div className="w-full lg:w-3/5">
+        <div className="w-full lg:w-1/2">
           <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-gray-100">
             <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
               1. ¿Cómo quieres tu pedido?
@@ -163,7 +163,7 @@ export const CheckoutPage = () => {
         </div>
 
         {/* COLUMNA DERECHA: RESUMEN DE PRODUCTOS */}
-        <div className="w-full lg:w-2/5">
+        <div className="w-full lg:w-1/2">
           <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 h-fit sticky top-28 flex flex-col">
             <h2 className="text-2xl font-bold text-primary mb-6 border-b pb-4">
               2. Resumen de tu pedido
