@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { useCart } from '../../context/CartContext';
-import logoClaro from '../../assets/logo_pizza_order_claro.png';
+import logoClaro from '../../assets/logo_pizza_order.webp';
 import { CarritoIcon } from '../icons/CarritoIcon';
 import { LoginIcon } from '../icons/LoginIcon';
 import { MenuIcon } from '../icons/MenuIcon';
@@ -44,7 +44,12 @@ export const Navbar = () => {
 
             {/* Logo */}
             <Link to="/" aria-label="Ir a la página de inicio" className="hover:scale-105 transition-transform shrink-0">
-              <img src={logoClaro} alt="Logo PizzaOrder+" className="h-18 w-auto lg:block" />
+              <img
+                src={logoClaro}
+                alt="Logo PizzaOrder+"
+                fetchPriority="high"
+                className="h-18 w-auto lg:block"
+              />
             </Link>
 
             {/* Enlaces de Navegación ESCRITORIO */}
@@ -69,10 +74,10 @@ export const Navbar = () => {
             {/* Botón Iniciar Pedido / Añadir Productos */}
             <Link
               to="/iniciar-pedido"
-              className="bg-action text-primary px-3 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all 
+              className="bg-action text-primary px-2 py-1 sm:px-3 sm:py-2 md:px-6 md:py-2.5 rounded-full hover:bg-focus hover:text-primary transition-all 
                       shadow-md flex items-center justify-center hover:scale-105 active:scale-95 active:shadow-sm"
             >
-              <span className="text-sm md:text-lg">
+              <span className="text-xs sm:text-sm md:text-lg whitespace-nowrap">
                 {pedidoEnEdicion ? 'AÑADE PRODUCTOS' : 'INICIAR PEDIDO'}
               </span>
             </Link>
@@ -82,7 +87,10 @@ export const Navbar = () => {
               <div className="relative group hidden md:block">
 
                 {/* Botón de Usuario */}
-                <button className="flex items-center gap-2 text-white hover:text-action transition-colors px-2 h-20">
+                <button
+                  aria-label="Menú de usuario"
+                  className="flex items-center gap-2 text-white hover:text-action transition-colors px-2 h-20"
+                >
                   <LoginIcon className="w-8 h-8" />
                   <span className="hidden xl:inline tracking-widest uppercase">
                     {user.rol === 'ADMIN' ? '¡HOLA, ADMIN!' : `¡HOLA, ${user.nombre}!`}
@@ -136,6 +144,7 @@ export const Navbar = () => {
             ) : (
               <Link
                 to="/login"
+                aria-label="Ir a inicio de sesión"
                 className="hidden md:flex items-center gap-2 text-white hover:text-action transition-colors px-2"
               >
                 <LoginIcon className="w-8 h-8" />

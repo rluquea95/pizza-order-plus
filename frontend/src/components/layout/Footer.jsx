@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router';
-import logoClaro from '../../assets/logo_pizza_order_claro.png';
+import logoClaro from '../../assets/logo_pizza_order.webp';
 import { ListaAlergenos } from '../ListaAlergenos';
 import { useData } from '../../context/DataContext';
 
@@ -88,7 +88,7 @@ export const Footer = () => {
               <Link to="/cookies" className="hover:text-action transition-colors">Política de Cookies</Link>
               <Link to="/accesibilidad" className="hover:text-action transition-colors">Declaración de Accesibilidad</Link>
             </div>
-            <p className="text-sm text-text-muted text-center mt-2">
+            <p className="text-sm text-gray-400 text-center mt-2">
               Copyright © {new Date().getFullYear()} PizzaOrder+ | Diseñado por Rosa María Luque Aguilar
             </p>
           </div>
