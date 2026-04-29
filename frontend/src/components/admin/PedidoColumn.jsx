@@ -1,7 +1,8 @@
 export const PedidoColumn = ({ titulo, children, colorTexto, colorFondo, icono, cantidad }) => {
   return (
-    <div className="flex flex-col bg-white backdrop-blur-md rounded-4xl p-6 md:p-8 shadow-sm border border-white min-h-125">
-      
+    <div className="flex flex-col bg-white backdrop-blur-md rounded-4xl p-5 md:p-6 shadow-sm border border-gray-100 min-h-125 
+      w-full md:min-w-85 max-w-112.5 xl:w-112.5 shrink-0">
+
       {/* CABECERA DE LA COLUMNA*/}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200/50">
         <div className="flex items-center gap-3">
@@ -18,7 +19,7 @@ export const PedidoColumn = ({ titulo, children, colorTexto, colorFondo, icono, 
       {/* AREA DONDE APARECERAN LOS PEDIDOS */}
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
         <div className="flex flex-col gap-6">
-          
+
           {/* Recibe las tarjetas PedidoCard */}
           {children}
 

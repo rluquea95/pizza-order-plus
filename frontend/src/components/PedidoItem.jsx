@@ -31,7 +31,7 @@ export const PedidoItem = ({ item, isCompact = false }) => {
 
       <div className="flex-1 min-w-0 flex flex-col justify-center">
         {/* NOMBRE DEL PRODUCTO */}
-        <h3 className={`font-black text-[#1a3a5a] ${isCompact ? 'text-sm' : 'text-base sm:text-lg'} leading-tight uppercase wrap-break-word`}>
+        <h3 className={`font-black text-[#1a3a5a] ${isCompact ? 'text-sm' : 'text-base sm:text-lg'} leading-tight uppercase break-word`}>
           {item.nombre}
         </h3>
         {/* TAMAÑO DEL PRODUCTO */}
@@ -45,7 +45,8 @@ export const PedidoItem = ({ item, isCompact = false }) => {
             {item.ingredientesExtra?.map((ex, i) => (
               <span
                 key={`ex-${i}`}
-                className="inline-flex items-center justify-center rounded-xl px-2 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase whitespace-nowrap bg-green-50 text-green-700 border border-green-100"
+                className={`inline-flex items-center justify-center rounded-xl font-bold uppercase whitespace-nowrap bg-green-50 text-green-700 border border-green-100 ${isCompact ? 'px-1.5 py-0.5 text-[9px]' : 'px-2 py-0.5 text-[10px] sm:text-[11px]'
+                  }`}
               >
                 + {typeof ex === 'object' ? ex.ingrediente : ex}
               </span>
@@ -53,7 +54,8 @@ export const PedidoItem = ({ item, isCompact = false }) => {
             {item.ingredientesQuitados?.map((qu, i) => (
               <span
                 key={`qu-${i}`}
-                className="inline-flex items-center justify-center rounded-xl px-2 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase whitespace-nowrap bg-red-50 text-red-600 border border-red-100 line-through opacity-90"
+                className={`inline-flex items-center justify-center rounded-xl font-bold uppercase whitespace-nowrap bg-red-50 text-red-600 border border-red-100 line-through opacity-90 ${isCompact ? 'px-1.5 py-0.5 text-[9px]' : 'px-2 py-0.5 text-[10px] sm:text-[11px]'
+                  }`}
               >
                 - {typeof qu === 'object' ? qu.ingrediente : qu}
               </span>
@@ -63,7 +65,8 @@ export const PedidoItem = ({ item, isCompact = false }) => {
       </div>
 
       {/* PRECIO DEL PRODUCTO */}
-      <div className="bg-orange-50 font-black text-action  px-3 py-1.5 rounded-xl text-lg sm:text-xl shrink-0 border border-orange-100">
+      <div className={`bg-orange-50 font-black text-action rounded-xl shrink-0 border border-orange-100 ${isCompact ? 'px-2 py-1 text-sm sm:text-base' : 'px-3 py-1.5 text-lg sm:text-xl'
+        }`}>
         {precioAMostrar !== null ? `${precioAMostrar.toFixed(2)}€` : '--'}
       </div>
     </div>
