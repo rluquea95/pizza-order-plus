@@ -10,6 +10,8 @@ dotenv.config();
 const Producto = require('./models/Producto');
 const Ingrediente = require('./models/Ingrediente');
 const Alergeno = require('./models/Alergeno');
+const Pedido = require('./models/Pedido');
+const Usuario = require('./models/Usuario');
 
 // Conecta a MongoDB
 mongoose.connect(process.env.MONGO_URI)
@@ -28,13 +30,57 @@ const transformarArray = (texto) => {
 const importarDatos = async () => {
   try {
     //Borra todos los productos que hubiera antes (para no duplicar si se ejecuta varias veces el script)
+    await Pedido.deleteMany();
     await Producto.deleteMany();
     await Ingrediente.deleteMany();
     await Alergeno.deleteMany();
+    await Usuario.deleteMany();
     console.log('🧹 Base de datos limpiada.');
 
     // ==========================================
-    // IMPORTAR ALÉRGENOS
+    // 1. IMPORTAR USUARIOS POR DEFECTO
+    // ==========================================
+    console.log('👤 Creando usuarios por defecto (Admin y Cliente)...');
+    const usuariosPorDefecto = [
+      {
+        nombre: 'Admin',
+        apellidos: 'Principal',
+        fecha_nacimiento: new Date('1990-01-01'),
+        telefono: '600000000',
+        email: 'admin@pizzaorder.com',
+        password: 'Password123*',
+        rol: 'ADMIN',
+        direccion: [{
+          tipo_via: 'Calle',
+          calle: 'Principal',
+          numero: '1',
+          codigo_postal: '41580',
+          ciudad: 'Casariche'
+        }]
+      },
+      {
+        nombre: 'Cliente',
+        apellidos: 'De Prueba',
+        fecha_nacimiento: new Date('1995-05-05'),
+        telefono: '611111111',
+        email: 'cliente@pizzaorder.com',
+        password: 'Password123*',
+        rol: 'CLIENTE',
+        direccion: [{
+          tipo_via: 'Avenida',
+          calle: 'Secundaria',
+          numero: '2',
+          codigo_postal: '41580',
+          ciudad: 'Casariche'
+        }]
+      }
+    ];
+
+    await Usuario.create(usuariosPorDefecto);
+    console.log('✅ Usuarios de prueba creados con éxito.');
+
+    // ==========================================
+    // 2. IMPORTAR ALÉRGENOS
     // ==========================================
     const rutaAlergenos = path.join(__dirname, 'data', 'alergenos.json');
     const datosAlergenos = fs.readFileSync(rutaAlergenos, 'utf-8');
@@ -59,7 +105,7 @@ const importarDatos = async () => {
 
 
     // ==========================================
-    // IMPORTAR INGREDIENTES
+    // 3. IMPORTAR INGREDIENTES
     // ==========================================
     const rutaIngredientes = path.join(__dirname, 'data', 'ingredientes.json');
     const datosIngredientes = fs.readFileSync(rutaIngredientes, 'utf-8');
@@ -89,7 +135,7 @@ const importarDatos = async () => {
     });
 
     // ==========================================
-    // IMPORTAR PRODUCTOS
+    // 4. IMPORTAR PRODUCTOS
     // ==========================================
     const rutaProductos = path.join(__dirname, 'data', 'productos.json');
     const datosProductos = fs.readFileSync(rutaProductos, 'utf-8');
