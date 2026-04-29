@@ -24,15 +24,11 @@ export const QuantitySelector = ({
 
   const containerSize = isModal ? "gap-4" : "gap-1";
   const btnSize = isModal
-    ? "w-12 h-12 text-3xl focus:border-action/50"
+    ? "w-12 h-12 text-3xl focus:border-action/50 pb-0.5"
     : "w-8 h-8 text-xl sm:w-10 sm:h-10 sm:text-2xl";
   const numSize = isModal
     ? "w-6 text-2xl"
     : "w-6 sm:w-8 text-base sm:text-lg";
-
-  // Ajustes de padding para cada símbolo y que se alineen igual
-  const minusAdjust = isModal ? "pb-1.5" : "pb-1";
-  const plusAdjust = isModal ? "pb-0.5" : "";
 
   return (
     <div className={`flex items-center ${containerSize}`}>
@@ -40,7 +36,7 @@ export const QuantitySelector = ({
       <button
         onClick={handleDecrement}
         aria-label="Disminuir cantidad"
-        className={`${baseBtnClasses} ${btnSize} ${minusAdjust}`}
+        className={`${baseBtnClasses} ${btnSize}`}
       >
         -
       </button>
@@ -54,7 +50,7 @@ export const QuantitySelector = ({
       <button
         onClick={handleIncrement}
         aria-label="Aumentar cantidad"
-        className={`${baseBtnClasses} ${btnSize} ${plusAdjust}`}
+        className={`${baseBtnClasses} ${btnSize}`}
       >
         +
       </button>
