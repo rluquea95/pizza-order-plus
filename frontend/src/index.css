@@ -1,7 +1,7 @@
-@import "tailwindcss";
-
 /* Importa las tipografías desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+@import "tailwindcss";
 
 /* Tema Global */
 @theme {
@@ -10,12 +10,8 @@
   --color-action: #F49C14;        /* Botones y llamadas a la acción (CTA) */
   --color-focus: #F2C413;         /* Elementos resaltados (Focus) */
   
-  /* Fondos y Neutros */
+  /* Fondo */
   --color-bg-main: #FCF7E6;       /* Fondo principal (tono crema) */
-  --color-bg-alt: #F2F2F2;        /* Fondo secundario (gris claro) */
-  --color-bg-logo: #FFDFAE;       /* Fondo (amarillo del logo) */
-  --color-text-muted: #818181;    /* Texto secundario */
-  --color-border: #CDCDCD;        /* Bordes grises */
 
   /* Tipografías */
   --font-poppins: 'Poppins', sans-serif; /* Títulos (H1, H2, H3...) */
@@ -29,6 +25,7 @@ body {
   color: var(--color-primary);
   margin: 0;
   padding: 0;
+  min-width: 320px; /* <--- NUEVO: Límite mínimo estándar de dispositivos móviles */
 }
 
 /* Aplica la fuente Poppins a todos los títulos y botones */
