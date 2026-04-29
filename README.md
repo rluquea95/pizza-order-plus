@@ -6,7 +6,7 @@ Proyecto completo (Full Stack) para la gestión de pedidos de una pizzería, des
 - **Frontend**: SPA construida con React 19 y Vite 8. Gestión inteligente de estado para el carrito, personalización de productos y temporizadores de edición de pedidos.
 - **Backend**: API RESTful con Node.js y Express 5.
 - **Base de Datos**: MongoDB Atlas para almacenar productos, ingredientes, alérgenos, pedidos y usuarios.
-- **Seguridad y Roles**: Autenticación mediante JWT con roles de acceso protegidos (Cliente y Administrador) y encriptación con Argon2.
+- **Seguridad y Roles**: Autenticación mediante JWT con roles de acceso protegidos (Cliente y Administrador) y hashing con Argon2.
 
 
 ## 🛠️ Stack Tecnológico
@@ -39,8 +39,8 @@ npm install
 ```
 
 - Crea un archivo `.env` en la raíz de la carpeta backend `(backend/.env)`
-- Regístrate en MongoDB Atlas, crea un clúster gratuito y configura el nombre de la base de datos y el usuario administrador.
-- Asegúrate de incluir tu MONGO_URI (modificando la URL que te da MongoDB Atlas incluyendo el usuario y la contraseña), el PORT y tu JWT_SECRET:
+- Regístrate en **MongoDB Atlas**, crea un clúster gratuito y configura el nombre de la base de datos y el usuario administrador.
+- Asegúrate de incluir tu **MONGO_URI** (modificando la URL que te da MongoDB Atlas incluyendo el usuario y la contraseña), el **PORT** y tu **JWT_SECRET**:
 
 ```bash
 PORT=pon el puerto aquí
@@ -53,11 +53,12 @@ Una vez configurada la conexión a MongoDB en el `.env`, ejecuta el script del f
 ```bash
 node seed.js
 ```
-💡Nota: El script de poblado crea automáticamente dos usuarios para que puedas probar la plataforma inmediatamente:
-
-- Administrador: admin@pizzaorder.com | Password: Password123*
-
-- Cliente: cliente@pizzaorder.com | Password: Password123*
+> [!NOTE]
+>💡El script de poblado crea automáticamente dos usuarios para que puedas probar la plataforma inmediatamente:
+> - Administrador: admin@pizzaorder.com 
+> - Password: Password123*
+> - Cliente: cliente@pizzaorder.com 
+> - Password: Password123*
 
 
 ### :four: Configurar el Frontend
@@ -68,15 +69,16 @@ npm install
 ```
 
 
-## Ejecución en Desarrollo
+## :computer: Ejecución en Desarrollo
 Para probar el proyecto, abre dos terminales y lanza ambos servicios:
-### Terminal 1 (Backend):
+
+#### Terminal 1 (Backend):
 ```bash
 cd backend
 npm run dev
 ```
 
-### Terminal 2 (Frontend):
+#### Terminal 2 (Frontend):
 ```bash
 cd frontend
 npm run dev
