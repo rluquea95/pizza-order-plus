@@ -91,10 +91,10 @@ export const HomePage = () => {
                   : 'opacity-0 translate-y-8 pointer-events-none z-0'
                 }`}
             >
-              <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl text-primary mb-4 md:mb-6 tracking-tight drop-shadow-sm leading-tight">
+              <h1 className="font-bold text-center text-3xl md:text-5xl lg:text-6xl text-primary mb-4 md:mb-6 tracking-tight drop-shadow-sm leading-tight">
                 {slide.title}
               </h1>
-              <p className="text-base md:text-xl text-primary/90 leading-relaxed max-w-2xl font-medium">
+              <p className="text-base text-center md:text-xl text-primary/90 leading-relaxed max-w-2xl font-medium">
                 {slide.text}
               </p>
 
